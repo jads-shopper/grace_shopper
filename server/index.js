@@ -25,55 +25,55 @@ if (process.env.NODE_ENV !== 'production') require('../secrets')
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))
 passport.deserializeUser((id, done) =>
-  db.models.user.findById(id)
-    .then(user => done(null, user))
-    .catch(done))
+	db.models.user.findById(id)
+		.then(user => done(null, user))
+		.catch(done))
 
 const createApp = () => {
-  // logging middleware
-  app.use(morgan('dev'))
+	// logging middleware
+	app.use(morgan('dev'))
 
-  // body parsing middleware
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
+	// body parsing middleware
+	app.use(bodyParser.json())
+	app.use(bodyParser.urlencoded({ extended: true }))
 
-  // session middleware with passport
-  app.use(session({
-    secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-    store: sessionStore,
-    resave: false,
-    saveUninitialized: false
-  }))
-  app.use(passport.initialize())
-  app.use(passport.session())
+	// session middleware with passport
+	app.use(session({
+		secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+		store: sessionStore,
+		resave: false,
+		saveUninitialized: false
+	}))
+	app.use(passport.initialize())
+	app.use(passport.session())
 
-  // auth and api routes
-  app.use('/auth', require('./auth'))
-  app.use('/api', require('./api'))
+	// auth and api routes
+	app.use('/auth', require('./auth'))
+	app.use('/api', require('./api'))
 
-  // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+	// static file-serving middleware
+	app.use(express.static(path.join(__dirname, '..', 'public')))
 
-  // sends index.html
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  })
+	// sends index.html
+	app.use('*', (req, res) => {
+		res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+	})
 
-  // error handling endware
-  app.use((err, req, res, next) => {
-    console.error(err)
-    console.error(err.stack)
-    res.status(err.status || 500).send(err.message || 'Internal server error.')
-  })
+	// error handling endware
+	app.use((err, req, res, next) => {
+		console.error(err)
+		console.error(err.stack)
+		res.status(err.status || 500).send(err.message || 'Internal server error.')
+	})
 }
 
 const startListening = () => {
-  // start listening (and create a 'server' object representing our server)
-  const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`))
+	// start listening (and create a 'server' object representing our server)
+	const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`))
 
-  // set up our socket control center
-  const io = socketio(server)
-  require('./socket')(io)
+	// set up our socket control center
+	const io = socketio(server)
+	require('./socket')(io)
 }
 
 const syncDb = () => db.sync()
@@ -83,10 +83,10 @@ const syncDb = () => db.sync()
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
 if (require.main === module) {
-  sessionStore.sync()
-    .then(syncDb)
-    .then(createApp)
-    .then(startListening)
+	sessionStore.sync()
+		.then(syncDb)
+		.then(createApp)
+		.then(startListening)
 } else {
-  createApp()
+	createApp()
 }
