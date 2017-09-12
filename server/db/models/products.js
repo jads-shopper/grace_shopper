@@ -1,4 +1,3 @@
-
 //  DB for products
 const Sequelize = require('sequelize')
 const db = require('../db')
@@ -35,6 +34,9 @@ const Product = db.define('Product', {
 		allowNull   : false,
 		defaultValue: true,
 	},
+	rating     : {
+		type: Sequelize.FLOAT,
+	}
 })
 
 module.exports = Product
