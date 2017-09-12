@@ -84,18 +84,14 @@ describe('User routes', () => {
 				})
 		})
 
-		it('should get the user by the id', () => {
-
-			it('should get the right user from a list of users', () => {
-				const theChosenOne = users[1]
-				console.log(theChosenOne)
-				return agent
-					.get(`/api/users/${theChosenOne.id}`)
-					.expect(200)
-					.expect((res) => {
-			    		expect(res.body.id).to.equal(theChosenOne.id)
-					})
-			})
+		it('should get the right user from a list of users', () => {
+			const theChosenOne = users[1]
+			return agent
+				.get(`/api/users/${theChosenOne.id}`)
+				.expect(200)
+				.expect((res) => {
+					expect(res.body.id).to.equal(theChosenOne.id)
+				})
 		})
 	})
 
