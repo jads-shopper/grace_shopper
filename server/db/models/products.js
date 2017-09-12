@@ -1,7 +1,7 @@
 //  DB for products
 const Sequelize = require('sequelize')
 const db = require('../db')
-const Product = db.define('Products', {
+const Product = db.define('Product', {
 	name       : {
 		type     : Sequelize.STRING(20),
 		allowNull: false,
@@ -12,12 +12,12 @@ const Product = db.define('Products', {
 	},
 	imageURL   : {
 		type: Sequelize.STRING(20),
-		// add hook to validate URL format ?
+		defaultValue: '/img.png'
 	},
 	price      : {
 		type     : Sequelize.FLOAT,
 		allowNull: false,
-		validate:  {
+		validate : {
 			min: 0.01,
 		}
 	},
@@ -28,25 +28,15 @@ const Product = db.define('Products', {
 	quantity   : {
 		type     : Sequelize.INTEGER,
 		allowNull: false,
-	},x
+	},
 	isActive   : {
-		type     : Sequelize.INTEGER,
-		allowNull: false,
+		type        : Sequelize.BOOLEAN,
+		allowNull   : false,
 		defaultValue: true,
 	},
 })
 
-const productOrder = db.define('productOrder', {
-	quantity : {
-		type: Sequelize.INTEGER,
-	},
-	unitPrice: {
-		type: Sequelize.FLOAT,
-	}
-})
 
-productOrder.subTotal =  ()  => this.unitPrice * this.quantity
-
-// productOrder.hasOne
-
-module.exports = Product
+module.exports = {
+	Product,
+}
