@@ -28,7 +28,7 @@ const Product = db.define('Products', {
 	quantity   : {
 		type     : Sequelize.INTEGER,
 		allowNull: false,
-	},
+	},x
 	isActive   : {
 		type     : Sequelize.INTEGER,
 		allowNull: false,
