@@ -10,7 +10,9 @@ const REMOVE_USER = 'REMOVE_USER'
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultState = {
+	users: []
+}
 
 /**
  * ACTION CREATORS
@@ -25,7 +27,7 @@ export const me = () =>
 	dispatch =>
 		axios.get('/auth/me')
 			.then(res =>
-				dispatch(getUser(res.data || defaultUser)))
+				dispatch(getUser(res.data || defaultState)))
 			.catch(err => console.log(err))
 
 export const auth = (email, password, method) =>
@@ -50,7 +52,7 @@ export const logout = () =>
 /**
  * REDUCER
  */
-export default function (state = defaultUser, action) {
+export default function (state = defaultState, action) {
 	switch (action.type) {
 	case GET_USER:
 		return action.user
