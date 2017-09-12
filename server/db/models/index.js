@@ -1,5 +1,6 @@
 const User = require('./user')
-
+const Product = require('./products')
+const Order = require('./orders')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -14,5 +15,7 @@ const User = require('./user')
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-	User
+	User,
+	Order,
+	Product,
 }

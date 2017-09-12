@@ -3,15 +3,15 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 const Product = db.define('Product', {
 	name       : {
-		type     : Sequelize.STRING(20),
+		type     : Sequelize.STRING,
 		allowNull: false,
 	},
 	category   : {
-		type     : Sequelize.STRING(20),
+		type     : Sequelize.STRING,
 		allowNull: false,
 	},
 	imageURL   : {
-		type: Sequelize.STRING(20),
+		type        : Sequelize.STRING,
 		defaultValue: '/img.png'
 	},
 	price      : {
@@ -36,7 +36,5 @@ const Product = db.define('Product', {
 	},
 })
 
+module.exports = Product
 
-module.exports = {
-	Product,
-}
