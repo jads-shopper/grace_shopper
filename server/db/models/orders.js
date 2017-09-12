@@ -1,3 +1,4 @@
+
 const Sequelize = require('sequelize')
 const db = require('../db')
 
@@ -10,4 +11,5 @@ const Order = db.define('Order', {
 	ShipDate: Sequelize.DATE,
 	fulfilled: Sequelize.BOOLEAN,
 })
+
 module.exports = Order

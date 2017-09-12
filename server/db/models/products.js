@@ -1,3 +1,4 @@
+
 //  DB for products
 const Sequelize = require('sequelize')
 const db = require('../db')
@@ -37,4 +38,5 @@ const Product = db.define('Product', {
 })
 
 module.exports = Product
+
 
