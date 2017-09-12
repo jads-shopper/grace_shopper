@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV !== 'production') require('../../secrets')
 const User = require('./models/user')
 const Product = require('./models/products')
 const Chance = require('chance')

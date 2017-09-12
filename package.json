@@ -10,10 +10,11 @@
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "deploy": "git checkout -b deploy && webpack -p && git add -f public/bundle.js public/bundle.js.map && git commit --allow-empty -m 'Deploying' && git push --force heroku deploy:master && git checkout master && git branch -D deploy",
+    "seed": "node secrets.js && node server/db/seed.js",
     "start": "node server",
     "start-dev": "npm run build-client-watch & npm run start-server",
     "start-server": "NODE_ENV='development' nodemon server -e html,js,scss --ignore public",
-    "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/gracehopper_test' mocha $(find . -name '*.spec.js' ! -ipath '*node_modules*') --compilers js:babel-register"
+    "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/jads-shopper_test' mocha $(find . -name '*.spec.js' ! -ipath '*node_modules*') --compilers js:babel-register"
   },
   "author": "",
   "license": "ISC",
