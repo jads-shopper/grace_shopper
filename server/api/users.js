@@ -10,5 +10,32 @@ router.get('/', (req, res, next) => {
 		attributes: ['id', 'email']
 	})
 		.then(users => res.json(users))
-		.catch(next)
+		.catch(console.error)
 })
+
+router.get('/:id', (req, res, next) => {
+	const {id} = req.params
+	User.findById(id)
+		.then((user) => {
+			if (user) {
+				res.json(user)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch(console.error)
+})
+
+router.post('/', (req, res, next) => {
+	User.create(req.body)
+		.then((user) => {
+			if (user) {
+				res.json(user)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch(console.error)
+})
+
+
