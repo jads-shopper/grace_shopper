@@ -6,6 +6,7 @@ const Review = db.define('review', {
 		type: Sequelize.TEXT,
 		allowNull: false
 	},
+	stars: Sequelize.
 })
 
 module.exports = Review
