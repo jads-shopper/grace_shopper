@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 
 const mapStateToProps = function(state) {
 	return {
-		products: state.product.products
+		products: state.products
 	}
 }
 
