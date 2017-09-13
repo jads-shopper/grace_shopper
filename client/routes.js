@@ -7,6 +7,7 @@ import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
 import Navbar from './components/Navbar.jsx'
 import Home from './components/Home.jsx'
+import Admin from './components/Admin.jsx'
 import store, {getMe, fetchProducts} from './store'
 
 /**
@@ -26,6 +27,7 @@ class Routes extends Component {
 					<Navbar />
 					<Switch>
 						<Route exact path="/home" component={Home} />
+						<Route exact path="/admin" component={Admin} />
 						<Redirect to="/home" />
 					</Switch>
 				</div>
