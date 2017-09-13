@@ -12,7 +12,7 @@ function categoriesInstance(props){
 	const categoryList = ['Accessories', 'Hardware', 'Software', 'Events', 'Miscallaneous']
 	if(props.products){
 		return (
-			<Col  xs={12} md={3}>
+			<Col  xs={12} sm={3}>
 				<ListGroup>
 					{
 						categoryList.map((val, idx) => {

@@ -12,7 +12,7 @@ const mapStateToProps = function(state) {
 function ProductList(props){
 	if(props.products){
 		return (
-			<Col xs={12} md={9}>
+			<Col xs={12} sm={9}>
 				<ul className="list-unstyled col-sm-6 col-xs-11">
 					{ props.products.map(product => {
 						return (
