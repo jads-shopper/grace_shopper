@@ -21,13 +21,12 @@ describe('Products route', () => {
 	}
 
 	describe('GET /products', () => {
-
-    	it('returns an array of products', () => {
-    		return agent
+		it('returns an array of products', () => {
+			return agent
 				.get('/api/products')
 				.expect(200)
 				.expect((res) => {
-    				expect(res.body).to.be.an.instanceOf(Array)
+					expect(res.body).to.be.an.instanceOf(Array)
 					expect(res.body).to.have.length(0)
 				})
 		}) // returns an array of products
@@ -60,7 +59,7 @@ describe('Products route', () => {
 						.get('/api/products')
 						.expect(200)
 						.expect((res) => {
-                        	expect(res.body).to.be.an.instanceOf(Array)
+							expect(res.body).to.be.an.instanceOf(Array)
 							expect(res.body).to.have.length(5)
 							expect(res.body[0].id).to.equal(products[0].id)
 							// expect(res.body).to.deep.equal(products)
