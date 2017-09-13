@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
+import {Col} from 'react-bootstrap'
 
 const mapStateToProps = function(state) {
 	return {
@@ -11,7 +12,7 @@ const mapStateToProps = function(state) {
 function ProductList(props){
 	if(props.products){
 		return (
-			<div>
+			<Col xs={12} md={9}>
 				<ul className="list-unstyled col-sm-6 col-xs-11">
 					{ props.products.map(product => {
 						return (
@@ -30,7 +31,7 @@ function ProductList(props){
 					})
 					}
 				</ul>
-			</div>
+			</Col>
 		)
 	} else {
 		return(<div>Error</div>)
