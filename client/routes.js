@@ -7,7 +7,7 @@ import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
 import Navbar from './components/Navbar.jsx'
 import Home from './components/Home.jsx'
-import {me} from './store'
+import store, {getMe, fetchProducts} from './store'
 
 /**
  * COMPONENT
@@ -48,7 +48,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		loadInitialData () {
-			dispatch(me())
+			dispatch(getMe())
+			dispatch(fetchProducts())
 		}
 	}
 }

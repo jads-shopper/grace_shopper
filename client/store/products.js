@@ -9,9 +9,7 @@ const GET_PRODUCTS = 'GET_PRODUCTS'
 /**
  * INITIAL STATE
  */
-const defaultState = {
-	products: []
-}
+const productState = []
 
 /**
  * ACTION CREATORS
@@ -37,10 +35,10 @@ export function fetchProducts () {
 /**
  * REDUCER
  */
-export default function (state = defaultState, action) {
+export default function (state = productState, action) {
 	switch (action.type) {
 	case GET_PRODUCTS:
-		return Object.assign({}, state, { products: action.products })
+		return action.products
 	default:
 		return state
 	}
