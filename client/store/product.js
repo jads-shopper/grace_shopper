@@ -23,7 +23,6 @@ const getProducts = products => ({type: GET_PRODUCTS, products})
  */
 
 export function fetchProducts () {
-
 	return function thunk (dispatch) {
 		return axios.get('/api/products')
 			.then(res => res.data)
