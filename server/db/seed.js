@@ -31,11 +31,10 @@ userFirstName.map(( val, idx ) => {
 	}))
 })
 // Product  seed
-const name = [], category = [], imageUrl = [], price = [], description = [], quantity = [], isActive = []
+const name = [], category = ['Accessories', 'Hardware', 'Software', 'Events', 'Misc'], imageUrl = [], price = [], description = [], quantity = [], isActive = []
 
 for (i = 0; i < 50; i++) {
 	name.push(chance.word())
-	category.push(chance.word())
 	imageUrl.push(chance.avatar())
 	price.push(chance.floating({ fixed: 2, min: 0.01, max: 1000 }))
 	description.push(chance.paragraph())
@@ -46,7 +45,7 @@ for (i = 0; i < 50; i++) {
 name.map(( val, idx ) => {
 	promises.push(Product.create({
 		name       : name[idx],
-		category   : category[idx],
+		category   : category[Math.floor(Math.random() * 4)],
 		imageUrl   : imageUrl[idx],
 		price      : price[idx],
 		description: description[idx],
