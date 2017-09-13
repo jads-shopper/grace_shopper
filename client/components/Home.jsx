@@ -13,19 +13,20 @@ function ProductList(props){
 	if(props.products){
 		return (
 			<Col xs={12} sm={9}>
-				<ul className="list-unstyled col-sm-6 col-xs-11">
+				<ul className="list-unstyled">
 					{ props.products.map(product => {
 						return (
-							<li className="" key={product.id}>
+							<li className="productItem" key={product.id}>
 								<NavLink to={`/products/${product.id}`}>
-									<div className="">
+									<div className="productImage">
 										<img src={`${product.imageURL}`} alt={`${product.name} image`} height="60" width="60" />
 									</div>
+									<div className="productInfo">
+										<div><h5>Product: {product.name}</h5></div>
+										<div><h5>Category: {product.category}</h5></div>
+										<div><h5>Amount Remaining: {product.quantity}</h5></div>
+									</div>
 								</NavLink>
-								<div className="">
-									<div><NavLink to={`/products/${product.id}`}>{product.name} Product</NavLink></div>
-									<div className="badge">Amount Remaining: {product.quantity}</div>
-								</div>
 							</li>
 						)
 					})

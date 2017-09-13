@@ -3,6 +3,7 @@ const db = require('../db')
 const User = db.model('user')
 const Product = db.model('product')
 const Review = db.model('review')
+const Category = db.model('category')
 const Chance = require('chance')
 const chance = new Chance()
 
@@ -30,8 +31,19 @@ userFirstName.map(( val, idx ) => {
 		isAdmin  : isAdmin[idx],
 	}))
 })
+
+// Category seed
+
+const category = ['Accessories', 'Hardware', 'Software', 'Events', 'Misc']
+category.map((val, idx) => {
+	promises.push(Category.create({
+		name: category[idx]
+	}))
+})
+
+
 // Product  seed
-const name = [], category = ['Accessories', 'Hardware', 'Software', 'Events', 'Misc'], imageUrl = [], price = [], description = [], quantity = [], isActive = []
+const name = [], imageUrl = [], price = [], description = [], quantity = [], isActive = []
 
 for (i = 0; i < 50; i++) {
 	name.push(chance.word())

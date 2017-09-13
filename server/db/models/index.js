@@ -2,10 +2,13 @@ const User = require('./user')
 const Order = require('./orders')
 const Product = require('./products')
 const Review = require('./reviews')
+const Category = require('./categories')
 const OrderProduct = require('./ordersProductsJoin')
 
 Review.belongsTo(User)
 Review.belongsTo(Product)
+
+Product.belongsToMany(Category, {through: 'productCategory'})
 
 Order.belongsTo(User)
 Order.belongsToMany(Product, {

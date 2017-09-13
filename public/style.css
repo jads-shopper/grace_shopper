@@ -1,0 +1,17 @@
+.productItem {
+	border: #337ab7 solid 3px;
+	border-radius: 4px;
+	margin: 5px 10px;
+	width: 90%;
+}
+
+.productImage {
+	height: 100px;
+	width: 100px;
+	display: inline-block;
+	margin: 5px;
+}
+
+.productInfo {
+	display: inline-block;
+}
