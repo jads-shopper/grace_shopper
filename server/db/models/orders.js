@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 
-const Order = db.define('Order', {
+const Order = db.define('order', {
 	OrderDate: {
 		type: Sequelize.DATE,
 		allowNull: false,

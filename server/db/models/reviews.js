@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Review = db.define('review', {
 	text: {
-		type: Sequelize.STRING,
+		type: Sequelize.TEXT,
 		allowNull: false
 	},
 })
