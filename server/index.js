@@ -36,7 +36,7 @@ const createApp = () => {
 
 	// body parsing middleware
 	app.use(bodyParser.json())
-	app.use(bodyParser.urlencoded({ extended: true }))
+	app.use(bodyParser.urlencoded({ extended: false }))
 
 	// session middleware with passport
 	app.use(session({
@@ -78,6 +78,8 @@ const startListening = () => {
 }
 
 const syncDb = () => db.sync({})
+
+
 
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)

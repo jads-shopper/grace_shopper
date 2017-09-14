@@ -23,7 +23,7 @@ const removeUser = () => ({type: REMOVE_USER})
 /**
  * THUNK CREATORS
  */
-export const me = () =>
+export const getMe = () =>
 	dispatch =>
 		axios.get('/auth/me')
 			.then(res =>

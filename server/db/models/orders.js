@@ -4,12 +4,12 @@ const db = require('../db')
 
 
 const Order = db.define('order', {
-	OrderDate: {
+	orderDate: {
 		type: Sequelize.DATE,
 		defaultValue: Sequelize.NOW,
 		allowNull: false,
 	},
-	ShipDate: Sequelize.DATE,
+	shipDate: Sequelize.DATE,
 	fulfilled: Sequelize.BOOLEAN,
 })
 
