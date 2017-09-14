@@ -27,7 +27,6 @@ class AdminView extends Component {
 
 	render() {
 		if(this.props.users){
-			console.log(this.props.users)
 			return (
 				<Row>
 					<Col xs={12} sm={4}>
