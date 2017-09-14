@@ -12,6 +12,7 @@ import Home from './components/Home.jsx'
 import Admin from './components/Admin.jsx'
 import store, {getMe, fetchProducts, fetchCategories} from './store'
 
+
 /**
  * COMPONENT
  */
@@ -27,6 +28,13 @@ class Routes extends Component {
 			<Router history={history}>
 				<div>
 					<Navbar />
+
+					<Switch>
+						<Route exact path="/home" component={Home} />
+						<Route exact path="/admin" component={Admin} />
+						<Redirect to="/home" />
+					</Switch>
+
 					<Row>
 						<Categories />
 						<Switch>
