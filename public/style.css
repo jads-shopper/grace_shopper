@@ -18,6 +18,11 @@
 	display: inline-table;
 }
 
+.catalogButton {
+	float: right;
+	margin: 15px 15px 15px 20px;
+}
+
 .categoryH3 {
 	margin-top: 0px;
 }

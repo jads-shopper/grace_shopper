@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Col, Row} from 'react-bootstrap'
+import {Col, Row, Button} from 'react-bootstrap'
 import Categories from './Categories.jsx'
 
 const mapStateToProps = function(state) {
@@ -31,13 +31,14 @@ function ProductList(props){
 										<div className="productImage">
 											<img src={`${product.imageURL}`} alt={`${product.name} image`} height="99" width="99" />
 										</div>
-										<div className="productInfo">
-											<div><h4>Product: {product.name}</h4></div>
-											<div><h4>${product.price}</h4></div>
-											<div><h5>Category: {product.categories.length ? categoryNameArray.join(', ') : 'None'}</h5></div>
-											<div><h5>Amount Remaining: {product.quantity}</h5></div>
-										</div>
 									</NavLink>
+									<div className="productInfo">
+										<NavLink to={`/products/${product.id}`}><div><h4>Product: {product.name}</h4></div></NavLink>
+										<div><h4>${product.price}</h4></div>
+										<div><h5>Category: {product.categories.length ? categoryNameArray.join(', ') : 'None'}</h5></div>
+										<div><h5>Amount Remaining: {product.quantity}</h5></div>
+									</div>
+									<Button bsStyle="success" className="catalogButton" onClick={() => {alert('Feature not yet implemented!')}}>Add to Cart</Button>
 								</li>
 							)
 						})
