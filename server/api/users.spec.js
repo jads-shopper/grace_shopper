@@ -12,15 +12,13 @@ describe('User routes', () => {
 		return db.sync({force: true})
 	})
 
-	describe('GET /users', () => {
-		// beforeEach(() => {
-		// 	return User.create({
-		// 		firstName: 'cody',
-		// 		lastName: 'theDog',
-		// 		email: codysEmail
-		// 	})
-		// })
+	var sampleUser1 = {
+		firstName: 'Dave',
+		lastName: 'Chappelle',
+		email: 'dave@email.com'
+	}
 
+	describe('GET /users', () => {
 
 		it('returns an array of users', () => {
 			return agent
@@ -84,7 +82,7 @@ describe('User routes', () => {
 				})
 		})
 
-		it('should get the right user from a list of users', () => {
+		it('should get the right user based on its id', () => {
 			const theChosenOne = users[1]
 			return agent
 				.get(`/api/users/${theChosenOne.id}`)
@@ -93,6 +91,104 @@ describe('User routes', () => {
 					expect(res.body.id).to.equal(theChosenOne.id)
 				})
 		})
+
+		it('should return a 404 error if a non-existing user id is used', () => {
+			return agent
+				.get('/api/users/99999')
+				.expect(404)
+		})
 	})
+
+	describe('POST /users', () => {
+
+		it('creates a new user and returns its JSON', () => {
+			return agent
+				.post('/api/users')
+				.send(sampleUser1)
+				.expect(201)
+				.expect((res) => {
+					expect(res.body.email).to.equal(sampleUser1.email)
+				})
+		})
+
+		it('creates a user in the database', () => {
+			return agent
+				.post('/api/users')
+				.send(sampleUser1)
+				.expect(201)
+				.then(() => User.findOne({where: {email: sampleUser1.email }}))
+				.then((foundUser) => {
+					expect(foundUser.firstName).to.equal(sampleUser1.firstName)
+					expect(foundUser.lastName).to.equal(sampleUser1.lastName)
+					expect(foundUser.email).to.equal(sampleUser1.email)
+				})
+		})
+
+		it('returns JSON of the actually created user, not just the POSTed data', () => {
+			return agent
+				.post('/api/users')
+				.send(Object.assign({}, sampleUser1, {extraneous: 'This should not exist'}))
+				.expect(201)
+				.expect((res) => {
+					expect(res.body.email).to.equal(sampleUser1.email)
+					expect(res.body.extraneous).to.be.an('undefined')
+					expect(res.body.createdAt).to.exist
+				})
+		})
+	})
+
+	describe('PUT /users/:id', () => {
+		var createdUsers
+		var theChosenUser
+		beforeEach(() => {
+			var creatingUsers = []
+			for (var i = 0; i < 5; i++) {
+				let user = Object.assign({}, sampleUser1, {name: `Mousetrap${i}`})
+				creatingUsers.push(user)
+			}
+			return Promise.all(creatingUsers.map(user => User.create(user)))
+				.then((users) => {
+					createdUsers = Object.assign({}, users)
+					theChosenUser = users[2]
+				})
+		})
+		it('updates an existing user', () => {
+			return agent
+				.put(`/api/users/${theChosenUser.id}`)
+				.send({email: 'changed@email.com'})
+				.expect(200)
+				.expect((res) => {
+					expect(res.body.id).to.equal(theChosenUser.id)
+					expect(res.body.description).to.equal('changed@email.com')
+				})
+		})
+
+		it('saves updates to the DB', () => {
+			return agent
+				.put(`/api/users/${theChosenUser.id}`)
+				.send({description: 'The description should be changed'})
+				.expect(200)
+				.then(() => User.findById(theChosenUser.id))
+				.then((foundUser) => {
+					expect(foundUser.id).to.equal(theChosenUser.id)
+					expect(foundUser.description).to.equal('The description should be changed')
+				})
+		})
+
+		it('should return a 404 error if trying to update a user with an invalid id', () => {
+			return agent
+				.put('/api/users/999')
+				.send({description: 'Sample description'})
+				.expect(404)
+		})
+
+		it('should return a 500 error if trying to make an invalid update', () => {
+			return agent
+				.put(`/api/users/${theChosenUser.id}`)
+				.send({price: 0.0})
+				.expect(500)
+		})
+	})
+
 
 }) // end describe('User routes')
