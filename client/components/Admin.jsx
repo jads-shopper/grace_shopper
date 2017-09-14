@@ -87,6 +87,7 @@ class AdminView extends Component {
 					</Col>
 					<Col xs={12} sm={4}>
 						<h2>Categories</h2>
+						<Button onClick={() => {history.push('/admin/newCategory')}}>Add Category</Button>
 						<Table striped bordered condensed hover>
 							<thead>
 								<tr>
@@ -102,7 +103,7 @@ class AdminView extends Component {
 											<tr key={category.id}>
 												<td>{category.id}</td>
 												<td>{category.name}</td>
-												<td>{category.products.length}</td>
+												<td>{category.products ? category.products.length : 0}</td>
 											</tr>
 										)
 									})

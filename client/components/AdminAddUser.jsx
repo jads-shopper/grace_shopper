@@ -9,7 +9,7 @@ const mapStateToProps = function(state) {
 	}
 }
 
-function ProductList(props){
+function AddUserForm(props){
 	return (
 		<Row>
 			<Col xs={0} sm={1}>
@@ -68,7 +68,7 @@ function ProductList(props){
 						<span>
 							<h5>Admin Status</h5>
 						</span>
-						<select name="isAdmin" className="inputTextBox" onChange={props.handelAdmin}>
+						<select name="isAdmin" className="inputTextBox" onChange={props.handleAdmin}>
 							<option value={false}>False</option>
 							<option value={true}>True</option>
 						</select>
@@ -88,7 +88,7 @@ function mapDispatchToProps (dispatch){
 		handleLastName: function(evt){
 			dispatch(writeLastName(evt.target.value))
 		},
-		handelAdmin: function(evt){
+		handleAdmin: function(evt){
 			dispatch(adminSelect(evt.target.value))
 		},
 		handleEmail: function(evt){
@@ -109,6 +109,6 @@ function mapDispatchToProps (dispatch){
 	}
 }
 
-const ProductContainer = connect(mapStateToProps, mapDispatchToProps)(ProductList)
+const AddUserContainer = connect(mapStateToProps, mapDispatchToProps)(AddUserForm)
 
-export default ProductContainer
+export default AddUserContainer

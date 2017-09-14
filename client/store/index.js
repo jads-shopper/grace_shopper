@@ -6,8 +6,9 @@ import users from './users'
 import products from './products'
 import categories from './categories'
 import newUser from './newUser'
+import newCategory from './newCategory'
 
-const reducer = combineReducers({user, products, categories, users, newUser})
+const reducer = combineReducers({user, products, categories, users, newUser, newCategory})
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, middleware)
 
@@ -17,3 +18,4 @@ export * from './categories'
 export * from './user'
 export * from './products'
 export * from './newUser'
+export * from './newCategory'
