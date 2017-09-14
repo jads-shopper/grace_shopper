@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_USERS = 'GET_USERS'
 const POST_USER = 'POST_USER'
+const EDIT_USER = 'EDIT_USER'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const usersState = []
  */
 const getUsers = users => ({type: GET_USERS, users})
 const makeUser = user => ({type: POST_USER, user})
+const editUserAction = user => ({type: EDIT_USER, user})
 
 /**
  * THUNK CREATORS
@@ -46,6 +48,18 @@ export function postUser (user) {
 	}
 }
 
+export function editUser (user) {
+	return function thunk (dispatch) {
+		return axios.put(`/api/users/${user.id}`, user)
+			.then(res => res.data)
+			.then(targetUser => {
+				const action = editUserAction(targetUser)
+				dispatch(action)
+				history.push('/admin')
+			})
+	}
+}
+
 /**
  * REDUCER
  */
@@ -55,6 +69,8 @@ export default function (state = usersState, action) {
 		return action.users
 	case POST_USER:
 		return state.concat(action.user)
+	case EDIT_USER:
+		return state.filter(user => Number(user.id) !== Number(action.user.id)).concat(action.user)
 	default:
 		return state
 	}

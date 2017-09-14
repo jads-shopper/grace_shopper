@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Row, Col, Table, Button} from 'react-bootstrap'
 import store, {fetchUsers} from './../store'
@@ -45,7 +44,7 @@ class AdminView extends Component {
 								{
 									this.props.users.map(user => {
 										return (
-											<tr key={user.id}>
+											<tr key={user.id} onClick={() => {history.push(`/admin/edit/user/${user.id}`)}}>
 												<td>{user.id}</td>
 												<td>{user.firstName + ' ' + user.lastName}</td>
 												<td>{user.email}</td>
