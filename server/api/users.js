@@ -75,7 +75,9 @@ router.delete('/:id', (req, res, next) => {
 				res.sendStatus(404)
 			}
 		})
-		.catch(next)
+		.catch((err) => {
+			res.status(500).json(err)
+		})
 
 })
 

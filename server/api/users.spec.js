@@ -45,7 +45,7 @@ describe('User routes', () => {
 						expect(res.body[0].id).to.equal(student.id)
 					})
 			})
-		})
+		})// end describe('GET /users')
 
 		it('returns multiple users if they are in the DB', () => {
 			var creatingUsers = [
@@ -97,7 +97,7 @@ describe('User routes', () => {
 				.get('/api/users/99999')
 				.expect(404)
 		})
-	})
+	}) //
 
 	describe('POST /users', () => {
 
@@ -135,7 +135,7 @@ describe('User routes', () => {
 					expect(res.body.createdAt).to.exist
 				})
 		})
-	})
+	}) // end describe('POST /users')
 
 	describe('PUT /users/:id', () => {
 		var createdUsers
@@ -143,7 +143,7 @@ describe('User routes', () => {
 		beforeEach(() => {
 			var creatingUsers = []
 			for (var i = 0; i < 5; i++) {
-				let user = Object.assign({}, sampleUser1, {name: `Mousetrap${i}`})
+				let user = Object.assign({}, sampleUser1, {email: `test${i}@email.com`})
 				creatingUsers.push(user)
 			}
 			return Promise.all(creatingUsers.map(user => User.create(user)))
@@ -159,19 +159,19 @@ describe('User routes', () => {
 				.expect(200)
 				.expect((res) => {
 					expect(res.body.id).to.equal(theChosenUser.id)
-					expect(res.body.description).to.equal('changed@email.com')
+					expect(res.body.email).to.equal('changed@email.com')
 				})
 		})
 
 		it('saves updates to the DB', () => {
 			return agent
 				.put(`/api/users/${theChosenUser.id}`)
-				.send({description: 'The description should be changed'})
+				.send({email: 'changedEmail@email.com'})
 				.expect(200)
 				.then(() => User.findById(theChosenUser.id))
 				.then((foundUser) => {
 					expect(foundUser.id).to.equal(theChosenUser.id)
-					expect(foundUser.description).to.equal('The description should be changed')
+					expect(foundUser.email).to.equal('changedEmail@email.com')
 				})
 		})
 
@@ -185,10 +185,37 @@ describe('User routes', () => {
 		it('should return a 500 error if trying to make an invalid update', () => {
 			return agent
 				.put(`/api/users/${theChosenUser.id}`)
-				.send({price: 0.0})
+				.send({email: []})
 				.expect(500)
 		})
-	})
+	})// end describe('PUT /users/:id')
 
+	describe('DELETE /users/:id', () => {
+		var createdUsers
+		var theChosenUser
+		beforeEach(() => {
+			var creatingUsers = []
+			for (var i = 0; i < 5; i++) {
+				let user = Object.assign({}, sampleUser1, {email: `test${i}@email.com`})
+				creatingUsers.push(user)
+			}
+			return Promise.all(creatingUsers.map(user => User.create(user)))
+				.then((users) => {
+					createdUsers = Object.assign({}, users)
+					theChosenUser = users[2]
+				})
+		})
 
+		it('removes a user from the DB', () => {
+			return agent
+				.delete(`/api/users/${theChosenUser.id}`)
+				.expect(204)
+		})
+
+		it('returns a 404 error if the ID is not correct', () => {
+			return agent
+				.get('/api/users/9999')
+				.expect(404)
+		})
+	})// end describe('DELETE /users/:id')
 }) // end describe('User routes')
