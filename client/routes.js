@@ -2,13 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Router} from 'react-router'
 import {Route, Switch, Redirect} from 'react-router-dom'
+import {Grid, Row} from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome} from './components'
 import Navbar from './components/Navbar.jsx'
+import Categories from './components/Categories.jsx'
 import Home from './components/Home.jsx'
 import Admin from './components/Admin.jsx'
-import store, {getMe, fetchProducts} from './store'
+import store, {getMe, fetchProducts, fetchCategories} from './store'
+
 
 /**
  * COMPONENT
@@ -25,11 +28,21 @@ class Routes extends Component {
 			<Router history={history}>
 				<div>
 					<Navbar />
+
 					<Switch>
 						<Route exact path="/home" component={Home} />
 						<Route exact path="/admin" component={Admin} />
 						<Redirect to="/home" />
 					</Switch>
+
+					<Row>
+						<Categories />
+						<Switch>
+							<Route exact path="/home" component={Home} />
+							<Route exact path="/admin" component={Admin} />
+							<Redirect to="/home" />
+						</Switch>
+					</Row>
 				</div>
 			</Router>
 		)
@@ -52,6 +65,7 @@ const mapDispatch = (dispatch) => {
 		loadInitialData () {
 			dispatch(getMe())
 			dispatch(fetchProducts())
+			dispatch(fetchCategories())
 		}
 	}
 }

@@ -10,6 +10,7 @@ export default function navbarInstance() {
 			<Navbar.Header>
 				<Navbar.Brand>
 					<a href="/home">Developer Accessories</a>
+					<NavLink to="/home">Developer Accessories</NavLink>
 				</Navbar.Brand>
 				<Navbar.Toggle />
 			</Navbar.Header>

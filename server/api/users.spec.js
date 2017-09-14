@@ -22,7 +22,7 @@ describe('User routes', () => {
 		// })
 
 
-		it('returns an array of users via JSON', () => {
+		it('returns an array of users', () => {
 			return agent
 				.get('/api/users')
 				.expect(200)
