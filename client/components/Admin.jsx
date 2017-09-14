@@ -58,6 +58,7 @@ class AdminView extends Component {
 					</Col>
 					<Col xs={12} sm={4}>
 						<h2>Products</h2>
+						<Button onClick={() => {history.push('/admin/newProduct')}}>Add Product</Button>
 						<Table striped bordered condensed hover>
 							<thead>
 								<tr>
@@ -75,7 +76,7 @@ class AdminView extends Component {
 											<tr key={product.id}>
 												<td>{product.id}</td>
 												<td>{product.name}</td>
-												<td>{product.price}</td>
+												<td>${product.price}</td>
 												<td>{product.quantity}</td>
 												<td>{product.isActive ? 'Yes' : 'No'}</td>
 											</tr>
