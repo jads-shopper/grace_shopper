@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Row, Col, Table} from 'react-bootstrap'
+import {Row, Col, Table, Button} from 'react-bootstrap'
 import store, {fetchUsers} from './../store'
+import history from './../history'
 
 const mapStateToProps = function(state) {
 	return {
@@ -31,6 +32,7 @@ class AdminView extends Component {
 				<Row>
 					<Col xs={12} sm={4}>
 						<h2>Users</h2>
+						<Button onClick={() => {history.push('/admin/newUser')}}>Add User</Button>
 						<Table striped bordered condensed hover>
 							<thead>
 								<tr>
