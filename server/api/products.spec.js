@@ -7,6 +7,9 @@ const app = require('../index')
 const Product = db.model('product')
 const agent = request.agent(app)
 
+// Note: Tests will break if category is a table rather than a string
+// TODO: Revise category for each test to associate it with the category table
+
 describe('Products route', () => {
 	beforeEach(() => {
 		return db.sync({force: true})
@@ -142,7 +145,6 @@ describe('Products route', () => {
 				})
 		})
 
-
 		// it('does not create a product if given an invalid category id', () => {
 		//
 		// })
@@ -164,7 +166,7 @@ describe('Products route', () => {
 					theChosenProduct = products[2]
 				})
 		})
-		it('should update the product', () => {
+		it('updates an existing product', () => {
 			return agent
 				.put(`/api/products/${theChosenProduct.id}`)
 				.send({description: 'The description should be changed'})
@@ -175,10 +177,58 @@ describe('Products route', () => {
 				})
 		})
 
+		it('saves updates to the DB', () => {
+			return agent
+				.put(`/api/products/${theChosenProduct.id}`)
+				.send({description: 'The description should be changed'})
+				.expect(200)
+				.then(() => Product.findById(theChosenProduct.id))
+				.then((foundProduct) => {
+					expect(foundProduct.id).to.equal(theChosenProduct.id)
+					expect(foundProduct.description).to.equal('The description should be changed')
+				})
+		})
+
 		it('should return a 404 error if trying to update a product with an invalid id', () => {
 			return agent
 				.put('/api/products/999')
 				.send({description: 'Sample description'})
+				.expect(404)
+		})
+
+		it('should return a 500 error if trying to make an invalid update', () => {
+			return agent
+				.put(`/api/products/${theChosenProduct.id}`)
+				.send({price: 0.0})
+				.expect(500)
+		})
+	})
+
+	describe('DELETE /products/:id', () => {
+		var createdProducts
+		var theChosenProduct
+		beforeEach(() => {
+			var creatingProducts = []
+			for (var i = 0; i < 5; i++) {
+				let product = Object.assign({}, sampleProduct1, {name: `Mousetrap${i}`})
+				creatingProducts.push(product)
+			}
+			return Promise.all(creatingProducts.map(product => Product.create(product)))
+				.then((products) => {
+					createdProducts = Object.assign({}, products)
+					theChosenProduct = products[2]
+				})
+		})
+
+		it('removes a product from the DB', () => {
+			return agent
+				.delete(`/api/products/${theChosenProduct.id}`)
+				.expect(204)
+		})
+
+		it('returns a 404 if the ID is not correct', () => {
+			return agent
+				.delete('/api/products/9999')
 				.expect(404)
 		})
 	})
