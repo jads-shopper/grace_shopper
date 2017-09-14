@@ -4,25 +4,25 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = function(state) {
 	return {
-		products: state.products
+		products: state.products,
+		categories: state.categories
 	}
 }
 
 function categoriesInstance(props){
-	const categoryList = ['Accessories', 'Hardware', 'Software', 'Events', 'Miscallaneous']
-	if(props.products){
+	if(props.categories){
 		return (
 			<Col  xs={12} sm={3}>
 				<ListGroup>
 					{
-						categoryList.map((val, idx) => {
+						props.categories.map((val, idx) => {
 							let counter = 0
-							props.products.forEach(product => {
-								if(product.category === val) { counter++ }
-							})
+							// props.categories.forEach(category => {
+							// 	if(product.category === val) { counter++ }
+							// })
 							return (
 								<ListGroupItem key={idx} href="#" active>
-									<h3>{val}</h3>
+									<h3>{val.name}</h3>
 									<h5>Contains {counter} Items</h5>
 									<hr style={{margin: 7}}/>
 								</ListGroupItem>

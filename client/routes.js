@@ -10,7 +10,7 @@ import Navbar from './components/Navbar.jsx'
 import Categories from './components/Categories.jsx'
 import Home from './components/Home.jsx'
 import Admin from './components/Admin.jsx'
-import store, {getMe, fetchProducts} from './store'
+import store, {getMe, fetchProducts, fetchCategories} from './store'
 
 /**
  * COMPONENT
@@ -57,6 +57,7 @@ const mapDispatch = (dispatch) => {
 		loadInitialData () {
 			dispatch(getMe())
 			dispatch(fetchProducts())
+			dispatch(fetchCategories())
 		}
 	}
 }
