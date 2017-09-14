@@ -6,6 +6,7 @@ const db = require('../db')
 const Order = db.define('order', {
 	OrderDate: {
 		type: Sequelize.DATE,
+		defaultValue: Sequelize.NOW,
 		allowNull: false,
 	},
 	ShipDate: Sequelize.DATE,
