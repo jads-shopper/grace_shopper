@@ -9,6 +9,7 @@ Review.belongsTo(User)
 Review.belongsTo(Product)
 
 Product.belongsToMany(Category, {through: 'productCategory'})
+Category.belongsToMany(Product, {through: 'productCategory'})
 
 Order.belongsTo(User)
 Order.belongsToMany(Product, {

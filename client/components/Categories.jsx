@@ -15,15 +15,11 @@ function categoriesInstance(props){
 			<Col  xs={12} sm={3}>
 				<ListGroup>
 					{
-						props.categories.map((val, idx) => {
-							let counter = 0
-							// props.categories.forEach(category => {
-							// 	if(product.category === val) { counter++ }
-							// })
+						props.categories.map((category, idx) => {
 							return (
 								<ListGroupItem key={idx} href="#" active>
-									<h3>{val.name}</h3>
-									<h5>Contains {counter} Items</h5>
+									<h3>{category.name}</h3>
+									<h5>Contains {category.products.length} Items</h5>
 									<hr style={{margin: 7}}/>
 								</ListGroupItem>
 							)
