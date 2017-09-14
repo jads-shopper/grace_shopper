@@ -1,5 +1,6 @@
 import React from 'react'
 import { ListGroup, ListGroupItem, Col } from 'react-bootstrap'
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 const mapStateToProps = function(state) {
@@ -17,8 +18,8 @@ function categoriesInstance(props){
 					{
 						props.categories.map((category, idx) => {
 							return (
-								<ListGroupItem key={idx} href="#" active>
-									<h3 className='categoryH3'>{category.name}</h3>
+								<ListGroupItem key={idx} active>
+									<NavLink to={`/category/${category.id}`}><h3 className='categoryH3'>{category.name}</h3></NavLink>
 									<h5>Contains {category.products.length} Items</h5>
 									<hr style={{margin: 7}}/>
 								</ListGroupItem>

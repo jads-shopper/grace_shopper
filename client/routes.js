@@ -12,6 +12,7 @@ import Admin from './components/Admin.jsx'
 import AdminAddUser from './components/AdminAddUser.jsx'
 import AdminAddCategory from './components/AdminAddCategory.jsx'
 import AdminAddProduct from './components/AdminAddProduct.jsx'
+import SingleCategory from './components/SingleCategory.jsx'
 import store, {getMe, fetchProducts, fetchCategories} from './store'
 
 
@@ -36,6 +37,7 @@ class Routes extends Component {
 						<Route exact path="/admin/newUser" component={AdminAddUser} />
 						<Route exact path="/admin/newCategory" component={AdminAddCategory} />
 						<Route exact path="/admin/newProduct" component={AdminAddProduct} />
+						<Route path="/category/:id" component={SingleCategory} />
 						<Redirect to="/home" />
 					</Switch>
 				</div>
