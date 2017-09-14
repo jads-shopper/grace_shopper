@@ -7,9 +7,6 @@ const app = require('../index')
 const Product = db.model('product')
 const agent = request.agent(app)
 
-// Note: Tests will break if category is a table rather than a string
-// TODO: Revise category for each test to associate it with the category table
-
 describe('Products route', () => {
 	beforeEach(() => {
 		return db.sync({force: true})
@@ -17,7 +14,6 @@ describe('Products route', () => {
 
 	var sampleProduct1 = {
 		name: 'Mousetrap',
-		category: 'Trap',
 		imageURL: 'http://static.victorpest.com/media/articles/images/83/vp_mousetrap_M210.jpg',
 		price: 10.99,
 		description: 'This is the best mousetrap in the world',
@@ -60,14 +56,15 @@ describe('Products route', () => {
 			}
 			return Promise.all(creatingProducts.map(product => Product.create(product)))
 				.then((products) => {
+					var chosenProduct = products[2]
 					return agent
 						.get('/api/products')
 						.expect(200)
 						.expect((res) => {
 							expect(res.body).to.be.an.instanceOf(Array)
 							expect(res.body).to.have.length(5)
-							expect(res.body[0].id).to.equal(products[0].id)
-							// expect(res.body).to.deep.equal(products)
+							const filteredProduct = res.body.filter((product) => product.id === chosenProduct.id)
+							expect(filteredProduct).to.have.length(1)
 						})
 
 
@@ -128,7 +125,7 @@ describe('Products route', () => {
 				.then(() => Product.findOne({where: {name: sampleProduct1.name}}))
 				.then((foundProduct) => {
 					expect(foundProduct.name).to.equal(sampleProduct1.name)
-					expect(foundProduct.category).to.equal(sampleProduct1.category)
+					expect(foundProduct.price).to.equal(sampleProduct1.price)
 					expect(foundProduct.imageURL).to.equal(sampleProduct1.imageURL)
 				})
 		})
@@ -144,10 +141,6 @@ describe('Products route', () => {
 					expect(res.body.createdAt).to.exist
 				})
 		})
-
-		// it('does not create a product if given an invalid category id', () => {
-		//
-		// })
 
 	})
 
@@ -235,5 +228,3 @@ describe('Products route', () => {
 
 
 })
-
-// TODO: should product names be unique?
