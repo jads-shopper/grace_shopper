@@ -9,7 +9,6 @@ export default function navbarInstance() {
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>
 				<Navbar.Brand>
-					<a href="/home">Developer Accessories</a>
 					<NavLink to="/home">Developer Accessories</NavLink>
 				</Navbar.Brand>
 				<Navbar.Toggle />
