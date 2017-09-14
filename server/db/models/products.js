@@ -7,10 +7,10 @@ const Product = db.define('product', {
 		type     : Sequelize.STRING,
 		allowNull: false,
 	},
-	category   : {
-		type     : Sequelize.STRING,
-		allowNull: false,
-	},
+	// category   : {
+	// 	type     : Sequelize.STRING,
+	// 	allowNull: false,
+	// },
 	imageURL   : {
 		type        : Sequelize.STRING,
 		defaultValue: '/img.png'

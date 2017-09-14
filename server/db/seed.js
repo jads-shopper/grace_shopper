@@ -3,6 +3,8 @@ const db = require('../db')
 const User = db.model('user')
 const Product = db.model('product')
 const Review = db.model('review')
+const Category = db.model('category')
+const ProductCategory = db.model('productCategory')
 const Chance = require('chance')
 const chance = new Chance()
 
@@ -30,8 +32,19 @@ userFirstName.map(( val, idx ) => {
 		isAdmin  : isAdmin[idx],
 	}))
 })
+
+// Category seed
+
+const category = ['Accessories', 'Hardware', 'Software', 'Events', 'Misc']
+category.map((val, idx) => {
+	promises.push(Category.create({
+		name: category[idx]
+	}))
+})
+
+
 // Product  seed
-const name = [], category = ['Accessories', 'Hardware', 'Software', 'Events', 'Misc'], imageUrl = [], price = [], description = [], quantity = [], isActive = []
+const name = [], imageUrl = [], price = [], description = [], quantity = [], isActive = []
 
 for (i = 0; i < 50; i++) {
 	name.push(chance.word())
@@ -45,12 +58,26 @@ for (i = 0; i < 50; i++) {
 name.map(( val, idx ) => {
 	promises.push(Product.create({
 		name       : name[idx],
-		category   : category[Math.floor(Math.random() * 4)],
 		imageUrl   : imageUrl[idx],
 		price      : price[idx],
 		description: description[idx],
 		quantity   : quantity[idx],
 		isActive   : isActive[idx],
+	}))
+})
+
+//Product category seed
+const productId1 = [1,1,1], categoryId = [1,2,3]
+
+for (i = 2; i <= 50; i++) {
+	productId1.push(i)
+	categoryId.push(chance.integer({ min: 1, max: 5 }))
+}
+
+productId1.map((val, idx) => {
+	promises.push(ProductCategory.create({
+		productId: productId1[idx],
+		categoryId: categoryId[idx]
 	}))
 })
 
