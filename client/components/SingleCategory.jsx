@@ -60,7 +60,12 @@ function SingleCategoryList(props){
 			</Row>
 		)
 	} else {
-		return(<div>Category with id:{categoryId} does not exist.</div>)
+		return(
+			<Row>
+				<Categories />
+				<h3>Category with id:{categoryId} does not exist.</h3>
+			</Row>
+		)
 	}
 }
 

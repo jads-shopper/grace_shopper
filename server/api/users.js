@@ -38,4 +38,13 @@ router.post('/', (req, res, next) => {
 		.catch(console.error)
 })
 
+router.put('/:id', function (req, res, next) {
+	User.findById(req.params.id)
+		.then(user => {
+			return user.update(req.body, {fields: ['firstName', 'lastName', 'email', 'isAdmin']})
+		})
+		.then(response => res.json(response))
+		.catch(next)
+})
+
 
