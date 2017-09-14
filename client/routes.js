@@ -9,7 +9,8 @@ import {Main, Login, Signup, UserHome} from './components'
 import Navbar from './components/Navbar.jsx'
 import Home from './components/Home.jsx'
 import Admin from './components/Admin.jsx'
-import AdminAddUser from './components/AdminAddUser'
+import AdminAddUser from './components/AdminAddUser.jsx'
+import AdminAddCategory from './components/AdminAddCategory.jsx'
 import store, {getMe, fetchProducts, fetchCategories} from './store'
 
 
@@ -32,6 +33,7 @@ class Routes extends Component {
 						<Route exact path="/home" component={Home} />
 						<Route exact path="/admin" component={Admin} />
 						<Route exact path="/admin/newUser" component={AdminAddUser} />
+						<Route exact path="/admin/newCategory" component={AdminAddCategory} />
 						<Redirect to="/home" />
 					</Switch>
 				</div>
