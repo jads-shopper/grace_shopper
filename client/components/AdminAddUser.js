@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Col, Row} from 'react-bootstrap'
-import store, {writeFirstName, writeLastName, adminSelect, writeEmail, writePassword} from './../store'
+import store, {postUser, writeFirstName, writeLastName, adminSelect, writeEmail, writePassword} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
@@ -48,7 +48,7 @@ function ProductList(props){
 							className=""
 							autoComplete= "off"
 							type="text"
-							name="lastName"
+							name="email"
 							onChange={props.handleEmail}
 						/>
 					</div>
@@ -60,7 +60,7 @@ function ProductList(props){
 							className=""
 							autoComplete= "off"
 							type="text"
-							name="lastName"
+							name="password"
 							onChange={props.handlePassword}
 						/>
 					</div>
@@ -68,7 +68,7 @@ function ProductList(props){
 						<span>
 							<h5>Admin Status</h5>
 						</span>
-						<select name="campus" className="inputTextBox" onChange={props.handelAdmin}>
+						<select name="isAdmin" className="inputTextBox" onChange={props.handelAdmin}>
 							<option value={false}>False</option>
 							<option value={true}>True</option>
 						</select>
@@ -80,7 +80,7 @@ function ProductList(props){
 	)
 }
 
-function mapDispatchToProps (dispatch, ownProps){
+function mapDispatchToProps (dispatch){
 	return {
 		handleFirstName: function(evt){
 			dispatch(writeFirstName(evt.target.value))
@@ -99,7 +99,7 @@ function mapDispatchToProps (dispatch, ownProps){
 		},
 		handleSubmit: function(evt){
 			evt.preventDefault()
-			//dispatch(postStudent({firstName: evt.target.firstName.value, lastName: evt.target.lastName.value, campusId: Number(evt.target.campus.value)}, ownProps.history))
+			dispatch(postUser({firstName: evt.target.firstName.value, lastName: evt.target.lastName.value, email: evt.target.email.value, password: evt.target.password.value, isAdmin: evt.target.isAdmin.value}))
 			dispatch(writeFirstName(''))
 			dispatch(writeLastName(''))
 			dispatch(adminSelect(false))

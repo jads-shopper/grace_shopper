@@ -11,7 +11,7 @@ const REMOVE_USER = 'REMOVE_USER'
  * INITIAL STATE
  */
 const defaultState = {
-	users: []
+	user: {}
 }
 
 /**
@@ -30,6 +30,7 @@ export const getMe = () =>
 				dispatch(getUser(res.data || defaultState)))
 			.catch(err => console.log(err))
 
+
 export const auth = (email, password, method) =>
 	dispatch =>
 		axios.post(`/auth/${method}`, { email, password })
@@ -39,6 +40,7 @@ export const auth = (email, password, method) =>
 			})
 			.catch(error =>
 				dispatch(getUser({error})))
+
 
 export const logout = () =>
 	dispatch =>
