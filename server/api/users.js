@@ -26,16 +26,16 @@ router.get('/:id', (req, res, next) => {
 		.catch(console.error)
 })
 
-// router.post('/', (req, res, next) => {
-// 	User.create(req.body)
-// 		.then((user) => {
-// 			if (user) {
-// 				res.json(user)
-// 			} else {
-// 				res.sendStatus(404)
-// 			}
-// 		})
-// 		.catch(console.error)
-// })
+router.post('/', (req, res, next) => {
+	User.create(req.body)
+		.then((user) => {
+			if (user) {
+				res.json(user)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch(console.error)
+})
 
 
