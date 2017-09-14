@@ -18,10 +18,13 @@ function ProductList(props){
 				<Col xs={12} sm={9}>
 					<ul className="list-unstyled">
 						{ props.products.map(product => {
-							let categoryArray = product.categories
-							let categoryNameArray = categoryArray.map(category => {
-								return category.name
-							})
+							let categoryArray, categoryNameArray
+							if (product.categories){
+								categoryArray = product.categories
+								categoryNameArray = categoryArray.map(category => {
+									return category.name
+								})
+							}
 							return (
 								<li className="productItem" key={product.id}>
 									<NavLink to={`/products/${product.id}`}>
@@ -29,8 +32,9 @@ function ProductList(props){
 											<img src={`${product.imageURL}`} alt={`${product.name} image`} height="60" width="60" />
 										</div>
 										<div className="productInfo">
-											<div><h5>Product: {product.name}</h5></div>
-											<div><h5>Category: {categoryNameArray.join(', ')}</h5></div>
+											<div><h4>Product: {product.name}</h4></div>
+											<div><h4>${product.price}</h4></div>
+											<div><h5>Category: {product.categories.length ? categoryNameArray.join(', ') : 'None'}</h5></div>
 											<div><h5>Amount Remaining: {product.quantity}</h5></div>
 										</div>
 									</NavLink>
