@@ -2,6 +2,7 @@
 	border: #337ab7 solid 3px;
 	border-radius: 4px;
 	margin: 5px 10px;
+	height: 115px;
 	width: 90%;
 }
 
@@ -9,9 +10,14 @@
 	height: 100px;
 	width: 100px;
 	display: inline-block;
+	vertical-align: top;
 	margin: 5px;
 }
 
 .productInfo {
-	display: inline-block;
+	display: inline-table;
+}
+
+.categoryH3 {
+	margin-top: 0px;
 }

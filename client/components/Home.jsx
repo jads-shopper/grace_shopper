@@ -29,7 +29,7 @@ function ProductList(props){
 								<li className="productItem" key={product.id}>
 									<NavLink to={`/products/${product.id}`}>
 										<div className="productImage">
-											<img src={`${product.imageURL}`} alt={`${product.name} image`} height="60" width="60" />
+											<img src={`${product.imageURL}`} alt={`${product.name} image`} height="99" width="99" />
 										</div>
 										<div className="productInfo">
 											<div><h4>Product: {product.name}</h4></div>

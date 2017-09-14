@@ -18,7 +18,7 @@ function categoriesInstance(props){
 						props.categories.map((category, idx) => {
 							return (
 								<ListGroupItem key={idx} href="#" active>
-									<h3>{category.name}</h3>
+									<h3 className='categoryH3'>{category.name}</h3>
 									<h5>Contains {category.products.length} Items</h5>
 									<hr style={{margin: 7}}/>
 								</ListGroupItem>
