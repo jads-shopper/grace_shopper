@@ -11,6 +11,7 @@ import Home from './components/Home.jsx'
 import Admin from './components/Admin.jsx'
 import store, {getMe, fetchProducts, fetchCategories} from './store'
 
+
 /**
  * COMPONENT
  */
