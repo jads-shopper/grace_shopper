@@ -11,6 +11,7 @@ const mapStateToProps = function(state) {
 }
 
 function ProductList(props){
+
 	if(props.products){
 		return (
 			<Row>

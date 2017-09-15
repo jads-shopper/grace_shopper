@@ -25,10 +25,15 @@ module.exports = app
 
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id))
-passport.deserializeUser((id, done) =>
+
+passport.deserializeUser((id, done) => {
 	db.models.user.findById(id)
-		.then(user => done(null, user))
-		.catch(done))
+		.then((user) => {
+			return done(null, user)})
+		.catch(done)
+})
+
+
 
 const createApp = () => {
 	// logging middleware

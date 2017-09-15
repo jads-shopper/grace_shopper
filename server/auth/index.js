@@ -17,19 +17,31 @@ router.post('/login', (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-	User.create(req.body)
-		.then(user => {
-			req.login(user, err => err ? next(err) : res.json(user))
-		})
-		.catch(err => {
-			if (err.name === 'SequelizeUniqueConstraintError')
-				res.status(401).send('User already exists')
-			else next(err)
+	User.findOrCreate({
+		where: {
+			email: req.body.email
+		},
+		defaults: {
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			password: req.body.password
+		}
+	}
+	)
+		.spread((user, created) => {
+			if(created) {
+				req.logIn(user, (err) => {
+					if(err) return next(err)
+					console.log('REQUSER', req.user, 'USER', user)
+					res.json(user)
+				})} else {
+				res.sendStatus(401)
+			}
 		})
 })
 
 router.post('/logout', (req, res) => {
-	req.logout()
+	req.logOut()
 	res.redirect('/')
 })
 
