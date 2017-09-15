@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Col, Row} from 'react-bootstrap'
-import store, {postCategory, writeCategoryName} from './../store'
+import {postCategory, writeCategoryName} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
-		newUser: state.newUser
+		newCategory: state.newCategory
 	}
 }
 

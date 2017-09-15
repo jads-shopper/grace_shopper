@@ -42,8 +42,11 @@ export function postProduct (product, categoryArray) {
 			.then(newProduct => {
 				categoryArray.forEach(categoryId => {
 					axios.post('/api/productCategories', {productId: newProduct.id, categoryId})
-				}) 
-				dispatch(makeProduct(newProduct))
+				})
+				return newProduct
+			})
+			.then((theNewProduct) => {
+				dispatch(makeProduct(theNewProduct))
 				return axios.get('/api/products')
 					.then(res => res.data)
 					.then(products => {
