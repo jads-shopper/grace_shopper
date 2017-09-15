@@ -12,10 +12,6 @@ const Review = db.define('review', {
 			max: 5,
 			min: 1,
 		}
-	},
-	ProductId: {
-		type: Sequelize.INTEGER,
-		foreignKey: true,
 	}
 }
 )
