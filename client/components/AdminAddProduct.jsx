@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Col, Row} from 'react-bootstrap'
+import {Col, Row, Button} from 'react-bootstrap'
 import {postProduct, writeProductName, writeImageURL, writePrice, writeDescription, writeQuantity, activeSelect} from './../store'
 
 const mapStateToProps = function(state) {
@@ -125,7 +125,7 @@ function AddProductForm(props){
 								<option value={false}>False</option>
 							</select>
 						</div>
-						<button type="submit" id="submit">Create Product</button>
+						<Button bsStyle="info" type="submit" className="submitButton">Create Product</Button>
 					</form>
 				</Col>
 			</Row>

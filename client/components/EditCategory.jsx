@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Col, Row} from 'react-bootstrap'
+import {Col, Row, Button} from 'react-bootstrap'
 import {editCategory, writeCategoryName} from './../store'
 
 const mapStateToProps = function(state) {
@@ -35,7 +35,8 @@ function EditCategoryForm(props){
 								onChange={props.handleName}
 							/>
 						</div>
-						<button type="submit" id="submit">Edit Category</button>
+						<Button bsStyle="info" type="submit" className="submitButton">Edit Category</Button>
+						<Button bsStyle="danger" className="deleteButton">Delete Category</Button>
 					</form>
 				</Col>
 			</Row>
