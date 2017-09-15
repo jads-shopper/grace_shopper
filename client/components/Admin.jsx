@@ -72,7 +72,7 @@ class AdminView extends Component {
 								{
 									this.props.products.map(product => {
 										return (
-											<tr key={product.id}>
+											<tr key={product.id} onClick={() => {history.push(`/admin/edit/product/${product.id}`)}}>
 												<td>{product.id}</td>
 												<td>{product.name}</td>
 												<td>${product.price}</td>

@@ -6,6 +6,8 @@ import history from '../history'
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const POST_PRODUCT = 'POST_PRODUCT'
+const EDIT_PRODUCT = 'EDIT_PRODUCT'
+
 
 /**
  * INITIAL STATE
@@ -17,6 +19,7 @@ const productState = []
  */
 const getProducts = products => ({type: GET_PRODUCTS, products})
 const makeProduct = product => ({type: POST_PRODUCT, product})
+const editProductAction = product => ({type: EDIT_PRODUCT, product})
 
 /**
  * THUNK CREATORS
@@ -58,6 +61,19 @@ export function postProduct (product, categoryArray) {
 	}
 }
 
+export function editProduct (product, categoryArray) {
+	return function thunk (dispatch) {
+		return axios.put(`/api/products/${product.id}`, product)
+			.then(res => res.data)
+			.then(targetProduct => {
+				const action = editProductAction(targetProduct)
+				dispatch(action)
+				//find a way to deal with updating product categories
+				history.push('/admin')
+			})
+	}
+}
+
 /**
  * REDUCER
  */
@@ -67,6 +83,8 @@ export default function (state = productState, action) {
 		return action.products
 	case POST_PRODUCT:
 		return state.concat(action.product)
+	case EDIT_PRODUCT:
+		return state.filter(product => Number(product.id) !== Number(action.product.id)).concat(action.product)
 	default:
 		return state
 	}
