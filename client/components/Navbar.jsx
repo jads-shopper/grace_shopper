@@ -2,8 +2,13 @@ import React from 'react'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
 import history from './../history'
+import store from '../store/index.js'
+import {setModal, removeModal} from '../store'
+import {connect} from 'react-redux'
 
-export default function navbarInstance() {
+function navbarInstance(props) {
+
+	const {handleLogin} = props
 
 	return (
 		<Navbar inverse collapseOnSelect>
@@ -26,10 +31,28 @@ export default function navbarInstance() {
 						<MenuItem divider />
 						<MenuItem eventKey={3.3}>Logout</MenuItem>
 					</NavDropdown>
-					<NavItem eventKey={3} href="#">Login</NavItem>
-					<NavItem eventKey={4} href="#">Sign-Up</NavItem>
+					<NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>
+					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
 	)
 }
+//container
+const mapStateToProps = (state) => {
+	return {
+		modals: state.modals
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		handleLogin (modalType) {
+			dispatch(setModal(modalType))
+		}
+	}
+}
+
+const NavBarContainer = connect(mapStateToProps, mapDispatchToProps)(navbarInstance)
+
+export default NavBarContainer

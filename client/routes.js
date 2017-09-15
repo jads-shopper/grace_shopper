@@ -8,6 +8,7 @@ import {Main, Login, Signup, UserHome} from './components'
 import Navbar from './components/Navbar.jsx'
 import Home from './components/Home.jsx'
 import Admin from './components/Admin.jsx'
+import Modal from './components/ModalConductor.jsx'
 import AdminAddUser from './components/AdminAddUser.jsx'
 import AdminAddCategory from './components/AdminAddCategory.jsx'
 import AdminAddProduct from './components/AdminAddProduct.jsx'
@@ -25,12 +26,13 @@ class Routes extends Component {
 	}
 
 	render () {
-		const {isLoggedIn} = this.props
+		const {isLoggedIn, currentModal} = this.props
 
 		return (
 			<Router history={history}>
 				<div>
 					<Navbar />
+					<Modal currentModal = {currentModal} />
 					<Switch>
 						<Route exact path="/home" component={Home} />
 						<Route exact path="/admin" component={Admin} />
@@ -54,7 +56,9 @@ const mapState = (state) => {
 	return {
 		// Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
 		// Otherwise, state.user will be an empty object, and state.user.id will be falsey
-		isLoggedIn: !!state.user.id
+		isLoggedIn: !!state.user.id,
+		currentModal: state.modals
+
 	}
 }
 
