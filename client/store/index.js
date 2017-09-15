@@ -6,12 +6,11 @@ import users from './users'
 import products from './products'
 import categories from './categories'
 import modals from './modals'
-const reducer = combineReducers({user, products, categories, users, modals})
 import newUser from './newUser'
 import newCategory from './newCategory'
 import newProduct from './newProduct'
 
-const reducer = combineReducers({user, products, categories, users, newUser, newCategory, newProduct})
+const reducer = combineReducers({user, products, categories, users, newUser, newCategory, newProduct, modals})
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, middleware)
 
