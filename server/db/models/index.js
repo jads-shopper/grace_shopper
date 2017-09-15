@@ -5,6 +5,8 @@ const Review = require('./reviews')
 const Category = require('./categories')
 const OrderProduct = require('./ordersProductsJoin')
 
+Product.hasMany(Review)
+
 Review.belongsTo(User)
 Review.belongsTo(Product)
 

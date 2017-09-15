@@ -25,7 +25,7 @@ router.post('/', (req, res, next) => {
 	Product.create(req.body)
 		.then((product) => {
 			if (product) {
-				res.json(product)
+				res.status(201).json(product)
 			} else {
 				res.sendStatus(404)
 			}
@@ -34,22 +34,25 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:id', (req, res, next) => {
-	const {id} = req.params
-
+	const id = +req.params.id
 	Product.update(req.body, {
 		where: {
 			id
 		}
 	})
-		.then((success) => {
-			if (success) {
-				return Product.getById(id)
+		.then(() => {
+			return Product.findById(id)
+		})
+		.then((foundProduct) => {
+			if(foundProduct) {
+				res.status(200).json(foundProduct)
 			} else {
 				res.sendStatus(404)
 			}
 		})
-		.then(res.json)
-		.catch(next)
+		.catch((err) => {
+			res.status(500).json(err)
+		})
 })
 
 router.delete('/:id', (req, res, next) => {
@@ -63,6 +66,8 @@ router.delete('/:id', (req, res, next) => {
 		.then((success) => {
 			if (success) {
 				res.sendStatus(204)
+			} else {
+				res.sendStatus(404)
 			}
 		})
 		.catch(next)
