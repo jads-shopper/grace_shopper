@@ -2,6 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Review = db.define('review', {
+	title: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
 	text  : {
 		type     : Sequelize.TEXT,
 		allowNull: false
@@ -13,11 +17,6 @@ const Review = db.define('review', {
 			min: 1,
 		}
 	},
-	ProductId: {
-		type: Sequelize.INTEGER,
-		foreignKey: true,
-	}
-}
-)
+})
 module.exports = Review
 

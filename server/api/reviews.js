@@ -10,14 +10,13 @@ router.get('/product/:id', ( req, res, next ) => {
 
 
 // new review
-router.post('/new/', ( req, res, next ) => {
-	const { userId, productId, text, rating } = req.body
-	Review.create({
-		text     : text,
-		rating   : rating,
-		ProductId: productId,
-		userId   : userId,
-	}).then(res.json)
+router.post('/', ( req, res, next ) => {
+	// const { userId, productId, text, rating } = req.body
+	Review.create(req.body)
+		.then((createdReview) => {
+			res.json(createdReview)
+		})
+		.catch(console.error)
 
 })
 

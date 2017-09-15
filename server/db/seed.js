@@ -9,6 +9,7 @@ const Chance = require('chance')
 const chance = new Chance()
 
 const promises = []
+const promisesUsers = []
 const promisesReviews = []
 
 //user seed
@@ -24,7 +25,7 @@ for (var i = 0; i < 50; i++) {
 }
 
 userFirstName.map(( val, idx ) => {
-	promises.push(User.create({
+	promisesUsers.push(User.create({
 		firstName: val,
 		lastName : userLastName[idx],
 		email    : userEmail[idx],
@@ -82,28 +83,37 @@ productId1.map((val, idx) => {
 })
 
 // review seed
-const text = [], rating = [], productId = []
+const title = [], text = [], rating = [], productId = [], userId = []
 
 for (i = 0; i < 50; i++) {
+	title.push(chance.sentence())
 	text.push(chance.paragraph())
 	rating.push(chance.integer({ min: 1, max: 5 }))
 	productId.push(chance.integer({ min: 1, max: 50 }))
+	userId.push(chance.integer({min: 1, max: 50 }))
 }
 
 
-text.map(( val, idx ) => {
-	promisesReviews.push(Review.create({
-		text  : text[idx],
-		rating: rating[idx],
-		productId: productId[idx],
-	})
-	)
-	Promise.all(promises).then(() => {
-		// console.log(promisesReviews)
-		return Promise.all(promisesReviews)
-	})
-		.then(console.log('success'))
-		.catch(console.error)
+// Refactor this
+Promise.all(promises)
+	.then(() => Promise.all(promisesUsers))
+	.then((users) => {
+		console.log(users.map((user) => user.id))
+		text.map(( val, idx ) => {
+			promisesReviews.push(Review.create({
+				title: title[idx],
+				text  : text[idx],
+				rating: rating[idx],
+				productId: productId[idx],
+				userId: userId[idx]
 
-})
+			})
+			)
+		})
+		// return Promise.all(promisesReviews)
+	})
+	.then(console.log('success'))
+	.catch(console.error)
+
+
 
