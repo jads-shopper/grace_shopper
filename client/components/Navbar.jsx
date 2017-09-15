@@ -2,13 +2,14 @@ import React from 'react'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
 import history from './../history'
-import {setModal, removeModal} from '../store'
+import store from '../store/index.js'
+import {setModal, removeModal, getMe, logout} from '../store'
 import {connect} from 'react-redux'
 
 function navbarInstance(props) {
 
 	const {handleLogin} = props
-
+	console.log(props.user)
 	return (
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>
@@ -19,7 +20,8 @@ function navbarInstance(props) {
 			</Navbar.Header>
 			<Navbar.Collapse>
 				<Nav>
-					<NavItem eventKey={1} href="#">Search Bar in Development</NavItem>
+					<NavItem onClick = {() =>{
+						props.checkAuth()}} eventKey={1} href="#">Search Bar in Development</NavItem>
 				</Nav>
 				<Nav pullRight>
 					<NavItem eventKey={1} onClick={() => {history.push('/admin')}}>Admin View</NavItem>
@@ -30,7 +32,11 @@ function navbarInstance(props) {
 						<MenuItem divider />
 						<MenuItem eventKey={3.3}>Logout</MenuItem>
 					</NavDropdown>
-					<NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>
+
+					{props.user.id ?
+						<NavItem eventKey={3} onClick={() => {props.handleLogOut()}} href="#">Logout</NavItem>
+
+						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
 					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
 				</Nav>
 			</Navbar.Collapse>
@@ -40,7 +46,8 @@ function navbarInstance(props) {
 //container
 const mapStateToProps = (state) => {
 	return {
-		modals: state.modals
+		modals: state.modals,
+		user: state.user
 	}
 }
 
@@ -48,6 +55,12 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		handleLogin (modalType) {
 			dispatch(setModal(modalType))
+		},
+		checkAuth(){
+			dispatch(getMe())
+		},
+		handleLogOut(){
+			dispatch(logout())
 		}
 	}
 }

@@ -1,10 +1,11 @@
 import axios from 'axios'
 import history from '../history'
+import {postUser} from './users'
 
 /**
  * ACTION TYPES
  */
-const GET_USER = 'GET_USER'
+const SET_USER = 'SET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 
 /**
@@ -17,7 +18,7 @@ const defaultState = {
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({type: GET_USER, user})
+const setUser = user => ({type: SET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
 
 /**
@@ -27,19 +28,32 @@ export const getMe = () =>
 	dispatch =>
 		axios.get('/auth/me')
 			.then(res =>
-				dispatch(getUser(res.data || defaultState)))
+				dispatch(setUser(res.data || defaultState)))
 			.catch(err => console.log(err))
 
-
-export const auth = (email, password, method) =>
+export const login = (credentials) =>
 	dispatch =>
-		axios.post(`/auth/${method}`, { email, password })
-			.then(res => {
-				dispatch(getUser(res.data))
-				history.push('/home')
+		axios.post('auth/login', credentials)
+			.then(res => res.data)
+			.then((user) => {
+				dispatch(setUser(user))
+			})
+			.catch(error =>{
+				console.log(error)
+			})
+
+
+export const signup = (credentials) =>
+	dispatch =>
+		axios.post('auth/signup', credentials)
+			.then(res => res.data)
+			.then((user) => {
+				dispatch(setUser(user))
+				dispatch(postUser(user))
+				// history.push('/home')
 			})
 			.catch(error =>
-				dispatch(getUser({error})))
+				console.log(error))
 
 
 export const logout = () =>
@@ -47,7 +61,7 @@ export const logout = () =>
 		axios.post('/auth/logout')
 			.then(res => {
 				dispatch(removeUser())
-				history.push('/login')
+				// history.push('/login')
 			})
 			.catch(err => console.log(err))
 
@@ -56,10 +70,10 @@ export const logout = () =>
  */
 export default function (state = defaultState, action) {
 	switch (action.type) {
-	case GET_USER:
+	case SET_USER:
 		return action.user
 	case REMOVE_USER:
-		return defaultUser
+		return defaultState
 	default:
 		return state
 	}
