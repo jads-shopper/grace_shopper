@@ -9,6 +9,41 @@ const mapStateToProps = function(state) {
 		categories: state.categories
 	}
 }
+let selectorCounter = 1
+
+function addCategorySelector (categories) {
+	if(selectorCounter === 5) {
+		let tooManyDiv = document.createElement('h4')
+		tooManyDiv.append('5 Categories is enough...')
+		let targetCol = document.getElementById('categoryCol')
+		targetCol.append(tooManyDiv)
+		selectorCounter++
+
+	} else if(selectorCounter < 5){
+		//creates selector element
+		let newSelector = document.createElement('select')
+		newSelector.className= 'categorySelector'
+		selectorCounter++
+		newSelector.name = 'category' + selectorCounter
+		let nullOption = document.createElement('option')
+		nullOption.append('None')
+		nullOption.key = 'null'
+		nullOption.value = null
+		newSelector.append(nullOption)
+
+		//maps categories and adds them as options
+		categories.forEach(category => {
+			let newOption = document.createElement('option')
+			newOption.append(category.name)
+			newOption.key = category.id
+			newOption.value = category.id
+			newSelector.append(newOption)
+		})
+
+		let targetCol = document.getElementById('categoryCol')
+		targetCol.append(newSelector)
+	}
+}
 
 function AddProductForm(props){
 	return (
@@ -89,17 +124,17 @@ function AddProductForm(props){
 								<option value={false}>False</option>
 							</select>
 						</div>
-						<button type="submit" id="submit">Create User</button>
+						<button type="submit" id="submit">Create Product</button>
 					</form>
 				</Col>
 			</Row>
 			<Row>
 				<Col xs={0} sm={1}>
 				</Col>
-				<Col xs={12} sm={11}>
+				<Col id="categoryCol" xs={12} sm={11}>
 					<h5>Category</h5>
-					<button id="newCat">Add Another Category</button>
-					<select name="category" className="inputTextBox" onChange={props.handleCategory}>
+					<button id="newCat" onClick={() => {addCategorySelector(props.categories)}}>Add Another Category</button>
+					<select name="category1" className="categorySelector" onChange={props.handleCategory}>
 						<option value={null}>None</option>
 						{
 							props.categories.map(category => {
