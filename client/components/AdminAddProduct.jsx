@@ -179,7 +179,6 @@ function mapDispatchToProps (dispatch){
 					categoryArray.push(targetSelect.value)
 				}
 			}
-			console.log(categoryArray)
 			dispatch(postProduct({name: evt.target.name.value, imageURL: evt.target.imageURL.value, price: Number(evt.target.price.value), description: evt.target.description.value, quantity: Number(evt.target.quantity.value), isActive: evt.target.isActive.value}, categoryArray))
 			dispatch(writeProductName(''))
 			dispatch(writeImageURL(''))
