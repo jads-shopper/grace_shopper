@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Col, Row} from 'react-bootstrap'
-import store, {postUser, writeFirstName, writeLastName, adminSelect, writeEmail, writePassword} from './../store'
+import {postUser, writeFirstName, writeLastName, adminSelect, writeEmail, writePassword} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
