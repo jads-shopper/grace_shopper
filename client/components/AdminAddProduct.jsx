@@ -175,10 +175,11 @@ function mapDispatchToProps (dispatch){
 			for (var i = 1; i <= selectorCounter; i++){
 				let tempName = 'category' + i
 				let targetSelect = document.getElementById(tempName)
-				if (targetSelect.value) {
+				if (targetSelect.value !== 'None') {
 					categoryArray.push(targetSelect.value)
 				}
 			}
+			console.log(categoryArray)
 			dispatch(postProduct({name: evt.target.name.value, imageURL: evt.target.imageURL.value, price: Number(evt.target.price.value), description: evt.target.description.value, quantity: Number(evt.target.quantity.value), isActive: evt.target.isActive.value}, categoryArray))
 			dispatch(writeProductName(''))
 			dispatch(writeImageURL(''))
