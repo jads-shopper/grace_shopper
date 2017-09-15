@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchCategories} from './categories'
 
 /**
  * ACTION TYPES
@@ -50,13 +51,18 @@ export function postProduct (product, categoryArray) {
 			})
 			.then((theNewProduct) => {
 				dispatch(makeProduct(theNewProduct))
+				//refresh products so new product has relation to categories
 				return axios.get('/api/products')
 					.then(res => res.data)
 					.then(products => {
 						const action = getProducts(products)
 						dispatch(action)
-						history.push('/admin')
 					})
+			})
+			//refresh categories so the categories have a relation to the new product
+			.then(() => {
+				dispatch(fetchCategories())
+				history.push('/admin')
 			})
 	}
 }
