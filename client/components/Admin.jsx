@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Row, Col, Table} from 'react-bootstrap'
+import {Row, Col, Table, Button} from 'react-bootstrap'
 import store, {fetchUsers} from './../store'
+import history from './../history'
 
 const mapStateToProps = function(state) {
 	return {
@@ -31,6 +31,7 @@ class AdminView extends Component {
 				<Row>
 					<Col xs={12} sm={4}>
 						<h2>Users</h2>
+						<Button onClick={() => {history.push('/admin/newUser')}}>Add User</Button>
 						<Table striped bordered condensed hover>
 							<thead>
 								<tr>
@@ -43,7 +44,7 @@ class AdminView extends Component {
 								{
 									this.props.users.map(user => {
 										return (
-											<tr key={user.id}>
+											<tr key={user.id} onClick={() => {history.push(`/admin/edit/user/${user.id}`)}}>
 												<td>{user.id}</td>
 												<td>{user.firstName + ' ' + user.lastName}</td>
 												<td>{user.email}</td>
@@ -56,6 +57,7 @@ class AdminView extends Component {
 					</Col>
 					<Col xs={12} sm={4}>
 						<h2>Products</h2>
+						<Button onClick={() => {history.push('/admin/newProduct')}}>Add Product</Button>
 						<Table striped bordered condensed hover>
 							<thead>
 								<tr>
@@ -73,7 +75,7 @@ class AdminView extends Component {
 											<tr key={product.id}>
 												<td>{product.id}</td>
 												<td>{product.name}</td>
-												<td>{product.price}</td>
+												<td>${product.price}</td>
 												<td>{product.quantity}</td>
 												<td>{product.isActive ? 'Yes' : 'No'}</td>
 											</tr>
@@ -85,6 +87,7 @@ class AdminView extends Component {
 					</Col>
 					<Col xs={12} sm={4}>
 						<h2>Categories</h2>
+						<Button onClick={() => {history.push('/admin/newCategory')}}>Add Category</Button>
 						<Table striped bordered condensed hover>
 							<thead>
 								<tr>
@@ -100,7 +103,7 @@ class AdminView extends Component {
 											<tr key={category.id}>
 												<td>{category.id}</td>
 												<td>{category.name}</td>
-												<td>{category.products.length}</td>
+												<td>{category.products ? category.products.length : 0}</td>
 											</tr>
 										)
 									})

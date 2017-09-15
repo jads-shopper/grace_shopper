@@ -5,6 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_PRODUCTS = 'GET_PRODUCTS'
+const POST_PRODUCT = 'POST_PRODUCT'
 
 /**
  * INITIAL STATE
@@ -15,6 +16,7 @@ const productState = []
  * ACTION CREATORS
  */
 const getProducts = products => ({type: GET_PRODUCTS, products})
+const makeProduct = product => ({type: POST_PRODUCT, product})
 
 /**
  * THUNK CREATORS
@@ -32,6 +34,18 @@ export function fetchProducts () {
 	}
 }
 
+export function postProduct (product) {
+
+	return function thunk (dispatch) {
+		return axios.post('/api/products', product)
+			.then(res => res.data)
+			.then(newProduct => {
+				dispatch(makeProduct(newProduct))
+				history.push('/admin')
+			})
+	}
+}
+
 /**
  * REDUCER
  */
@@ -39,6 +53,8 @@ export default function (state = productState, action) {
 	switch (action.type) {
 	case GET_PRODUCTS:
 		return action.products
+	case POST_PRODUCT:
+		return state.concat(action.product)
 	default:
 		return state
 	}
