@@ -19,3 +19,25 @@ router.post('/', (req, res, next) => {
 		})
 		.catch(next)
 })
+
+router.put('/:id', (req, res, next) => {
+	const id = +req.params.id
+	Category.update(req.body, {
+		where: {
+			id
+		}
+	})
+		.then(() => {
+			return Category.findById(id)
+		})
+		.then((foundCategory) => {
+			if(foundCategory) {
+				res.status(200).json(foundCategory)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch((err) => {
+			res.status(500).json(err)
+		})
+})

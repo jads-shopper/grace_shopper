@@ -27,7 +27,6 @@
 	margin-top: 0px;
 	color: white;
 }
-
 .icon-bar {
 	width: 20%; /* Full-width */
 	background-color: #555; /* Dark-grey background */
@@ -51,4 +50,6 @@
 	color: white; /* White text color */
 	font-size: 4px; /* Increased font size */
 }
-
+.categorySelector {
+	margin-left: 10px;
+}

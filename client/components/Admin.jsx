@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Row, Col, Table, Button} from 'react-bootstrap'
-import store, {fetchUsers} from './../store'
+import {fetchUsers} from './../store'
 import history from './../history'
 
 const mapStateToProps = function(state) {
@@ -72,7 +72,7 @@ class AdminView extends Component {
 								{
 									this.props.products.map(product => {
 										return (
-											<tr key={product.id}>
+											<tr key={product.id} onClick={() => {history.push(`/admin/edit/product/${product.id}`)}}>
 												<td>{product.id}</td>
 												<td>{product.name}</td>
 												<td>${product.price}</td>
@@ -100,7 +100,7 @@ class AdminView extends Component {
 								{
 									this.props.categories.map(category => {
 										return (
-											<tr key={category.id}>
+											<tr key={category.id} onClick={() => {history.push(`/admin/edit/category/${category.id}`)}}>
 												<td>{category.id}</td>
 												<td>{category.name}</td>
 												<td>{category.products ? category.products.length : 0}</td>

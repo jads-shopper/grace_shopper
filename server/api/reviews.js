@@ -1,13 +1,26 @@
-const router = require('express').Router()
-const { Review } = require('../db/models')
 
+/*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
+const router = require('express').Router()
+const { Review, Product } = require('../db/models')
+module.exports = router
 //get product reviews
-router.get('/product/:id', ( req, res, next ) => {
-	const { id } = req.params
-	Review.findById(id)
-	      .then(review => review ? res.json(review) : res.sendStatus(404))
+
+router.get('/', (req,res,next) => {
+	Review.findAll().then(reviews => res.json(reviews))
+		.catch(next)
 })
 
+router.get('/product/:id', ( req, res, next ) => {
+	const { id } = req.params
+	console.log(id)
+	Review.findAll({
+		where: {
+			productId: {
+				$eq: id
+			}
+		}})
+	      .then(review => review ? res.json(review) : res.sendStatus(404))
+})
 
 // new review
 router.post('/', ( req, res, next ) => {
@@ -57,5 +70,3 @@ router.get('/user/:id', ( req, res, next ) => {
 	}).then(res.json)
 	      .catch(next)
 })
-
-module.exports = router
