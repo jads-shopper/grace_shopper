@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Col, Row} from 'react-bootstrap'
+import {Col, Row, Button} from 'react-bootstrap'
 import {postCategory, writeCategoryName} from './../store'
 
 const mapStateToProps = function(state) {
@@ -28,7 +28,7 @@ function AddCategoryForm(props){
 							onChange={props.handleName}
 						/>
 					</div>
-					<button type="submit" id="submit">Create Category</button>
+					<Button bsStyle="info" type="submit" className="submitButton">Create Category</Button>
 				</form>
 			</Col>
 		</Row>

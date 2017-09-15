@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Col, Row} from 'react-bootstrap'
+import {Col, Row, Button} from 'react-bootstrap'
 import {editUser, writeFirstName, writeLastName, adminSelect, writeEmail} from './../store'
 
 const mapStateToProps = function(state) {
@@ -71,7 +71,8 @@ function EditUserForm(props){
 								<option value={true}>True</option>
 							</select>
 						</div>
-						<button type="submit" id="submit">Edit User</button>
+						<Button bsStyle="info" type="submit" className="submitButton">Edit User</Button>
+						<Button bsStyle="danger" className="deleteButton">Delete User</Button>
 					</form>
 				</Col>
 			</Row>
