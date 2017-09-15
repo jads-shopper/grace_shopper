@@ -25,6 +25,7 @@ function addCategorySelector (categories) {
 		newSelector.className= 'categorySelector'
 		selectorCounter++
 		newSelector.name = 'category' + selectorCounter
+		newSelector.id = 'category' + selectorCounter
 		let nullOption = document.createElement('option')
 		nullOption.append('None')
 		nullOption.key = 'null'
@@ -134,7 +135,7 @@ function AddProductForm(props){
 				<Col id="categoryCol" xs={12} sm={11}>
 					<h5>Category</h5>
 					<button id="newCat" onClick={() => {addCategorySelector(props.categories)}}>Add Another Category</button>
-					<select name="category1" className="categorySelector" onChange={props.handleCategory}>
+					<select id="category1" name="category1" className="categorySelector" onChange={props.handleCategory}>
 						<option value={null}>None</option>
 						{
 							props.categories.map(category => {
@@ -170,7 +171,15 @@ function mapDispatchToProps (dispatch){
 		},
 		handleSubmit: function(evt){
 			evt.preventDefault()
-			dispatch(postProduct({name: evt.target.name.value, imageURL: evt.target.imageURL.value, price: Number(evt.target.price.value), description: evt.target.description.value, quantity: Number(evt.target.quantity.value), isActive: evt.target.isActive.value}))
+			let categoryArray = []
+			for (var i = 1; i <= selectorCounter; i++){
+				let tempName = 'category' + i
+				let targetSelect = document.getElementById(tempName)
+				if (targetSelect.value) {
+					categoryArray.push(targetSelect.value)
+				}
+			}
+			dispatch(postProduct({name: evt.target.name.value, imageURL: evt.target.imageURL.value, price: Number(evt.target.price.value), description: evt.target.description.value, quantity: Number(evt.target.quantity.value), isActive: evt.target.isActive.value}, categoryArray))
 			dispatch(writeProductName(''))
 			dispatch(writeImageURL(''))
 			dispatch(activeSelect(false))
