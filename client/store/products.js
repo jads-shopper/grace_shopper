@@ -34,14 +34,23 @@ export function fetchProducts () {
 	}
 }
 
-export function postProduct (product) {
+export function postProduct (product, categoryArray) {
 
 	return function thunk (dispatch) {
 		return axios.post('/api/products', product)
 			.then(res => res.data)
 			.then(newProduct => {
+				categoryArray.forEach(categoryId => {
+					axios.post('/api/productCategories', {productId: newProduct.id, categoryId})
+				}) 
 				dispatch(makeProduct(newProduct))
-				history.push('/admin')
+				return axios.get('/api/products')
+					.then(res => res.data)
+					.then(products => {
+						const action = getProducts(products)
+						dispatch(action)
+						history.push('/admin')
+					})
 			})
 	}
 }
