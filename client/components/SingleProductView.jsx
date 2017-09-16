@@ -38,12 +38,12 @@ export function SingleProductView(props) {
 		if (starRating === Math.round(starRating)) {
 			console.log('equal to rounded')
 			for (var i = 0; i < starRating; i++) {
-				console.log(i)
 				starRatingArr.push('full')
 			}
+			var j = 0
 			return starRatingArr.map(() => {
 				return (
-					<a href="#"><i className="fa fa-star"></i></a>
+					<a key={j++} href="#"><i className="fa fa-star"></i></a>
 				)
 			})
 		} else {
@@ -57,11 +57,11 @@ export function SingleProductView(props) {
 			return starRatingArr.map((type) => {
             	if (type === 'full') {
 					return (
-						<a href="#"><i className="fa fa-star"></i></a>
+						<a key={j++} href="#"><i className="fa fa-star"></i></a>
 					)
 				} else {
 					return (
-						<a href="#"><i className="fa fa-star-half-o"></i></a>
+						<a key={j++} href="#"><i className="fa fa-star-half-o"></i></a>
 					)
 				}
 			})
@@ -128,13 +128,6 @@ export function SingleProductView(props) {
 							{
 								renderStarRating(starRating)
 							}
-							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
-							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
-							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
-							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
-							{/*<a href="#"><i className="fa fa-star-half-o"></i></a>*/}
-							{/* mock reviews length*/}
-							{/*Add product has many reviews relationship*/}
 							<br />
 							<a href="#">{currentProduct.reviews.length} customer reviews</a>
 							<hr />
