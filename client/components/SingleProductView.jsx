@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
 import _ from 'lodash'
 
-// TODO: Refactor the customer reviews code and related products code into their components
+// TODO: Refactor the customer reviews, star ratings, and related products code into their components
 
 export function SingleProductView(props) {
 	const productId = +props.match.params.id
@@ -14,7 +14,6 @@ export function SingleProductView(props) {
 
 	// Get average review rating
 	const calcAverageRating = () => {
-		// get the average rating based on all the reviews for this product
 		return currentProduct.reviews
 			.map((review) => review.rating)
 			.reduce((acc, curr) => acc + curr) / currentProduct.reviews.length
@@ -33,11 +32,39 @@ export function SingleProductView(props) {
 			return ceil
 		}
 	}
-
 	// render the star rating
 	const renderStarRating = (starRating) => {
+		var starRatingArr = []
 		if (starRating === Math.round(starRating)) {
-			return (<a href="#"><i className="fa fa-star"></i></a>)
+			console.log('equal to rounded')
+			for (var i = 0; i < starRating; i++) {
+				console.log(i)
+				starRatingArr.push('full')
+			}
+			return starRatingArr.map(() => {
+				return (
+					<a href="#"><i className="fa fa-star"></i></a>
+				)
+			})
+		} else {
+			console.log('starrating not equal to rounded', starRating, Math.round(starRating))
+			for (var i = 0; i < starRating - 1; i++) {
+				console.log(i)
+				starRatingArr.push('full')
+			}
+			starRatingArr.push('half')
+
+			return starRatingArr.map((type) => {
+            	if (type === 'full') {
+					return (
+						<a href="#"><i className="fa fa-star"></i></a>
+					)
+				} else {
+					return (
+						<a href="#"><i className="fa fa-star-half-o"></i></a>
+					)
+				}
+			})
 		}
 	}
 	const filterRelatedProducts = () => {
@@ -72,6 +99,8 @@ export function SingleProductView(props) {
 		}
 	}
 
+	const starRating = calcStarRating(calcAverageRating())
+
 	if(currentProduct) {
 		return (
 			<Grid>
@@ -96,15 +125,18 @@ export function SingleProductView(props) {
 					<Col md={6}>
 						<div>
 							<h2>{currentProduct.name}</h2>
-							<a href="#"><i className="fa fa-star"></i></a>
-							<a href="#"><i className="fa fa-star"></i></a>
-							<a href="#"><i className="fa fa-star"></i></a>
-							<a href="#"><i className="fa fa-star"></i></a>
-							<a href="#"><i className="fa fa-star-half-o"></i></a>
+							{
+								renderStarRating(starRating)
+							}
+							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
+							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
+							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
+							{/*<a href="#"><i className="fa fa-star"></i></a>*/}
+							{/*<a href="#"><i className="fa fa-star-half-o"></i></a>*/}
 							{/* mock reviews length*/}
 							{/*Add product has many reviews relationship*/}
 							<br />
-							<a href="#">534 customer reviews</a>
+							<a href="#">{currentProduct.reviews.length} customer reviews</a>
 							<hr />
 						List Price: <p style={{color: 'green', display: 'inline-block'}}>${currentProduct.price}</p>
 							<p>Description:</p>
@@ -113,7 +145,7 @@ export function SingleProductView(props) {
 					</Col>
 					<Col md={3}>
 						<Row>
-							<div className="card border-dark mb-3" style={{['max-width']: '20rem'}}>
+							<div className="card border-dark mb-3" style={{maxWidth: '20rem'}}>
 								<div className="card-body text-dark">
 									{renderRelatedProducts(filterRelatedProducts())}
 								</div>
