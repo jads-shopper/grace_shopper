@@ -15,7 +15,7 @@ export function SingleProductView(props) {
 					<Col md={3}>
 						<Carousel>
 							<Carousel.Item>
-								<img width={900} height={500} alt="900x500" src="https://cdn.shopify.com/s/files/1/1586/4957/products/Fidget-Cube-Vinyl-Desk-Toy-Squeeze-Fun-Stress-Reliever-Anti-Irritability-Juguet-Dice-Cube-Box-for_2_800x.jpg?v=1495313963"/>
+								<img width={900} height={500} alt="900x500" src={currentProduct.imageUrl}/>
 							</Carousel.Item>
 							<Carousel.Item>
 								<img width={900} height={500} alt="900x500" src="https://cdn.shopify.com/s/files/1/1586/4957/products/Fidget-Cube-Vinyl-Desk-Toy-Squeeze-Fun-Stress-Reliever-Anti-Irritability-Juguet-Dice-Cube-Box-for_4_530x.jpg?v=1495313963"/>

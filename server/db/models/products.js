@@ -13,9 +13,9 @@ const Product = db.define('product', {
 	// 	type     : Sequelize.STRING,
 	// 	allowNull: false,
 	// },
-	imageURL   : {
+	imageUrl   : {
 		type        : Sequelize.STRING,
-		defaultValue: '/img.png'
+		defaultValue: 'https://gear4grunts.com/images/default/product.png'
 	},
 	price      : {
 		type     : Sequelize.FLOAT,

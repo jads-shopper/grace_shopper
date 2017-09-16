@@ -26,11 +26,12 @@ function ProductList(props){
 									return category.name
 								})
 							}
+							console.log(product.imageUrl)
 							return (
 								<li className="productItem" key={product.id}>
 									<NavLink to={`/products/${product.id}`}>
 										<div className="productImage">
-											<img src={`${product.imageURL}`} alt={`${product.name} image`} height="99" width="99" />
+											<img src={`${product.imageUrl}`} alt={`${product.name} image`} height="99" width="99" />
 										</div>
 									</NavLink>
 									<div className="productInfo">
