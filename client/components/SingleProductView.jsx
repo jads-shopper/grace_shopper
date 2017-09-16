@@ -4,13 +4,42 @@ import {Link} from 'react-router-dom'
 import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
 import _ from 'lodash'
 
+// TODO: Refactor the customer reviews code and related products code into their components
+
 export function SingleProductView(props) {
 	const productId = +props.match.params.id
 	const {products, categories} = props
 	const currentProduct = products.filter((product) => product.id === productId)[0]
 	console.log('curr product', currentProduct)
-	console.log('categories', categories)
 
+	// Get average review rating
+	const calcAverageRating = () => {
+		// get the average rating based on all the reviews for this product
+		return currentProduct.reviews
+			.map((review) => review.rating)
+			.reduce((acc, curr) => acc + curr) / currentProduct.reviews.length
+	}
+	// Convert the average review rating to a .5 interval rating so it can be represented by stars
+	const calcStarRating = (rating) => {
+		const floor = Math.floor(rating)
+		const ceil = Math.ceil(rating)
+		const midPoint = (floor + ceil) / 2
+		const difference = rating - midPoint
+		if (Math.abs(difference) <= 0.25) {
+			return midPoint
+		} else if(difference < 0.25) {
+			return floor
+		} else {
+			return ceil
+		}
+	}
+
+	// render the star rating
+	const renderStarRating = (starRating) => {
+		if (starRating === Math.round(starRating)) {
+			return (<a href="#"><i className="fa fa-star"></i></a>)
+		}
+	}
 	const filterRelatedProducts = () => {
 		const currentProductCategories = currentProduct.categories.map((category => category.id))
 		const relatedCategories = categories.filter((category) => currentProductCategories.includes(category.id))
