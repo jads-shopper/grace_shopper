@@ -48,6 +48,7 @@ category.map((val, idx) => {
 const name = [], imageUrl = [], price = [], description = [], quantity = [], isActive = []
 
 for (i = 0; i < 50; i++) {
+	// TODO: Ensure unique product names
 	name.push(chance.word())
 	imageUrl.push(chance.avatar())
 	price.push(chance.floating({ fixed: 2, min: 0.01, max: 1000 }))
@@ -93,8 +94,6 @@ for (i = 0; i < 50; i++) {
 	userId.push(chance.integer({min: 1, max: 50 }))
 }
 
-
-// Refactor this
 Promise.all(promises)
 	.then(() => Promise.all(promisesUsers))
 	.then((users) => {
@@ -110,7 +109,7 @@ Promise.all(promises)
 			})
 			)
 		})
-		// return Promise.all(promisesReviews)
+		return Promise.all(promisesReviews)
 	})
 	.then(console.log('success'))
 	.catch(console.error)
