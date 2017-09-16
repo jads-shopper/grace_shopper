@@ -50,7 +50,7 @@ const name = [], imageUrl = [], price = [], description = [], quantity = [], isA
 for (i = 0; i < 50; i++) {
 	// TODO: Ensure unique product names to avoid the unique product name constraint
 	name.push(chance.word())
-	imageUrl.push('http://lorempixel.com/400/200/')
+	imageUrl.push('http://lorempixel.com/200/200/')
 	price.push(chance.floating({ fixed: 2, min: 0.01, max: 1000 }))
 	description.push(chance.paragraph())
 	quantity.push(chance.integer({ min: 0, max: 50 }))

@@ -14,15 +14,15 @@ export function SingleProductView(props) {
 				<Row>
 					<Col md={3}>
 						<Carousel>
-							<Carousel.Item>
-								<img width={900} height={500} alt="900x500" src={currentProduct.imageUrl}/>
-							</Carousel.Item>
-							<Carousel.Item>
-								<img width={900} height={500} alt="900x500" src="https://cdn.shopify.com/s/files/1/1586/4957/products/Fidget-Cube-Vinyl-Desk-Toy-Squeeze-Fun-Stress-Reliever-Anti-Irritability-Juguet-Dice-Cube-Box-for_4_530x.jpg?v=1495313963"/>
-							</Carousel.Item>
-							<Carousel.Item>
-								<img width={900} height={500} alt="900x500" src="https://cdn.shopify.com/s/files/1/1586/4957/products/Fidget-Cube-Vinyl-Desk-Toy-Squeeze-Fun-Stress-Reliever-Anti-Irritability-Juguet-Dice-Cube-Box-for_7_530x.jpg?v=1495313963"/>
-							</Carousel.Item>
+							{
+								[1,2,3].map((index) => {
+									return (
+										<Carousel.Item key={index}>
+											<img width={900} height={500} alt="900x500" src={currentProduct.imageUrl}/>
+										</Carousel.Item>
+									)
+								})
+							}
 						</Carousel>
 					</Col>
 					<Col md={6}>
