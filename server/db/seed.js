@@ -48,7 +48,7 @@ category.map((val, idx) => {
 const name = [], imageUrl = [], price = [], description = [], quantity = [], isActive = []
 
 for (i = 0; i < 50; i++) {
-	// TODO: Ensure unique product names
+	// TODO: Ensure unique product names to avoid the unique product name constraint
 	name.push(chance.word())
 	imageUrl.push(chance.avatar())
 	price.push(chance.floating({ fixed: 2, min: 0.01, max: 1000 }))
