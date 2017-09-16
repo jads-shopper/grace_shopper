@@ -6,12 +6,12 @@ import Categories from './Categories.jsx'
 
 const mapStateToProps = function(state) {
 	return {
-		products: state.products
+		products: state.products,
+		search: state.query,
 	}
 }
 
 function ProductList(props){
-
 	if(props.products){
 		return (
 			<Row>
