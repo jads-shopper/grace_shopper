@@ -7,6 +7,7 @@ const Category = db.model('category')
 const ProductCategory = db.model('productCategory')
 const Chance = require('chance')
 const chance = new Chance()
+const chalk = require('chalk')
 
 const promises = []
 const promisesUsers = []
@@ -97,7 +98,6 @@ for (i = 0; i < 50; i++) {
 Promise.all(promises)
 	.then(() => Promise.all(promisesUsers))
 	.then((users) => {
-		console.log(users.map((user) => user.id))
 		text.map(( val, idx ) => {
 			promisesReviews.push(Review.create({
 				title: title[idx],
@@ -112,10 +112,12 @@ Promise.all(promises)
 		return Promise.all(promisesReviews)
 	})
 	.then(() => {
+		console.log(chalk.green('seed success!'))
 		process.exit(0)
 	})
 	.catch((err) => {
-		console.log(err)
+		console.error(err.parent)
+		console.log(chalk.blue(`if only getting ${chalk.red('duplicate key value violates unique constraint "products_name_key"')}, it is because only unique product names will be created`))
 		process.exit(1)
 	})
 

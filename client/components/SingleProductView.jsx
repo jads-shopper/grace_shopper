@@ -2,12 +2,47 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
+import _ from 'lodash'
 
 export function SingleProductView(props) {
 	const productId = +props.match.params.id
-	const currentProduct = props.products.filter((product) => product.id === productId)[0]
-	console.log(currentProduct)
-	const products = props.products
+	const {products, categories} = props
+	const currentProduct = products.filter((product) => product.id === productId)[0]
+	console.log('curr product', currentProduct)
+	console.log('categories', categories)
+
+	const filterRelatedProducts = () => {
+		const currentProductCategories = currentProduct.categories.map((category => category.id))
+		const relatedCategories = categories.filter((category) => currentProductCategories.includes(category.id))
+		const oneOfEachRelatedCategory = relatedCategories.map((relatedCategory) => relatedCategory.products[0])
+		const uniqueRelatedProducts = _.uniqBy(oneOfEachRelatedCategory, 'id')
+		return uniqueRelatedProducts.filter((uniqueRelatedProducts => uniqueRelatedProducts.id !== productId))
+	}
+
+	const renderRelatedProducts = (relatedProducts) => {
+		if(relatedProducts.length) {
+			return (
+				<div>
+					<h4 className="card-title">Add a :</h4>
+					<FormGroup>
+						<form>
+							{
+								filterRelatedProducts().map((relatedProduct) => {
+									return (
+										<Checkbox key={relatedProduct.id}>
+											<Link to={`/products/${relatedProduct.id}`}>{relatedProduct.name} - <p style={{color: 'green', display: 'inline-block'}}>${relatedProduct.price}</p></Link>
+										</Checkbox>
+									// {' '}
+									)
+								})
+							}
+						</form>
+					</FormGroup>
+				</div>
+			)
+		}
+	}
+
 	if(currentProduct) {
 		return (
 			<Grid>
@@ -18,6 +53,10 @@ export function SingleProductView(props) {
 								[1,2,3].map((index) => {
 									return (
 										<Carousel.Item key={index}>
+											{/*
+											TODO: Change image dimensions to reflect actual dimensions
+											TODO: Determine whether or not to have multiple images for a product
+											*/}
 											<img width={900} height={500} alt="900x500" src={currentProduct.imageUrl}/>
 										</Carousel.Item>
 									)
@@ -47,22 +86,7 @@ export function SingleProductView(props) {
 						<Row>
 							<div className="card border-dark mb-3" style={{['max-width']: '20rem'}}>
 								<div className="card-body text-dark">
-									<h4 className="card-title">Add a :</h4>
-									<FormGroup>
-										<form>
-											<Checkbox>
-												<Link to={`/products/${products[0].id}`}>{products[0].name} - <p style={{color: 'green', display: 'inline-block'}}>${products[0].price}</p></Link>
-											</Checkbox>
-											{' '}
-											<Checkbox>
-												<Link to={`/products/${products[4].id}`}>{products[4].name} - <p style={{color: 'green', display: 'inline-block'}}>${products[4].price}</p></Link>
-											</Checkbox>
-											{' '}
-											<Checkbox>
-												<Link to={`/products/${products[2].id}`}>{products[2].name}  - <p style={{color: 'green', display: 'inline-block'}}>${products[2].price}</p></Link>
-											</Checkbox>
-										</form>
-									</FormGroup>
+									{renderRelatedProducts(filterRelatedProducts())}
 								</div>
 							</div>
 						</Row>
@@ -103,7 +127,7 @@ export function SingleProductView(props) {
 	}
 }
 
-const mapStateToProps = ({products}) => ({products})
+const mapStateToProps = ({products, categories}) => ({products, categories})
 
 export default connect(mapStateToProps, null)(SingleProductView)
 
