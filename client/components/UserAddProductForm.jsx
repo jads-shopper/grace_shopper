@@ -8,12 +8,17 @@ export default class UserAddProductForm extends Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			quantity: 1
+		}
+
 		this.currentProduct = this.props.currentProduct
 		this.productId = this.currentProduct.id
 		this.categories = this.props.categories
 
 		this.filterRelatedProducts = this.filterRelatedProducts.bind(this)
 		this.renderRelatedProducts = this.renderRelatedProducts.bind(this)
+		this.handleSelectChange = this.handleSelectChange.bind(this)
 	}
 
 	filterRelatedProducts() {
@@ -37,9 +42,12 @@ export default class UserAddProductForm extends Component {
 		)
 	}
 
+	handleSelectChange(e) {
+		this.setState({quantity: +e.target.value})
+	}
+
 	render() {
 		const filteredProducts = this.filterRelatedProducts()
-		console.log('filtered', filteredProducts)
 
 		return (
 			<div>
@@ -57,7 +65,7 @@ export default class UserAddProductForm extends Component {
 									</FormGroup>
 									<FormGroup controlId="formControlsSelect">
 										<ControlLabel>Select</ControlLabel>
-										<FormControl componentClass="select" placeholder="select">
+										<select className="form-control" placeholder="select" onChange={this.handleSelectChange} value={this.state.quantity}>
 											{/*
 											TODO: Quantity should max out at the number of remaining items and prevent adding to cart if exceeds remaining
 											TODO: Quantity should be reduced when adding to cart
@@ -68,10 +76,10 @@ export default class UserAddProductForm extends Component {
 													.filter((index) => index !== 0)
 													.map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
 											}
-										</FormControl>
+										</select>
 									</FormGroup>
 									<Button
-										onClick={() => this.props.handleAddToCart(this.currentProduct, 1)}
+										onClick={() => this.props.handleAddToCart(this.currentProduct, this.state.quantity)}
 										bsStyle="info">
 										<i className="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart
 									</Button>
