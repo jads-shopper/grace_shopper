@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
-import {editCategory, writeCategoryName} from './../store'
+import {editCategory, writeCategoryName, deleteCategory} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
@@ -36,7 +36,7 @@ function EditCategoryForm(props){
 							/>
 						</div>
 						<Button bsStyle="info" type="submit" className="submitButton">Edit Category</Button>
-						<Button bsStyle="danger" className="deleteButton">Delete Category</Button>
+						<Button bsStyle="danger" onClick={props.handleDelete} className="deleteButton">Delete Category</Button>
 					</form>
 				</Col>
 			</Row>
@@ -60,10 +60,14 @@ function mapDispatchToProps (dispatch, ownProps){
 			dispatch(writeCategoryName(evt.target.value))
 		},
 		handleSubmit: function(evt){
-			console.log(evt.target.categoryName.value)
 			evt.preventDefault()
 			dispatch(editCategory({id: Number(ownProps.match.params.id), name: evt.target.categoryName.value}))
 			dispatch(writeCategoryName(''))
+		},
+		handleDelete: function(evt){
+			evt.preventDefault()
+			dispatch(writeCategoryName(''))
+			dispatch(deleteCategory({id: Number(ownProps.match.params.id)}))
 		}
 	}
 }

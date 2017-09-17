@@ -32,8 +32,7 @@ export function fetchProducts () {
 		return axios.get('/api/products')
 			.then(res => res.data)
 			.then(products => {
-				const action = getProducts(products)
-				dispatch(action)
+				dispatch(getProducts(products))
 			})
 	}
 }
@@ -55,8 +54,7 @@ export function postProduct (product, categoryArray) {
 				return axios.get('/api/products')
 					.then(res => res.data)
 					.then(products => {
-						const action = getProducts(products)
-						dispatch(action)
+						dispatch(getProducts(products))
 					})
 			})
 			//refresh categories so the categories have a relation to the new product
