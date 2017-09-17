@@ -2,8 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
-import {AddProductForm} from './AddProductForm.jsx';
-import {SingleProductReviews} from './SingleProductReviews.jsx'
+import UserAddProductForm from './UserAddProductForm.jsx'
+import SingleProductReviews from './SingleProductReviews.jsx'
 
 // TODO: Refactor the customer reviews, star ratings, and related products code into their components
 
@@ -107,17 +107,7 @@ export function SingleProductView(props) {
 						</div>
 					</Col>
 					<Col md={3}>
-						<AddProductForm currentProduct={currentProduct} categories={categories} />
-						{/*<Row>*/}
-							{/*<div className="card border-dark mb-3" style={{maxWidth: '20rem'}}>*/}
-								{/*<div className="card-body text-dark">*/}
-									{/*{renderRelatedProducts(filterRelatedProducts())}*/}
-								{/*</div>*/}
-							{/*</div>*/}
-						{/*</Row>*/}
-						{/*<Row>*/}
-							{/*<Button bsStyle="info"><i className="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</Button>*/}
-						{/*</Row>*/}
+						<UserAddProductForm currentProduct={currentProduct} categories={categories} />
 					</Col>
 				</Row>
 				<hr />

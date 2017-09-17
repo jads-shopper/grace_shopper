@@ -1,7 +1,7 @@
 import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
 
-export function SingleProductReviews(props) {
+export default function SingleProductReviews(props) {
     const {reviews} = props
 	return (
 		<div>
