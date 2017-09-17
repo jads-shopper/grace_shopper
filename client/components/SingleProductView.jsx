@@ -83,6 +83,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		handleSubmit: () => {
 			// add checked products + current product to cart
+		},
+		handleSelectQuantity: () => {
+
 		}
 	}
 }
