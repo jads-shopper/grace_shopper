@@ -8,11 +8,7 @@ import { getProducts, searchProduct , getSearch} from '../store'
 class SearchQ extends Component {
 	render() {
 		return (
-			<form onChange={(evt) => this.props.handleChange(evt)}>
-				<FormGroup>
-					<FormControl type="text" placeholder="Filter Product Results"/>
-				</FormGroup>
-			</form>
+				<input onChange={(evt) => this.props.handleChange(evt)} type="text" name="search" placeholder="Search.."></input>
 		)
 	}
 }
