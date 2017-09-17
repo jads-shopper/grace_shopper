@@ -7,6 +7,7 @@ export default function SingleProductReviews(props) {
 		<div>
 			<h3>Customer Reviews</h3>
 			{/*TODO: Add a product ratings breakdown component here (nice to have, prob not a user story) */}
+			{/*TODO: Transform review data to a more user-friendly format*/}
 			<ListGroup>
 				{reviews.map((review) => {
 					return (
