@@ -24,13 +24,13 @@ export default function SingleProductRating(props) {
 	}
 	// render the star rating
 	const renderStarRating = (starRating) => {
+        var j = 0
 		var starRatingArr = []
 		if (starRating === Math.round(starRating)) {
 			console.log('equal to rounded')
 			for (var i = 0; i < starRating; i++) {
 				starRatingArr.push('full')
 			}
-			var j = 0
 			return starRatingArr.map(() => {
 				return (
 					<a key={j++} href="#"><i className="fa fa-star"></i></a>

@@ -27,7 +27,7 @@ export default function UserAddProductForm(props) {
 			})
 		)
 	}
-
+	const filteredProducts = filterRelatedProducts()
 	return (
 		<div>
 			<Row>
@@ -35,11 +35,11 @@ export default function UserAddProductForm(props) {
 					<div className="card-body text-dark">
 						{/*{renderRelatedProducts(filterRelatedProducts())}*/}
 						<div>
-							<h4 className="card-title">Add a :</h4>
+							{filteredProducts.length > 0 && <h4 className="card-title">Add a :</h4>}
 							<FormGroup>
 								<form>
 									{
-									    filterRelatedProducts().length && renderRelatedProducts()
+                                        filteredProducts.length > 0 && renderRelatedProducts()
 									}
 									<Button bsStyle="info"><i className="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</Button>
 								</form>
