@@ -14,8 +14,8 @@ const cartState = []
  * ACTION CREATORS
  */
 
-const addToCart = product => ({type: ADD_TO_CART, product})
-const removeFromCart = product => ({type: REMOVE_FROM_CART, product})
+export const addToCart = product => ({type: ADD_TO_CART, product})
+export const removeFromCart = product => ({type: REMOVE_FROM_CART, product})
 
 /**
  * REDUCER
@@ -26,7 +26,9 @@ export default function (state = cartState, action) {
 	case ADD_TO_CART:
 		return state.concat(action.product)
 	case REMOVE_FROM_CART:
-		return state.concat
+		return state.filter((product) => product.id !== action.product.id)
+	default:
+		return state
 	}
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {FormGroup, Row, Button, Checkbox} from 'react-bootstrap'
+import {FormGroup, Row, Button, Checkbox, ControlLabel,  FormControl} from 'react-bootstrap'
 import _ from 'lodash'
 
 export default function UserAddProductForm(props) {
@@ -28,6 +28,7 @@ export default function UserAddProductForm(props) {
 		)
 	}
 	const filteredProducts = filterRelatedProducts()
+
 	return (
 		<div>
 			<Row>
@@ -36,14 +37,29 @@ export default function UserAddProductForm(props) {
 						{/*{renderRelatedProducts(filterRelatedProducts())}*/}
 						<div>
 							{filteredProducts.length > 0 && <h4 className="card-title">Add a :</h4>}
-							<FormGroup>
-								<form>
+							<form>
+								<FormGroup>
 									{
-                                        filteredProducts.length > 0 && renderRelatedProducts()
+										filteredProducts.length > 0 && renderRelatedProducts()
 									}
-									<Button bsStyle="info"><i className="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</Button>
-								</form>
-							</FormGroup>
+								</FormGroup>
+								<FormGroup controlId="formControlsSelect">
+									<ControlLabel>Select</ControlLabel>
+									<FormControl componentClass="select" placeholder="select">
+										{
+											[...Array(31)]
+												.map((x, index) => index)
+												.filter((index) => index !== 0)
+												.map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
+										}
+									</FormControl>
+								</FormGroup>
+								<Button
+									onClick={() => props.handleAddToCart(currentProduct)}
+									bsStyle="info">
+									<i className="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart
+								</Button>
+							</form>
 						</div>
 					</div>
 				</div>
