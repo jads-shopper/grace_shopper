@@ -1,41 +1,30 @@
 import React, {Component} from 'react'
 import { Button, FormControl, FormGroup , Navbar } from 'react-bootstrap'
 import store , { connect } from 'react-redux'
-import { getSearch } from '../store'
+import { getProducts, getSearch } from '../store'
 
 class SearchQ extends Component {
-	constructor( props ) {
-		super(props)
-		this.state = {
-			query: ''
-		}
-		this.handleChange = this.handleChange.bind(this)
-	}
-	handleChange( evt ) {
-		evt.preventDefault()
-		console.log(evt.target.value)
-	}
-
 	render() {
 
 		return (
-			<form onChange={(evt) => this.props.handleSubmit(evt)}>
+			<form onChange={(evt) => this.props.handleChange(evt)}>
 				<FormGroup>
-					<FormControl type="text" placeholder="Search"/>
+					<FormControl type="text" placeholder="Filter Product Results"/>
 				</FormGroup>
-				{' '}
-				<Button type="submit">Submit</Button>
 			</form>
 		)
 	}
 }
 
+
+
+
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleSubmit( evt ) {
+		handleChange( evt ) {
 			dispatch(getSearch(evt.target.value))
 		}
 	}
 }
-
 export default connect(state => state, mapDispatchToProps)(SearchQ)
+

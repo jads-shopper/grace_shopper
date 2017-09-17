@@ -8,6 +8,7 @@ import {fetchCategories} from './categories'
 const GET_PRODUCTS = 'GET_PRODUCTS'
 const POST_PRODUCT = 'POST_PRODUCT'
 const EDIT_PRODUCT = 'EDIT_PRODUCT'
+const GET_SEARCH = 'GET_SEARCH'
 
 
 /**
@@ -19,6 +20,7 @@ const productState = []
  * ACTION CREATORS
  */
 const getProducts = products => ({type: GET_PRODUCTS, products})
+export const getSearch = search => ({type: GET_SEARCH, search})
 const makeProduct = product => ({type: POST_PRODUCT, product})
 const editProductAction = product => ({type: EDIT_PRODUCT, product})
 
@@ -87,6 +89,8 @@ export default function (state = productState, action) {
 	switch (action.type) {
 	case GET_PRODUCTS:
 		return action.products
+	case GET_SEARCH:
+		return state.filter(val => val.name.includes(action.search))
 	case POST_PRODUCT:
 		return state.concat(action.product)
 	case EDIT_PRODUCT:
