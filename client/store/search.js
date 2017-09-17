@@ -1,3 +1,4 @@
+// store
 import axios from 'axios'
 import history from '../history'
 
@@ -26,9 +27,9 @@ export const getSearch = query => ({type: GET_SEARCH , query })
  */
 export default function (state = searchState, action) {
 	switch (action.type) {
-	case GET_SEARCH:
-		return Object.assign({}, state, { query: action.query })
-	default:
-		return state
+		case GET_SEARCH:
+			return Object.assign({}, state, { query: action.query })
+		default:
+			return state
 	}
 }
