@@ -9,7 +9,6 @@ import {connect} from 'react-redux'
 function navbarInstance(props) {
 
 	const {handleLogin} = props
-	console.log(props.user)
 	return (
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>
