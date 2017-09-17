@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Row, Col, Carousel, Grid} from 'react-bootstrap'
 import UserAddProductForm from './UserAddProductForm.jsx'
 import SingleProductReviews from './SingleProductReviews.jsx'
-import SingleProductRatings from './SingleProductRatings.jsx'
+import SingleProductRating from './SingleProductRating.jsx'
 
 // TODO: Refactor the customer reviews, star ratings, and related products code into their components
 
@@ -37,10 +37,10 @@ export function SingleProductView(props) {
 					<Col md={6}>
 						<div>
 							<h2>{currentProduct.name}</h2>
-								<SingleProductRatings currentProduct={currentProduct}/>
+								<SingleProductRating currentProduct={currentProduct}/>
 							<hr />
 						List Price: <p style={{color: 'green', display: 'inline-block'}}>${currentProduct.price}</p>
-							<p>Description:</p>
+							<p>Quantity Remaining: {currentProduct.quantity}</p>
 							<p>{currentProduct.description}</p>
 						</div>
 					</Col>

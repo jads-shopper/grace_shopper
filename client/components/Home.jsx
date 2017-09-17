@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
 import Categories from './Categories.jsx'
+import SingleProductRatings from './SingleProductRating.jsx'
 
 const mapStateToProps = function(state) {
 	return {
@@ -26,19 +27,19 @@ function ProductList(props){
 									return category.name
 								})
 							}
-							console.log(product.imageUrl)
 							return (
 								<li className="productItem" key={product.id}>
 									<NavLink to={`/products/${product.id}`}>
 										<div className="productImage">
-											<img src={`${product.imageUrl}`} alt={`${product.name} image`} height="99" width="99" />
+											<img src={`${product.imageUrl}`} alt={`${product.name} image`} height="120" width="120" />
 										</div>
 									</NavLink>
 									<div className="productInfo">
 										<NavLink to={`/products/${product.id}`}><div><h4>Product: {product.name}</h4></div></NavLink>
 										<div><h4>${product.price}</h4></div>
 										<div><h5>Category: {product.categories && product.categories[0] ? categoryNameArray.join(', ') : 'None'}</h5></div>
-										<div><h5>Amount Remaining: {product.quantity}</h5></div>
+										{/*<div><h5>Quantity Left: {product.quantity}</h5></div>*/}
+										<SingleProductRatings currentProduct={product}/>
 									</div>
 									<Button bsStyle="success" className="catalogButton" onClick={() => {alert('Feature not yet implemented!')}}>Add to Cart</Button>
 								</li>

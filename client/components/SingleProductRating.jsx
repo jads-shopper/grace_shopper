@@ -1,12 +1,12 @@
 import React from 'react'
 
-export default function SingleProductRatings(props) {
+export default function SingleProductRating(props) {
 	const {currentProduct} = props
 	// Get average review rating
 	const calcAverageRating = () => {
 		return currentProduct.reviews
 			.map((review) => review.rating)
-			.reduce((acc, curr) => acc + curr) / currentProduct.reviews.length
+			.reduce((acc, curr) => acc + curr, 0) / currentProduct.reviews.length
 	}
 	// Convert the average review rating to a .5 interval rating so it can be represented by stars
 	const calcStarRating = (rating) => {

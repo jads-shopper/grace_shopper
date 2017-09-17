@@ -2,13 +2,13 @@
 	border: #337ab7 solid 3px;
 	border-radius: 4px;
 	margin: 5px 10px;
-	height: 115px;
+	height: 135px;
 	width: 90%;
 }
 
 .productImage {
-	height: 100px;
-	width: 100px;
+	height: 120px;
+	width: 120px;
 	display: inline-block;
 	vertical-align: top;
 	margin: 5px;
