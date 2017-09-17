@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
 import _ from 'lodash'
+import {SingleProductReviews} from './SingleProductReviews.jsx'
 
 // TODO: Refactor the customer reviews, star ratings, and related products code into their components
 
@@ -151,20 +152,7 @@ export function SingleProductView(props) {
 				</Row>
 				<hr />
 				<Row>
-					<h3>Customer Reviews</h3>
-					{/*TODO: Add a title to the review model and ensure that all reviews have a user */}
-					<ListGroup>
-						{currentProduct.reviews.map((review) => {
-							return (
-								<ListGroupItem key={review.id}>
-									<p>{review.rating} {review.title}</p>
-									<p>by {review.userId} on {review.createdAt}</p>
-									<br />
-									<p>{review.text}</p>
-								</ListGroupItem>
-							)
-						})}
-					</ListGroup>
+					<SingleProductReviews reviews={currentProduct.reviews} />
 				</Row>
 			</Grid>
 		)
