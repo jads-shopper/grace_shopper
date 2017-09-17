@@ -75,8 +75,8 @@ export function SingleProductView(props) {
 const mapStateToProps = ({products, categories, cart}) => ({products, categories, cart})
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleAddToCart: (product) => {
-			return dispatch(addToCart(product))
+		handleAddToCart: (product, quantity) => {
+			return dispatch(addToCart(product, quantity))
 		},
 		handleRemoveFromCart: (product) => {
 			return dispatch(removeFromCart(product))

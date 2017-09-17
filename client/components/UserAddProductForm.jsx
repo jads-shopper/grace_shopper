@@ -46,6 +46,9 @@ export default function UserAddProductForm(props) {
 								<FormGroup controlId="formControlsSelect">
 									<ControlLabel>Select</ControlLabel>
 									<FormControl componentClass="select" placeholder="select">
+										{/*
+										TODO: Quantity should max out at the number of remaining items and prevent adding to cart if exceeds remaining
+										*/}
 										{
 											[...Array(31)]
 												.map((x, index) => index)
@@ -55,7 +58,7 @@ export default function UserAddProductForm(props) {
 									</FormControl>
 								</FormGroup>
 								<Button
-									onClick={() => props.handleAddToCart(currentProduct)}
+									onClick={() => props.handleAddToCart(currentProduct, 1)}
 									bsStyle="info">
 									<i className="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart
 								</Button>
