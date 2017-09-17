@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
-import {editUser, writeFirstName, writeLastName, adminSelect, writeEmail} from './../store'
+import {editUser, deleteUser, writeFirstName, writeLastName, adminSelect, writeEmail} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
@@ -72,7 +72,7 @@ function EditUserForm(props){
 							</select>
 						</div>
 						<Button bsStyle="info" type="submit" className="submitButton">Edit User</Button>
-						<Button bsStyle="danger" className="deleteButton">Delete User</Button>
+						<Button bsStyle="danger" onClick={props.handleDelete} className="deleteButton">Delete User</Button>
 					</form>
 				</Col>
 			</Row>
@@ -108,6 +108,14 @@ function mapDispatchToProps (dispatch, ownProps){
 		handleSubmit: function(evt){
 			evt.preventDefault()
 			dispatch(editUser({id: Number(ownProps.match.params.id) ,firstName: evt.target.firstName.value, lastName: evt.target.lastName.value, email: evt.target.email.value, isAdmin: evt.target.isAdmin.value}))
+			dispatch(writeFirstName(''))
+			dispatch(writeLastName(''))
+			dispatch(adminSelect(false))
+			dispatch(writeEmail(''))
+		},
+		handleDelete: function(evt){
+			evt.preventDefault()
+			dispatch(deleteUser({id: Number(ownProps.match.params.id)}))
 			dispatch(writeFirstName(''))
 			dispatch(writeLastName(''))
 			dispatch(adminSelect(false))
