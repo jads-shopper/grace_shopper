@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
-import _ from 'lodash'
+import {AddProductForm} from './AddProductForm.jsx';
 import {SingleProductReviews} from './SingleProductReviews.jsx'
 
 // TODO: Refactor the customer reviews, star ratings, and related products code into their components
@@ -68,37 +68,6 @@ export function SingleProductView(props) {
 			})
 		}
 	}
-	const filterRelatedProducts = () => {
-		const currentProductCategories = currentProduct.categories.map((category => category.id))
-		const relatedCategories = categories.filter((category) => currentProductCategories.includes(category.id))
-		const oneOfEachRelatedCategory = relatedCategories.map((relatedCategory) => relatedCategory.products[0])
-		const uniqueRelatedProducts = _.uniqBy(oneOfEachRelatedCategory, 'id')
-		return uniqueRelatedProducts.filter((uniqueRelatedProducts => uniqueRelatedProducts.id !== productId))
-	}
-
-	const renderRelatedProducts = (relatedProducts) => {
-		if(relatedProducts.length) {
-			return (
-				<div>
-					<h4 className="card-title">Add a :</h4>
-					<FormGroup>
-						<form>
-							{
-								filterRelatedProducts().map((relatedProduct) => {
-									return (
-										<Checkbox key={relatedProduct.id}>
-											<Link to={`/products/${relatedProduct.id}`}>{relatedProduct.name} - <p style={{color: 'green', display: 'inline-block'}}>${relatedProduct.price}</p></Link>
-										</Checkbox>
-									// {' '}
-									)
-								})
-							}
-						</form>
-					</FormGroup>
-				</div>
-			)
-		}
-	}
 
 	const starRating = calcStarRating(calcAverageRating())
 
@@ -138,16 +107,17 @@ export function SingleProductView(props) {
 						</div>
 					</Col>
 					<Col md={3}>
-						<Row>
-							<div className="card border-dark mb-3" style={{maxWidth: '20rem'}}>
-								<div className="card-body text-dark">
-									{renderRelatedProducts(filterRelatedProducts())}
-								</div>
-							</div>
-						</Row>
-						<Row>
-							<Button bsStyle="info"><i className="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</Button>
-						</Row>
+						<AddProductForm currentProduct={currentProduct} categories={categories} />
+						{/*<Row>*/}
+							{/*<div className="card border-dark mb-3" style={{maxWidth: '20rem'}}>*/}
+								{/*<div className="card-body text-dark">*/}
+									{/*{renderRelatedProducts(filterRelatedProducts())}*/}
+								{/*</div>*/}
+							{/*</div>*/}
+						{/*</Row>*/}
+						{/*<Row>*/}
+							{/*<Button bsStyle="info"><i className="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</Button>*/}
+						{/*</Row>*/}
 					</Col>
 				</Row>
 				<hr />
