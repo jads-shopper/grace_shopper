@@ -7,6 +7,7 @@ const Category = db.model('category')
 const ProductCategory = db.model('productCategory')
 const Chance = require('chance')
 const chance = new Chance()
+const chalk = require('chalk')
 
 const promises = []
 const promisesUsers = []
@@ -48,8 +49,9 @@ category.map((val, idx) => {
 const name = [], imageUrl = [], price = [], description = [], quantity = [], isActive = []
 
 for (i = 0; i < 50; i++) {
+	// TODO: Ensure unique product names to avoid the unique product name constraint
 	name.push(chance.word())
-	imageUrl.push(chance.avatar())
+	imageUrl.push('http://lorempixel.com/200/200/')
 	price.push(chance.floating({ fixed: 2, min: 0.01, max: 1000 }))
 	description.push(chance.paragraph())
 	quantity.push(chance.integer({ min: 0, max: 50 }))
@@ -93,12 +95,10 @@ for (i = 0; i < 50; i++) {
 	userId.push(chance.integer({min: 1, max: 50 }))
 }
 
-
 // Refactor this
 Promise.all(promises)
 	.then(() => Promise.all(promisesUsers))
 	.then((users) => {
-		console.log(users.map((user) => user.id))
 		text.map(( val, idx ) => {
 			promisesReviews.push(Review.create({
 				title: title[idx],
@@ -110,10 +110,16 @@ Promise.all(promises)
 			})
 			)
 		})
-		// return Promise.all(promisesReviews)
+		return Promise.all(promisesReviews)
 	})
-	.then(console.log('success'))
-	.catch(console.error)
-
+	.then(() => {
+		console.log(chalk.green('seed success!'))
+		process.exit(0)
+	})
+	.catch((err) => {
+		console.error(err.parent)
+		console.log(chalk.blue(`if only getting ${chalk.red('duplicate key value violates unique constraint "products_name_key"')}, it is because only unique product names will be created`))
+		process.exit(1)
+	})
 
 

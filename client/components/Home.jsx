@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
 import Categories from './Categories.jsx'
+import SingleProductRatings from './SingleProductRating.jsx'
 
 const mapStateToProps = function(state) {
 	return {
