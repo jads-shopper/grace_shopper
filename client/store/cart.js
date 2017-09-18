@@ -19,7 +19,7 @@ const cartState = {}
 
 export const addToCart = (product, quantity) => ({type: ADD_TO_CART, product, quantity})
 export const removeFromCart = (product) => ({type: REMOVE_FROM_CART, product})
-export const updateCart = (product, quantity) => ({type: UPDATE_CART, product, quantity})
+export const updateCart = (cart) => ({type: UPDATE_CART, cart})
 export const loadSessionCart = (cart) => ({type: LOAD_CART_FROM_SESSION, cart})
 
 /**
@@ -53,10 +53,8 @@ export default function (state = cartState, action) {
 		delete newState[action.product.id]
 		return newState
 	case UPDATE_CART:
-		newState[action.product.id].quantity = action.quantity
-		return newState
+		return action.cart
 	case LOAD_CART_FROM_SESSION:
-		console.log('inside cart reducer for session cart', action.cart)
 		return action.cart
 	default:
 		return state
@@ -66,9 +64,6 @@ export default function (state = cartState, action) {
 export const postCartSession = (cart) => {
 	return function() {
 		axios.post('/api/cart', cart)
-			.then((response) => {
-				console.log('SESSION',response)
-			})
 			.catch(console.error)
 	}
 }
@@ -77,8 +72,6 @@ export const fetchCartSession = () => {
 	return function(dispatch) {
 		axios.get('/api/cart')
 			.then((response) => {
-				console.log('cart from session', response.data)
-				// dispatch update cart
 				dispatch(loadSessionCart(response.data))
 			})
 			.catch(console.error)
