@@ -38,6 +38,28 @@ router.put('/:orderId/:productId', (req, res, next) =>{
 		.catch(next)
 })
 
+router.put('/:id', (req, res, next) => {
+	const id = +req.params.id
+	Order.update(req.body, {
+		where: {
+			id
+		}
+	})
+		.then(() => {
+			return Order.findById(id)
+		})
+		.then((foundOrder) => {
+			if(foundOrder) {
+				res.status(200).json(foundOrder)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch((err) => {
+			res.status(500).json(err)
+		})
+})
+
 router.delete('/:orderId/:productId', (req, res, next) =>{
 	return OrderProduct.findOne({
 		where: {

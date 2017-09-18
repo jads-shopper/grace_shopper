@@ -1,21 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Col, Row, Table, Button} from 'react-bootstrap'
-import {fetchOrderProducts, fetchOrders} from './../store'
+import {fetchOrderProducts, fetchOrders, editOrder} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
 		orders: state.orders,
 		orderProduct: state.orderProduct,
-	}
-}
-
-const mapDispatch = (dispatch) => {
-	return {
-		loadInitialData (id) {
-			dispatch(fetchOrderProducts(id))
-			dispatch(fetchOrders())
-		}
 	}
 }
 
@@ -29,7 +20,8 @@ class EditOrderForm extends Component {
 		const theOrder = this.props.orders.filter(order => {
 			return order.id === orderId
 		})[0]
-		if(theOrder) {
+
+		if(theOrder && theOrder.products) {
 			return (
 				<div>
 					<Row>
@@ -46,7 +38,7 @@ class EditOrderForm extends Component {
 							<span>
 								<h5>Status: {theOrder.fulfilled ? 'Fulfilled' : 'Unfulfilled'}</h5>
 							</span>
-							<Button >Toggle Status</Button>
+							<Button onClick={(evt) => {this.props.handleToggle(evt, theOrder)}}>Toggle Status</Button>
 						</Col>
 					</Row>
 					<Row>
@@ -103,6 +95,19 @@ class EditOrderForm extends Component {
 					</Col>
 				</Row>
 			)
+		}
+	}
+}
+
+const mapDispatch = (dispatch) => {
+	return {
+		loadInitialData (id) {
+			dispatch(fetchOrderProducts(id))
+			dispatch(fetchOrders())
+		},
+		handleToggle(evt, theOrder) {
+			evt.preventDefault()
+			dispatch(editOrder({id: Number(theOrder.id), fulfilled: !theOrder.fulfilled}))
 		}
 	}
 }
