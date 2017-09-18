@@ -18,7 +18,7 @@ describe('Reviews routes', () => {
 			return Object.assign({}, sampleProduct, { name: `computer lol ${idx}` })
 		}).map(prd => Product.create(prd)).concat(
 			'12345'.split('').map(( val, idx ) => {
-				return Object.assign({2}, sampleUser, { email: `lolzer${idx}@gmail.com` })
+				return Object.assign({}, sampleUser, { email: `lolzer${idx}@gmail.com` })
 			}).map(us => User.create(us)))
 		)
 
