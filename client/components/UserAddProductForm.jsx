@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import {FormGroup, Row, Button, Checkbox, ControlLabel,  FormControl} from 'react-bootstrap'
+import {FormGroup, Row, Button, Checkbox, ControlLabel} from 'react-bootstrap'
 import _ from 'lodash'
+import axios from 'axios'
 
 export default class UserAddProductForm extends Component {
 
@@ -9,7 +10,8 @@ export default class UserAddProductForm extends Component {
 		super(props)
 
 		this.state = {
-			quantity: 1
+			quantity: 1,
+			cart: {}
 		}
 
 		this.currentProduct = this.props.currentProduct
@@ -19,6 +21,17 @@ export default class UserAddProductForm extends Component {
 		this.filterRelatedProducts = this.filterRelatedProducts.bind(this)
 		this.renderRelatedProducts = this.renderRelatedProducts.bind(this)
 		this.handleSelectChange = this.handleSelectChange.bind(this)
+	}
+
+	componentWillReceiveProps(nextProps) {
+		axios.post('/api/cart', nextProps.cart)
+			.then((response) => {
+				// this.setState({cart: nextProps.cart})
+				// console.log('SESSION', response)
+				console.log('cart session posted', response)
+			})
+			.catch(console.error)
+
 	}
 
 	filterRelatedProducts() {
@@ -79,7 +92,8 @@ export default class UserAddProductForm extends Component {
 										</select>
 									</FormGroup>
 									<Button
-										onClick={() => this.props.handleAddToCart(this.currentProduct, this.state.quantity)}
+										onClick={() => {
+											this.props.handleAddToCart(this.currentProduct, this.state.quantity)}}
 										bsStyle="info">
 										<i className="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart
 									</Button>

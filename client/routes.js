@@ -18,7 +18,7 @@ import EditCategory from './components/EditCategory.jsx'
 import EditProduct from './components/EditProduct.jsx'
 import SingleCategory from './components/SingleCategory.jsx'
 import SingleProductView from './components/SingleProductView.jsx'
-import {getMe, fetchProducts, fetchCategories} from './store'
+import {getMe, fetchProducts, fetchCategories, fetchCartSession} from './store'
 
 /**
  * COMPONENT
@@ -34,7 +34,7 @@ class Routes extends Component {
 		return (
 			<Router history={history}>
 				<div>
-					<Navbar />
+					<Navbar cart={this.props.cart}/>
 					<Modal currentModal = {currentModal} />
 					<Switch>
 						<Route exact path="/home" component={Home} />
@@ -64,7 +64,8 @@ const mapState = (state) => {
 		// Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
 		// Otherwise, state.user will be an empty object, and state.user.id will be falsey
 		isLoggedIn: !!state.user.id,
-		currentModal: state.modals
+		currentModal: state.modals,
+		cart: state.cart
 
 	}
 }
@@ -75,6 +76,7 @@ const mapDispatch = (dispatch) => {
 			dispatch(getMe())
 			dispatch(fetchProducts())
 			dispatch(fetchCategories())
+			dispatch(fetchCartSession())
 		}
 	}
 }
