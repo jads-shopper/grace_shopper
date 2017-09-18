@@ -1,3 +1,4 @@
+import axios from 'axios'
 /**
  * ACTION TYPES
  */
@@ -23,6 +24,7 @@ export const updateCart = (product, quantity) => ({type: UPDATE_CART, product, q
  * REDUCER
  */
 
+
 export default function (state = cartState, action) {
 	let newState = {...state}
 	switch (action.type) {
@@ -46,6 +48,16 @@ export default function (state = cartState, action) {
 		return newState
 	default:
 		return state
+	}
+}
+
+export const postSessionThunk = (cart) => {
+	return function(dispatch) {
+		axios.post('/api/cart', cart)
+			.then((response) => {
+				console.log('SESSION',response)
+			})
+			.catch(console.error)
 	}
 }
 
