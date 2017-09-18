@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Label} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
 import history from './../history'
 import store from '../store/index.js'
@@ -36,6 +36,8 @@ function navbarInstance(props) {
 						<NavItem eventKey={3} onClick={() => {props.handleLogOut()}} href="#">Logout</NavItem>
 						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
 					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
+					{/*// TODO: Increase size of shopping cart*/}
+					<NavItem><Label className="black-label"><i className="fa fa-shopping-cart"></i> O ITEMS - 0$</Label></NavItem>
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>

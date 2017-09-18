@@ -41,6 +41,10 @@
 	color: orange
 }
 
+.icon-shopping-cart {
+	color: teal
+}
+
 .icon-bar a {
 	float: left; /* Float links side by side */
 	text-align: center; /* Center-align text */
@@ -57,6 +61,12 @@
 .deleteButton {
 	margin-left: 15px;
 }
+
+.black-label {
+	background-color: black
+}
+
+.
 
 
 input[type=text] {
