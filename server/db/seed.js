@@ -102,13 +102,13 @@ for (i = 0; i < 50; i++) {
 const orderDate = [], fulfilled = [], shippingAddress = [], orderUserId = []
 
 for (i = 0; i < 10; i++){
-	orderDate.push(chance.date())
+	orderDate.push(chance.date({year: 2016}))
 	fulfilled.push(chance.bool())
 	shippingAddress.push(chance.address())
 	orderUserId.push(i + 1)
 }
 
-orderDate.push(chance.date())
+orderDate.push(chance.date({year: 2016}))
 fulfilled.push(chance.bool())
 shippingAddress.push(chance.address())
 orderUserId.push(1)
