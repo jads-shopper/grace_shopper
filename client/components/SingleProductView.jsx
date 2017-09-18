@@ -40,7 +40,7 @@ export function SingleProductView(props) {
 							<SingleProductRating currentProduct={currentProduct}/>
 							<hr />
 						List Price: <p style={{color: 'green', display: 'inline-block'}}>${currentProduct.price}</p>
-							<p>Quantity Remaining: {currentProduct.quantity}</p>
+							{/*<p>Quantity Remaining: {currentProduct.quantity}</p>*/}
 							<p>{currentProduct.description}</p>
 						</div>
 					</Col>
