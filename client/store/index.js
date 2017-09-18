@@ -1,5 +1,5 @@
 //index
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
@@ -15,8 +15,9 @@ import newProduct from './newProduct'
 import newOrder from './newOrder'
 import cart from './cart'
 import searchProduct from './search'
+import orderProduct from './orderProduct'
 
-const reducer = combineReducers({user, products, categories, orders, users, newUser, newCategory, newProduct, newOrder, searchProduct, modals, cart})
+const reducer = combineReducers({user, products, categories, orders, users, newUser, newCategory, newProduct, newOrder, searchProduct, modals, cart, orderProduct})
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, composeWithDevTools(middleware))
 
@@ -33,4 +34,5 @@ export * from './newCategory'
 export * from './newProduct'
 export * from './newOrder'
 export * from './cart'
+export * from './orderProduct'
 
