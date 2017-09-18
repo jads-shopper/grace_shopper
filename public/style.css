@@ -27,3 +27,54 @@
 	margin-top: 0px;
 	color: white;
 }
+.icon-bar {
+	width: 20%; /* Full-width */
+	background-color: #555; /* Dark-grey background */
+	overflow: auto; /* Overflow due to float */
+}
+
+.fa-star {
+	color: orange
+}
+
+.fa-star-half-o {
+	color: orange
+}
+
+.icon-bar a {
+	float: left; /* Float links side by side */
+	text-align: center; /* Center-align text */
+	width: 20%; /* Equal width (5 icons with 20% width each = 100%)
+    padding: 12px 0; /* Some top and bottom padding */
+	transition: all 0.3s ease; /* Add transition for hover effects */
+	color: white; /* White text color */
+	font-size: 4px; /* Increased font size */
+}
+.categorySelector {
+	margin-left: 10px;
+}
+
+.deleteButton {
+	margin-left: 15px;
+}
+
+
+input[type=text] {
+	width: 230px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	margin-top: 15px;
+	background-color: white;
+	background-image: url('smSearch.png');
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	padding: 12px 20px 12px 40px;
+	-webkit-transition: width 0.4s ease-in-out;
+	transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+	width: 460px;
+}

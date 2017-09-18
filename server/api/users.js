@@ -24,28 +24,60 @@ router.get('/:id', (req, res, next) => {
 				res.sendStatus(404)
 			}
 		})
-		.catch(console.error)
+		.catch(next)
 })
 
 router.post('/', (req, res, next) => {
 	User.create(req.body)
 		.then((user) => {
 			if (user) {
-				res.json(user)
+				res.status(201).json(user)
 			} else {
 				res.sendStatus(404)
 			}
 		})
-		.catch(console.error)
-})
-
-router.put('/:id', function (req, res, next) {
-	User.findById(req.params.id)
-		.then(user => {
-			return user.update(req.body, {fields: ['firstName', 'lastName', 'email', 'isAdmin']})
-		})
-		.then(response => res.json(response))
 		.catch(next)
 })
 
+router.put('/:id', (req, res, next) => {
+	const id = +req.params.id
+	User.update(req.body, {
+		where: {
+			id
+		}
+	})
+		.then(() => {
+			return User.findById(id)
+		})
+		.then((foundUser) => {
+			if(foundUser) {
+				res.status(200).json(foundUser)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch((err) => {
+			res.status(500).json(err)
+		})
+})
 
+router.delete('/:id', (req, res, next) => {
+	const {id} = req.params
+
+	User.destroy({
+		where: {
+			id
+		}
+	})
+		.then((success) => {
+			if (success) {
+				res.sendStatus(204)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch((err) => {
+			res.status(500).json(err)
+		})
+
+})

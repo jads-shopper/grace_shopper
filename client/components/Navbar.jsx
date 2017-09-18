@@ -5,10 +5,12 @@ import history from './../history'
 import store from '../store/index.js'
 import {setModal, removeModal, getMe, logout} from '../store'
 import {connect} from 'react-redux'
+import SearchQ from './Search.jsx'
 
 function navbarInstance(props) {
 
 	const {handleLogin} = props
+	console.log(props.search)
 	return (
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>
@@ -19,8 +21,7 @@ function navbarInstance(props) {
 			</Navbar.Header>
 			<Navbar.Collapse>
 				<Nav>
-					<NavItem onClick = {() =>{
-						props.checkAuth()}} eventKey={1} href="#">Search Bar in Development</NavItem>
+					<SearchQ />
 				</Nav>
 				<Nav pullRight>
 					<NavItem eventKey={1} onClick={() => {history.push('/admin')}}>Admin View</NavItem>
