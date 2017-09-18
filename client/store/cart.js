@@ -34,7 +34,14 @@ export default function (state = cartState, action) {
 		} else {
 			priorQuantity = 0
 		}
-		const cartObject = {name: action.product.name, quantity: priorQuantity + action.quantity, price: action.product.price}
+		const cartObject =
+			{
+				name: action.product.name,
+				quantity: priorQuantity + action.quantity,
+				price: action.product.price,
+				imageUrl: action.product.imageUrl,
+
+			}
 		newState[action.product.id] = cartObject
 		return newState
 		//return {...state, ...action.product, ...{quantity: action.quantity}}
