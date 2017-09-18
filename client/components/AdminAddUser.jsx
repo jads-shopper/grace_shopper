@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Col, Row} from 'react-bootstrap'
-import store, {postUser, writeFirstName, writeLastName, adminSelect, writeEmail, writePassword} from './../store'
+import {Col, Row, Button} from 'react-bootstrap'
+import {postUser, writeFirstName, writeLastName, adminSelect, writeEmail, writePassword} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
@@ -73,7 +73,7 @@ function AddUserForm(props){
 							<option value={true}>True</option>
 						</select>
 					</div>
-					<button type="submit" id="submit">Create User</button>
+					<Button bsStyle="info" type="submit" className="submitButton">Create User</Button>
 				</form>
 			</Col>
 		</Row>

@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_CATEGORIES = 'GET_CATEGORIES'
 const POST_CATEGORY = 'POST_CATEGORY'
+const EDIT_CATEGORY = 'EDIT_CATEGORY'
 
 /**
  * INITIAL STATE
@@ -17,6 +18,7 @@ const categoryState = []
  */
 const getProducts = categories => ({type: GET_CATEGORIES, categories})
 const makeCategory = category => ({type: POST_CATEGORY, category})
+const editCategoryAction = category => ({type: EDIT_CATEGORY, category})
 
 /**
  * THUNK CREATORS
@@ -46,6 +48,18 @@ export function postCategory (category) {
 	}
 }
 
+export function editCategory (category) {
+	return function thunk (dispatch) {
+		return axios.put(`/api/categories/${category.id}`, category)
+			.then(res => res.data)
+			.then(targetCategory => {
+				const action = editCategoryAction(targetCategory)
+				dispatch(action)
+				history.push('/admin')
+			})
+	}
+}
+
 /**
  * REDUCER
  */
@@ -55,6 +69,8 @@ export default function (state = categoryState, action) {
 		return action.categories
 	case POST_CATEGORY:
 		return state.concat(action.category)
+	case EDIT_CATEGORY:
+		return state.filter(category => Number(category.id) !== Number(action.category.id)).concat(action.category)
 	default:
 		return state
 	}

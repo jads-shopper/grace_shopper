@@ -7,8 +7,8 @@ const OrderProduct = require('./ordersProductsJoin')
 
 Product.hasMany(Review)
 
-Review.belongsTo(User)
-Review.belongsTo(Product)
+Review.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
+Review.belongsTo(Product, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' })
 
 Product.belongsToMany(Category, {through: 'productCategory'})
 Category.belongsToMany(Product, {through: 'productCategory'})
