@@ -12,6 +12,7 @@ import Modal from './components/ModalConductor.jsx'
 import AdminAddUser from './components/AdminAddUser.jsx'
 import AdminAddCategory from './components/AdminAddCategory.jsx'
 import AdminAddProduct from './components/AdminAddProduct.jsx'
+import AdminAddOrder from './components/AdminAddOrder.jsx'
 import EditUser from './components/EditUser.jsx'
 import EditCategory from './components/EditCategory.jsx'
 import EditProduct from './components/EditProduct.jsx'
@@ -41,6 +42,7 @@ class Routes extends Component {
 						<Route exact path="/admin/newUser" component={AdminAddUser} />
 						<Route exact path="/admin/newCategory" component={AdminAddCategory} />
 						<Route exact path="/admin/newProduct" component={AdminAddProduct} />
+						<Route exact path="/admin/newOrder" component={AdminAddOrder} />
 						<Route exact path="/products/:id" component={SingleProductView} />
 						<Route path="/admin/edit/user/:id" component={EditUser} />
 						<Route path="/admin/edit/category/:id" component={EditCategory} />
