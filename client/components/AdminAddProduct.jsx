@@ -135,7 +135,7 @@ function AddProductForm(props){
 				<Col id="categoryCol" xs={12} sm={11}>
 					<h5>Category</h5>
 					<button id="newCat" onClick={() => {addCategorySelector(props.categories)}}>Add Another Category</button>
-					<select id="category1" name="category1" className="categorySelector" onChange={props.handleCategory}>
+					<select id="category1" name="category1" className="categorySelector">
 						<option value={null}>None</option>
 						{
 							props.categories.map(category => {

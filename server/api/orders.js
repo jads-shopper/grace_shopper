@@ -1,11 +1,23 @@
 const router = require('express').Router()
-const {Order, OrderProduct} = require('../db/models')
+const {Order, OrderProduct, Product, User} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
-	return Order.findAll()
+	return Order.findAll({include: [User, Product]})
 		.then((orders) => {
 			return res.json(orders)
+		})
+		.catch(next)
+})
+
+router.post('/admin', (req, res, next) => {
+	Order.create(req.body)
+		.then((order) => {
+			if (order) {
+				res.status(201).json(order)
+			} else {
+				res.sendStatus(404)
+			}
 		})
 		.catch(next)
 })
@@ -63,7 +75,7 @@ router.get('/:orderId', (req, res, next) => {
 		.catch(next)
 })
 
-router.get('/:userId', (req, res, next) => {
+router.get('/user/:userId', (req, res, next) => {
 	return Order.findAll({
 		where: {
 			userId: req.params.userId,
@@ -101,6 +113,7 @@ router.post('/', (req, res, next) => {
 		})
 		.catch(next)
 })
+
 
 
 
