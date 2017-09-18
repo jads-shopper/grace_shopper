@@ -19,7 +19,7 @@ const cartState = {}
 
 export const addToCart = (product, quantity) => ({type: ADD_TO_CART, product, quantity})
 export const removeFromCart = (product) => ({type: REMOVE_FROM_CART, product})
-export const updateCart = (cart) => ({type: UPDATE_CART, cart})
+export const updateCart = (product, quantity) => ({type: UPDATE_CART, product, quantity})
 export const loadSessionCart = (cart) => ({type: LOAD_CART_FROM_SESSION, cart})
 
 /**
@@ -53,7 +53,8 @@ export default function (state = cartState, action) {
 		delete newState[action.product.id]
 		return newState
 	case UPDATE_CART:
-		return action.cart
+		newState[action.product.id].quantity = action.quantity
+		return newState
 	case LOAD_CART_FROM_SESSION:
 		return action.cart
 	default:
