@@ -6,6 +6,7 @@ import UserAddProductForm from './UserAddProductForm.jsx'
 import SingleProductReviews from './SingleProductReviews.jsx'
 import SingleProductRating from './SingleProductRating.jsx'
 import {addToCart, removeFromCart} from '../store/cart'
+import {postSessionThunk} from '../store/cart'
 
 export function SingleProductView(props) {
 	const productId = +props.match.params.id
@@ -36,7 +37,7 @@ export function SingleProductView(props) {
 					<Col md={6}>
 						<div>
 							<h2>{currentProduct.name}</h2>
-								<SingleProductRating currentProduct={currentProduct}/>
+							<SingleProductRating currentProduct={currentProduct}/>
 							<hr />
 						List Price: <p style={{color: 'green', display: 'inline-block'}}>${currentProduct.price}</p>
 							<p>Quantity Remaining: {currentProduct.quantity}</p>
@@ -48,6 +49,8 @@ export function SingleProductView(props) {
 							currentProduct={currentProduct}
 							categories={categories}
 							handleAddToCart={props.handleAddToCart}
+							postCartSession = {props.postCartSession}
+							cart = {props.cart}
 						/>
 					</Col>
 				</Row>
@@ -80,6 +83,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		handleSubmit: () => {
 			// add checked products + current product to cart
+		},
+		postCartSession: (cart) => {
+			dispatch(postSessionThunk(cart))
 		}
 	}
 }
