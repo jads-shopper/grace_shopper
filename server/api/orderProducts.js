@@ -8,6 +8,12 @@ router.get('/', (req, res, next) => {
 		.catch(next)
 })
 
+router.get('/:orderId', (req, res, next) => {
+	OrderProduct.findAll({where: {orderId: Number(req.params.orderId)}})
+		.then(result => res.json(result))
+		.catch(next)
+})
+
 router.post('/', (req, res, next) => {
 	OrderProduct.create(req.body)
 		.then((orderProduct) => {
