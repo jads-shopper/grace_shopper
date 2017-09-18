@@ -5,6 +5,8 @@ const Product = db.model('product')
 const Review = db.model('review')
 const Category = db.model('category')
 const ProductCategory = db.model('productCategory')
+const Order = db.model('order')
+const OrderProduct = db.model('orderProduct')
 const Chance = require('chance')
 const chance = new Chance()
 const chalk = require('chalk')
@@ -12,6 +14,7 @@ const chalk = require('chalk')
 const promises = []
 const promisesUsers = []
 const promisesReviews = []
+const promisesOrders= []
 
 //user seed
 const userFirstName = [], userLastName = [], userEmail = [], password = [], isAdmin = []
@@ -95,10 +98,54 @@ for (i = 0; i < 50; i++) {
 	userId.push(chance.integer({min: 1, max: 50 }))
 }
 
+// orders seed
+const orderDate = [], fulfilled = [], shippingAddress = [], orderUserId = []
+
+for (i = 0; i < 10; i++){
+	orderDate.push(chance.date())
+	fulfilled.push(chance.bool())
+	shippingAddress.push(chance.address())
+	orderUserId.push(i + 1)
+}
+
+orderDate.push(chance.date())
+fulfilled.push(chance.bool())
+shippingAddress.push(chance.address())
+orderUserId.push(1)
+
+orderDate.map((val, idx) => {
+	return Order.create({
+		orderDate: orderDate[idx],
+		fulfilled: fulfilled[idx],
+		shippingAddress: shippingAddress[idx],
+	})
+		.then(order => {
+			order.setUser(orderUserId[idx])
+		})
+})
+
+// order products seed
+
+const orderQuantity = [], orderId = [], orderProductId = []
+
+for (i = 1; i <= 20; i++) {
+	orderQuantity.push(chance.integer({min: 1, max: 3}))
+	orderId.push(chance.integer({min: 1, max: 10}))
+	orderProductId.push(chance.integer({min: 1, max: 50}))
+}
+
+orderQuantity.map((val, idx) => {
+	promises.push(OrderProduct.create({
+		quantity: orderQuantity[idx],
+		orderId: orderId[idx],
+		productId: orderProductId[idx]
+	}))
+})
+
 // Refactor this
 Promise.all(promises)
 	.then(() => Promise.all(promisesUsers))
-	.then((users) => {
+	.then(() => {
 		text.map(( val, idx ) => {
 			promisesReviews.push(Review.create({
 				title: title[idx],
