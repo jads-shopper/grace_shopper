@@ -17,7 +17,7 @@ import EditCategory from './components/EditCategory.jsx'
 import EditProduct from './components/EditProduct.jsx'
 import SingleCategory from './components/SingleCategory.jsx'
 import SingleProductView from './components/SingleProductView.jsx'
-import {getMe, fetchProducts, fetchCategories} from './store'
+import {getMe, fetchProducts, fetchCategories, fetchCartSession} from './store'
 
 /**
  * COMPONENT
@@ -74,6 +74,7 @@ const mapDispatch = (dispatch) => {
 			dispatch(getMe())
 			dispatch(fetchProducts())
 			dispatch(fetchCategories())
+			dispatch(fetchCartSession())
 		}
 	}
 }

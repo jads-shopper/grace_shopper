@@ -1,12 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
+import {Row, Col, Carousel, Grid } from 'react-bootstrap'
 import UserAddProductForm from './UserAddProductForm.jsx'
 import SingleProductReviews from './SingleProductReviews.jsx'
 import SingleProductRating from './SingleProductRating.jsx'
 import {addToCart, removeFromCart} from '../store/cart'
-import {postSessionThunk} from '../store/cart'
+import {postCartSession} from '../store/cart'
 
 export function SingleProductView(props) {
 	const productId = +props.match.params.id
@@ -85,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
 			// add checked products + current product to cart
 		},
 		postCartSession: (cart) => {
-			dispatch(postSessionThunk(cart))
+			dispatch(postCartSession(cart))
 		}
 	}
 }
