@@ -8,4 +8,9 @@ router.post('/', (req, res, next) => {
 	res.json(req.session).end()
 })
 
+router.get('/', (req, res, next) => {
+	console.log(req.session.cart)
+	res.json(req.session.cart)
+})
+
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import {FormGroup, Row, Button, Checkbox, ControlLabel,  FormControl} from 'react-bootstrap'
+import {FormGroup, Row, Button, Checkbox, ControlLabel} from 'react-bootstrap'
 import _ from 'lodash'
 import axios from 'axios'
 
@@ -24,12 +24,11 @@ export default class UserAddProductForm extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log('NEXTPROPS', nextProps)
-		console.log('CART', nextProps.cart)
 		axios.post('/api/cart', nextProps.cart)
 			.then((response) => {
-				this.setState({cart: nextProps.cart})
-				console.log('SESSION', response)
+				// this.setState({cart: nextProps.cart})
+				// console.log('SESSION', response)
+				console.log('cart session posted', response)
 			})
 			.catch(console.error)
 
