@@ -1,3 +1,4 @@
+//index
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import createLogger from 'redux-logger'

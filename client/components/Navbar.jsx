@@ -10,9 +10,6 @@ import SearchQ from './Search.jsx'
 function navbarInstance(props) {
 
 	const {handleLogin} = props
-
-	console.log(props.search)
-
 	return (
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>

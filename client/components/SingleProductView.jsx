@@ -1,12 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Row, Col, Carousel, Grid} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
+import {Row, Col, Carousel, Button, FormGroup, Checkbox, Grid, ListGroup, ListGroupItem} from 'react-bootstrap'
 import UserAddProductForm from './UserAddProductForm.jsx'
 import SingleProductReviews from './SingleProductReviews.jsx'
 import SingleProductRating from './SingleProductRating.jsx'
 import {addToCart, removeFromCart} from '../store/cart'
-
-// TODO: Refactor the customer reviews, star ratings, and related products code into their components
 
 export function SingleProductView(props) {
 	const productId = +props.match.params.id
@@ -70,7 +69,6 @@ export function SingleProductView(props) {
 		)
 	}
 }
-
 const mapStateToProps = ({products, categories, cart}) => ({products, categories, cart})
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -82,14 +80,8 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		handleSubmit: () => {
 			// add checked products + current product to cart
-		},
-		handleSelectQuantity: () => {
-
 		}
 	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProductView)
-
-
-

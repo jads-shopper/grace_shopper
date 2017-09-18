@@ -95,6 +95,7 @@ for (i = 0; i < 50; i++) {
 	userId.push(chance.integer({min: 1, max: 50 }))
 }
 
+// Refactor this
 Promise.all(promises)
 	.then(() => Promise.all(promisesUsers))
 	.then((users) => {
@@ -120,6 +121,5 @@ Promise.all(promises)
 		console.log(chalk.blue(`if only getting ${chalk.red('duplicate key value violates unique constraint "products_name_key"')}, it is because only unique product names will be created`))
 		process.exit(1)
 	})
-
 
 
