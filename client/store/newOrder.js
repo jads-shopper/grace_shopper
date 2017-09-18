@@ -12,7 +12,7 @@ const FULFILLED_SELECT = 'FULFILLED_SELECT'
 const newOrderState = {
 	shippingAddress: '',
 	userId: 0,
-	fulfilled: true
+	fulfilled: false
 }
 
 /**
@@ -20,7 +20,7 @@ const newOrderState = {
  */
 export function writeAddress (address) {return {type: WRITE_ADDRESS, address}}
 export function writeUserId (userId) {return {type: WRITE_USERID, price: Number(userId)}}
-export function fulfilledSelect (isFulfilled) {return {type : FULFILLED_SELECT, isFulfilled}}
+export function fulfilledSelect (fulfilled) {return {type : FULFILLED_SELECT, fulfilled}}
 
 /**
  * REDUCER
@@ -32,7 +32,7 @@ export default function (state = newOrderState, action) {
 	case WRITE_USERID:
 		return Object.assign({}, state, { userId: action.userId })
 	case FULFILLED_SELECT:
-		return Object.assign({}, state, { isFulfilled: action.isFulfilled })
+		return Object.assign({}, state, { fulfilled: action.fulfilled })
 	default:
 		return state
 	}

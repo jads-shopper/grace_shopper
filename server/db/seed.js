@@ -130,7 +130,7 @@ const orderQuantity = [], orderId = [], orderProductId = []
 
 for (i = 1; i <= 20; i++) {
 	orderQuantity.push(chance.integer({min: 1, max: 3}))
-	orderId.push(chance.integer({min: 1, max: 10}))
+	orderId.push(chance.integer({min: 1, max: 11}))
 	orderProductId.push(chance.integer({min: 1, max: 50}))
 }
 

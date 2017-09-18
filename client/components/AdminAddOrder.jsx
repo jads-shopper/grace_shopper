@@ -10,52 +10,53 @@ const mapStateToProps = function(state) {
 	}
 }
 let selectorCounter = 1
+let numberArray = [1,2,3,4,5,6,7,8,9,10]
 
 function addProductSelector (products) {
-		//creates selector element
-		let newSelector = document.createElement('select')
-		newSelector.className= 'productSelector'
-		selectorCounter++
-		newSelector.name = 'product' + selectorCounter
-		newSelector.id = 'product' + selectorCounter
-		let nullOption = document.createElement('option')
-		nullOption.append('None')
-		nullOption.key = 'null'
-		nullOption.value = null
-		newSelector.append(nullOption)
+	//creates selector element
+	let newSelector = document.createElement('select')
+	newSelector.className= 'categorySelector'
+	selectorCounter++
+	newSelector.name = 'product' + selectorCounter
+	newSelector.id = 'product' + selectorCounter
+	let nullOption = document.createElement('option')
+	nullOption.append('None')
+	nullOption.key = 'null'
+	nullOption.value = null
+	newSelector.append(nullOption)
 
-		//creates quantity selector
-		let numberSelector = document.createElement('select')
-		numberSelector.className= 'numberSelector'
-		numberSelector.name = 'quantity' + selectorCounter
-		numberSelector.id = 'quantity' + selectorCounter
-		let zeroOption = document.createElement('option')
-		zeroOption.append('0')
-		zeroOption.key = 'null'
-		zeroOption.value = null
-		numberSelector.append(zeroOption)
-		for(var i = 1; i <= 10; i++){
-			let numberOption = document.createElement('option')
-			numberOption.append(i)
-			numberOption.key = i
-			numberOption.value = i
-			numberSelector.append(numberOption)
-		}
-
-		//maps products and adds them as options
-		products.forEach(product => {
-			let newOption = document.createElement('option')
-			newOption.append(product.name)
-			newOption.key = product.id
-			newOption.value = product.id
-			newSelector.append(newOption)
-		})
-
-		let targetCol = document.getElementById('productCol')
-		targetCol.append(newSelector)
-		targetCol.append(numberSelector)
+	//creates quantity selector
+	let numberSelector = document.createElement('select')
+	numberSelector.className= 'numberSelector'
+	numberSelector.name = 'quantity' + selectorCounter
+	numberSelector.id = 'quantity' + selectorCounter
+	let zeroOption = document.createElement('option')
+	zeroOption.append('0')
+	zeroOption.key = 'null'
+	zeroOption.value = null
+	numberSelector.append(zeroOption)
+	for(var i = 1; i <= 10; i++){
+		let numberOption = document.createElement('option')
+		numberOption.append(i)
+		numberOption.key = i
+		numberOption.value = i
+		numberSelector.append(numberOption)
 	}
+
+	//maps products and adds them as options
+	products.forEach(product => {
+		let newOption = document.createElement('option')
+		newOption.append(product.name)
+		newOption.key = product.id
+		newOption.value = product.id
+		newSelector.append(newOption)
+	})
+
+	let targetCol = document.getElementById('productCol')
+	targetCol.append(newSelector)
+	targetCol.append(numberSelector)
 }
+
 
 function AddOrderForm(props){
 	return (
@@ -93,9 +94,9 @@ function AddOrderForm(props){
 							<span>
 								<h5>Fulfilled</h5>
 							</span>
-							<select name="isFulFilled" className="inputTextBox" onChange={props.handleFulfilled}>
-								<option value={true}>Yes</option>
+							<select name="fulfilled" className="inputTextBox" onChange={props.handleFulfilled}>
 								<option value={false}>No</option>
+								<option value={true}>Yes</option>
 							</select>
 						</div>
 						<Button bsStyle="info" type="submit" className="submitButton">Create Order</Button>
@@ -105,10 +106,10 @@ function AddOrderForm(props){
 			<Row>
 				<Col xs={0} sm={1}>
 				</Col>
-				<Col id="categoryCol" xs={12} sm={11}>
+				<Col id="productCol" xs={12} sm={11}>
 					<h5>Product</h5>
 					<button id="newCat" onClick={() => {addProductSelector(props.products)}}>Add Another Product</button>
-					<select id="product1" name="product1" className="categorySelector" onChange={props.handleProduct}>
+					<select id="product1" name="product1" className="categorySelector">
 						<option value={null}>None</option>
 						{
 							props.products.map(product => {
@@ -116,12 +117,12 @@ function AddOrderForm(props){
 							})
 						}
 					</select>
-					<select id="quantity1" name="quantity1" className="categorySelector">
+					<select id="quantity1" name="quantity1" className="numberSelector">
 						<option value={null}>0</option>
 						{
-							for(var i = 1; i <= 10; i++){
-								return (<option value={i} key={i})
-							}
+							numberArray.map(number => {
+								return (<option value={number} key={number}>{number}</option>)
+							})
 						}
 					</select>
 				</Col>
@@ -132,45 +133,34 @@ function AddOrderForm(props){
 
 function mapDispatchToProps (dispatch){
 	return {
-		handleName: function(evt){
-			dispatch(writeProductName(evt.target.value))
+		handleAddress: function(evt){
+			dispatch(writeAddress(evt.target.value))
 		},
-		handleImageURL: function(evt){
-			dispatch(writeImageURL(evt.target.value))
+		handleUserId: function(evt){
+			dispatch(writeUserId(evt.target.value))
 		},
-		handlePrice: function(evt){
-			dispatch(writePrice(evt.target.value))
-		},
-		handleQuantity: function(evt){
-			dispatch(writeQuantity(evt.target.value))
-		},
-		handleDescription: function(evt){
-			dispatch(writeDescription(evt.target.value))
-		},
-		handleActive: function(evt){
-			dispatch(activeSelect(evt.target.value))
+		handleFulfilled: function(evt){
+			dispatch(fulfilledSelect(evt.target.value))
 		},
 		handleSubmit: function(evt){
 			evt.preventDefault()
-			let categoryArray = []
+			let productArray = []
 			for (var i = 1; i <= selectorCounter; i++){
-				let tempName = 'category' + i
+				let tempName = 'product' + i
 				let targetSelect = document.getElementById(tempName)
+				let quantitySelect = document.getElementById('quantity' + i)
 				if (targetSelect.value !== 'None') {
-					categoryArray.push(targetSelect.value)
+					productArray.push({id: Number(targetSelect.value), quantity: Number(quantitySelect.value)})
 				}
 			}
-			dispatch(postProduct({name: evt.target.name.value, imageURL: evt.target.imageURL.value, price: Number(evt.target.price.value), description: evt.target.description.value, quantity: Number(evt.target.quantity.value), isActive: evt.target.isActive.value}, categoryArray))
-			dispatch(writeProductName(''))
-			dispatch(writeImageURL(''))
-			dispatch(activeSelect(false))
-			dispatch(writePrice(0))
-			dispatch(writeDescription(''))
-			dispatch(writeQuantity(0))
+			dispatch(postOrder({shippingAddress: evt.target.shippingAddress.value, userId: evt.target.userId.value, fulfilled: evt.target.fulfilled.value}, productArray))
+			dispatch(writeAddress(''))
+			dispatch(writeUserId(''))
+			dispatch(fulfilledSelect(false))
 		}
 	}
 }
 
-const AddProductContainer = connect(mapStateToProps, mapDispatchToProps)(AddProductForm)
+const AddProductContainer = connect(mapStateToProps, mapDispatchToProps)(AddOrderForm)
 
 export default AddProductContainer

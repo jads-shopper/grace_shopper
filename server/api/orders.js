@@ -10,6 +10,18 @@ router.get('/', (req, res, next) => {
 		.catch(next)
 })
 
+router.post('/admin', (req, res, next) => {
+	Order.create(req.body)
+		.then((order) => {
+			if (order) {
+				res.status(201).json(order)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch(next)
+})
+
 router.put('/:orderId/:productId', (req, res, next) =>{
 	return OrderProduct.findOne({
 		where: {
@@ -101,6 +113,7 @@ router.post('/', (req, res, next) => {
 		})
 		.catch(next)
 })
+
 
 
 

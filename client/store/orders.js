@@ -1,6 +1,5 @@
 import axios from 'axios'
 import history from '../history'
-import {fetchCategories} from './categories'
 
 /**
  * ACTION TYPES
@@ -39,17 +38,18 @@ export function fetchOrders () {
 	}
 }
 
-export function postOrder (order) {
+export function postOrder (order, productArray) {
 
 	return function thunk (dispatch) {
-		return axios.post('/api/orders', order)
+		return axios.post('/api/orders/admin', order)
 			.then(res => res.data)
-			// .then(newOrder => {
-			// 	// categoryArray.forEach(categoryId => {
-			// 	// 	axios.post('/api/productCategories', {productId: newProduct.id, categoryId})
-			// 	// })
-			// 	//return newProduct
-			// })
+			.then(newOrder => {
+				productArray.forEach(productIdAndQuantity => {
+					let relationObject = {quantity: productIdAndQuantity.quantity, productId: productIdAndQuantity.id, orderId:newOrder.id}
+					axios.post('/api/orderProducts', relationObject)
+				})
+				return newOrder
+			})
 			.then((newOrder) => {
 				dispatch(makeOrder(newOrder))
 				history.push('/admin')
