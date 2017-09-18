@@ -26,17 +26,17 @@ export default function SingleProductRating(props) {
 	const renderStarRating = (starRating) => {
 		var starRatingArr = []
 		if (starRating === Math.round(starRating)) {
-			console.log('equal to rounded')
+			console.log('equal to rounded', starRating)
 			for (var i = 0; i < starRating; i++) {
 				starRatingArr.push('full')
 			}
-			var j = 0
-			return starRatingArr.map(() => {
+			return [...Array(starRating)].map((x, i) => {
 				return (
-					<a key={j++} href="#"><i className="fa fa-star"></i></a>
+					<a key={i} href="#"><i className="fa fa-star"></i></a>
 				)
 			})
 		} else {
+			var j = 0
 			console.log('starrating not equal to rounded', starRating, Math.round(starRating))
 			for (var i = 0; i < starRating - 1; i++) {
 				console.log(i)

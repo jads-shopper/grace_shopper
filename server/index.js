@@ -82,7 +82,7 @@ const startListening = () => {
 	require('./socket')(io)
 }
 
-const syncDb = () => db.sync({force: true})
+const syncDb = () => db.sync({force: false})
 
 
 // This evaluates as true when this file is run directly from the command line,

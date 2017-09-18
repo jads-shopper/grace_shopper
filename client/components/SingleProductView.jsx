@@ -4,6 +4,7 @@ import {Row, Col, Carousel, Grid} from 'react-bootstrap'
 import UserAddProductForm from './UserAddProductForm.jsx'
 import SingleProductReviews from './SingleProductReviews.jsx'
 import SingleProductRating from './SingleProductRating.jsx'
+import {addToCart, removeFromCart} from '../store/cart'
 
 // TODO: Refactor the customer reviews, star ratings, and related products code into their components
 
@@ -11,7 +12,6 @@ export function SingleProductView(props) {
 	const productId = +props.match.params.id
 	const {products, categories} = props
 	const currentProduct = products.filter((product) => product.id === productId)[0]
-	console.log('curr product', currentProduct)
 
 	if(currentProduct) {
 		return (
@@ -45,7 +45,11 @@ export function SingleProductView(props) {
 						</div>
 					</Col>
 					<Col md={3}>
-						<UserAddProductForm currentProduct={currentProduct} categories={categories} />
+						<UserAddProductForm
+							currentProduct={currentProduct}
+							categories={categories}
+							handleAddToCart={props.handleAddToCart}
+						/>
 					</Col>
 				</Row>
 				<hr />
@@ -67,9 +71,25 @@ export function SingleProductView(props) {
 	}
 }
 
-const mapStateToProps = ({products, categories}) => ({products, categories})
+const mapStateToProps = ({products, categories, cart}) => ({products, categories, cart})
+const mapDispatchToProps = (dispatch) => {
+	return {
+		handleAddToCart: (product, quantity) => {
+			return dispatch(addToCart(product, quantity))
+		},
+		handleRemoveFromCart: (product) => {
+			return dispatch(removeFromCart(product))
+		},
+		handleSubmit: () => {
+			// add checked products + current product to cart
+		},
+		handleSelectQuantity: () => {
 
-export default connect(mapStateToProps, null)(SingleProductView)
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProductView)
 
 
 

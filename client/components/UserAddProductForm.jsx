@@ -1,23 +1,37 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import {FormGroup, Row, Button, Checkbox} from 'react-bootstrap'
+import {FormGroup, Row, Button, Checkbox, ControlLabel,  FormControl} from 'react-bootstrap'
 import _ from 'lodash'
 
-export default function UserAddProductForm(props) {
-	const {currentProduct, categories} = props
-	const productId = currentProduct.id
+export default class UserAddProductForm extends Component {
 
-	const filterRelatedProducts = () => {
-		const currentProductCategories = currentProduct.categories.map((category => category.id))
-		const relatedCategories = categories.filter((category) => currentProductCategories.includes(category.id))
-		const oneOfEachRelatedCategory = relatedCategories.map((relatedCategory) => relatedCategory.products[0])
-		const uniqueRelatedProducts = _.uniqBy(oneOfEachRelatedCategory, 'id')
-		return uniqueRelatedProducts.filter((uniqueRelatedProducts => uniqueRelatedProducts.id !== productId))
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			quantity: 1
+		}
+
+		this.currentProduct = this.props.currentProduct
+		this.productId = this.currentProduct.id
+		this.categories = this.props.categories
+
+		this.filterRelatedProducts = this.filterRelatedProducts.bind(this)
+		this.renderRelatedProducts = this.renderRelatedProducts.bind(this)
+		this.handleSelectChange = this.handleSelectChange.bind(this)
 	}
 
-	const renderRelatedProducts = () => {
+	filterRelatedProducts() {
+		const currentProductCategories = this.currentProduct.categories.map((category => category.id))
+		const relatedCategories = this.categories.filter((category) => currentProductCategories.includes(category.id))
+		const oneOfEachRelatedCategory = relatedCategories.map((relatedCategory) => relatedCategory.products[0])
+		const uniqueRelatedProducts = _.uniqBy(oneOfEachRelatedCategory, 'id')
+		return uniqueRelatedProducts.filter((uniqueRelatedProducts => uniqueRelatedProducts.id !== this.productId))
+	}
+
+	renderRelatedProducts() {
 		return (
-			filterRelatedProducts().map((relatedProduct) => {
+			this.filterRelatedProducts().map((relatedProduct) => {
 				return (
 					<Checkbox key={relatedProduct.id}>
 						<Link to={`/products/${relatedProduct.id}`}>{relatedProduct.name} - <p style={{color: 'green', display: 'inline-block'}}>${relatedProduct.price}</p></Link>
@@ -28,26 +42,54 @@ export default function UserAddProductForm(props) {
 		)
 	}
 
-	return (
-		<div>
-			<Row>
-				<div className="card border-dark mb-3" style={{maxWidth: '20rem'}}>
-					<div className="card-body text-dark">
-						{/*{renderRelatedProducts(filterRelatedProducts())}*/}
-						<div>
-							<h4 className="card-title">Add a :</h4>
-							<FormGroup>
+	handleSelectChange(e) {
+		this.setState({quantity: +e.target.value})
+	}
+
+	render() {
+		const filteredProducts = this.filterRelatedProducts()
+
+		return (
+			<div>
+				<Row>
+					<div className="card border-dark mb-3" style={{maxWidth: '20rem'}}>
+						<div className="card-body text-dark">
+							{/*{renderRelatedProducts(filterRelatedProducts())}*/}
+							<div>
+								{filteredProducts.length > 0 && <h4 className="card-title">Add a :</h4>}
 								<form>
-									{
-									    filterRelatedProducts().length && renderRelatedProducts()
-									}
-									<Button bsStyle="info"><i className="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</Button>
+									<FormGroup>
+										{
+											filteredProducts.length > 0 && this.renderRelatedProducts()
+										}
+									</FormGroup>
+									<FormGroup controlId="formControlsSelect">
+										<ControlLabel>Select</ControlLabel>
+										<select className="form-control" placeholder="select" onChange={this.handleSelectChange} value={this.state.quantity}>
+											{/*
+											TODO: Quantity should max out at the number of remaining items and prevent adding to cart if exceeds remaining
+											TODO: Quantity should be reduced when adding to cart
+											*/}
+											{
+												[...Array(this.currentProduct.quantity + 1)]
+													.map((x, index) => index)
+													.filter((index) => index !== 0)
+													.map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
+											}
+										</select>
+									</FormGroup>
+									<Button
+										onClick={() => this.props.handleAddToCart(this.currentProduct, this.state.quantity)}
+										bsStyle="info">
+										<i className="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart
+									</Button>
 								</form>
-							</FormGroup>
+							</div>
 						</div>
 					</div>
-				</div>
-			</Row>
-		</div>
-	)
+				</Row>
+			</div>
+		)
+
+	}
 }
