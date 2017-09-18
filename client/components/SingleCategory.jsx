@@ -7,7 +7,8 @@ import Categories from './Categories.jsx'
 const mapStateToProps = function(state) {
 	return {
 		products: state.products,
-		categories: state.categories
+		categories: state.categories,
+		search: state.searchProduct,
 	}
 }
 
@@ -16,7 +17,8 @@ function SingleCategoryList(props){
 	const theCategory = props.categories.filter(category => {
 		return category.id === categoryId
 	})[0]
-	if(props.products && theCategory){
+	let prods = props.products.filter(prod => prod.name.includes(props.search.query))
+	if(prods && theCategory){
 		return (
 			<Row>
 				<Categories />
@@ -24,7 +26,7 @@ function SingleCategoryList(props){
 					<h2>{theCategory.name}</h2>
 					<ul className="list-unstyled">
 						{ 
-							props.products.map(product => {
+							prods.map(product => {
 								let hasCatagory = product.categories.some(category => {
 									return category.name === theCategory.name
 								})
