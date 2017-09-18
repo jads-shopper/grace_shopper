@@ -32,7 +32,6 @@ router.post('/signup', (req, res, next) => {
 			if(created) {
 				req.logIn(user, (err) => {
 					if(err) return next(err)
-					console.log('REQUSER', req.user, 'USER', user)
 					res.json(user)
 				})} else {
 				res.sendStatus(401)

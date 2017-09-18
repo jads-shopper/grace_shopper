@@ -42,6 +42,16 @@ export const login = (credentials) =>
 				console.log(error)
 			})
 
+export const googleLogin = () =>
+	dispatch =>
+		axios.get('/auth/google')
+			.then((user) => {
+				console.log('USER', user)
+				dispatch(setUser(user))
+			})
+			.catch(error => {
+				console.log(error)
+			})
 
 export const signup = (credentials) =>
 	dispatch =>

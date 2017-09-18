@@ -63,6 +63,13 @@ class SignIn extends React.Component {
 								</Button>
 							</Col>
 						</FormGroup>
+						<FormGroup>
+							<Col smOffset={2} sm={10}>
+								<Button href = "/auth/google" bsStyle="danger">
+						Sign in with Google
+								</Button>
+							</Col>
+						</FormGroup>
 					</Modal.Footer>
 				</Form>
 			</Modal>

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Modal, Form, FormGroup, Col, FormControl, Button, ControlLabel} from 'react-bootstrap'
 import {connect} from 'react-redux'
-import {removeModal, signup } from '../store'
+import {removeModal, signup, googleLogin } from '../store'
 
 class SignUp extends React.Component {
 	constructor (props){
@@ -19,9 +19,7 @@ class SignUp extends React.Component {
 		evt.preventDefault()
 		let newState = {}
 		newState[evt.target.name] = evt.target.value
-		console.log(newState)
 		this.setState(newState)
-		console.log('STATE', this.state)
 	}
 
 	render() {
@@ -34,7 +32,6 @@ class SignUp extends React.Component {
 					<Modal.Title>Sign In</Modal.Title>
 				</Modal.Header>
 				<Form horizontal onSubmit = {() => {
-					console.log('SUBMIT')
 					this.props.handleSubmit(this.state)}}>
 					<Modal.Body>
 
@@ -84,7 +81,7 @@ class SignUp extends React.Component {
 						</FormGroup>
 						<FormGroup>
 							<Col smOffset={2} sm={10}>
-								<Button bsStyle="danger">
+								<Button href = "/auth/google" bsStyle="danger">
 						Sign in with Google
 								</Button>
 							</Col>
@@ -105,6 +102,9 @@ const mapDispatchToProps = (dispatch) => {
 
 		handleSubmit(credentials) {
 			dispatch(signup(credentials))
+		},
+		handleAuthSubmit() {
+			dispatch(googleLogin())
 		}
 	}
 }

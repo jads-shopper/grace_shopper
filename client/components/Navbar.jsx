@@ -9,7 +9,6 @@ import {connect} from 'react-redux'
 function navbarInstance(props) {
 
 	const {handleLogin} = props
-	console.log(props.user)
 	return (
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>
@@ -35,7 +34,6 @@ function navbarInstance(props) {
 
 					{props.user.id ?
 						<NavItem eventKey={3} onClick={() => {props.handleLogOut()}} href="#">Logout</NavItem>
-
 						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
 					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
 				</Nav>
