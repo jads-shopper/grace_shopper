@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
-import {editProduct, writeProductName, writeImageURL, writePrice, writeDescription, writeQuantity, activeSelect} from './../store'
+import {editProduct, deleteProduct, writeProductName, writeImageURL, writePrice, writeDescription, writeQuantity, activeSelect} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
@@ -142,7 +142,7 @@ function EditProductForm(props){
 								</select>
 							</div>
 							<Button bsStyle="info" type="submit" className="submitButton">Edit Product</Button>
-							<Button bsStyle="danger" className="deleteButton">Delete Product</Button>
+							<Button bsStyle="danger" onClick={props.handleDelete} className="deleteButton">Delete Product</Button>
 						</form>
 					</Col>
 				</Row>
@@ -208,6 +208,16 @@ function mapDispatchToProps (dispatch, ownProps){
 			// 	}
 			// }
 			dispatch(editProduct({id: Number(ownProps.match.params.id), name: evt.target.name.value, imageURL: evt.target.imageURL.value, price: Number(evt.target.price.value), description: evt.target.description.value, quantity: Number(evt.target.quantity.value), isActive: evt.target.isActive.value}, categoryArray))
+			dispatch(writeProductName(''))
+			dispatch(writeImageURL(''))
+			dispatch(activeSelect(false))
+			dispatch(writePrice(0))
+			dispatch(writeDescription(''))
+			dispatch(writeQuantity(0))
+		},
+		handleDelete: function(evt){
+			evt.preventDefault()
+			dispatch(deleteProduct({id: Number(ownProps.match.params.id)}))
 			dispatch(writeProductName(''))
 			dispatch(writeImageURL(''))
 			dispatch(activeSelect(false))

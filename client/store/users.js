@@ -7,6 +7,7 @@ import history from '../history'
 const GET_USERS = 'GET_USERS'
 const POST_USER = 'POST_USER'
 const EDIT_USER = 'EDIT_USER'
+const DELETE_USER = 'DELETE_USER'
 
 /**
  * INITIAL STATE
@@ -19,6 +20,7 @@ const usersState = []
 const getUsers = users => ({type: GET_USERS, users})
 const makeUser = user => ({type: POST_USER, user})
 const editUserAction = user => ({type: EDIT_USER, user})
+const deleteUserAction = user => ({type: DELETE_USER, user})
 
 /**
  * THUNK CREATORS
@@ -30,8 +32,7 @@ export function fetchUsers () {
 		return axios.get('/api/users')
 			.then(res => res.data)
 			.then(users => {
-				const action = getUsers(users)
-				dispatch(action)
+				dispatch(getUsers(users))
 			})
 	}
 }
@@ -53,8 +54,18 @@ export function editUser (user) {
 		return axios.put(`/api/users/${user.id}`, user)
 			.then(res => res.data)
 			.then(targetUser => {
-				const action = editUserAction(targetUser)
-				dispatch(action)
+				dispatch(editUserAction(targetUser))
+				history.push('/admin')
+			})
+	}
+}
+
+export function deleteUser (user) {
+	return function thunk (dispatch) {
+		return axios.delete(`/api/users/${user.id}`, user)
+			.then(res => res.data)
+			.then(() => {
+				dispatch(deleteUserAction(user))
 				history.push('/admin')
 			})
 	}
@@ -71,6 +82,8 @@ export default function (state = usersState, action) {
 		return state.concat(action.user)
 	case EDIT_USER:
 		return state.filter(user => Number(user.id) !== Number(action.user.id)).concat(action.user)
+	case DELETE_USER:
+		return state.filter(user => Number(user.id) !== Number(action.user.id))
 	default:
 		return state
 	}

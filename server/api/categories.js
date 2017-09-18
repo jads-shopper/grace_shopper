@@ -41,3 +41,24 @@ router.put('/:id', (req, res, next) => {
 			res.status(500).json(err)
 		})
 })
+
+router.delete('/:id', (req, res, next) => {
+	const {id} = req.params
+
+	Category.destroy({
+		where: {
+			id
+		}
+	})
+		.then((success) => {
+			if (success) {
+				res.sendStatus(204)
+			} else {
+				res.sendStatus(404)
+			}
+		})
+		.catch((err) => {
+			res.status(500).json(err)
+		})
+
+})

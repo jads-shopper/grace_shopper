@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchProducts} from './products'
 
 /**
  * ACTION TYPES
@@ -7,6 +8,7 @@ import history from '../history'
 const GET_CATEGORIES = 'GET_CATEGORIES'
 const POST_CATEGORY = 'POST_CATEGORY'
 const EDIT_CATEGORY = 'EDIT_CATEGORY'
+const DELETE_CATEGORY = 'DELETE_CATEGORY'
 
 /**
  * INITIAL STATE
@@ -19,6 +21,7 @@ const categoryState = []
 const getProducts = categories => ({type: GET_CATEGORIES, categories})
 const makeCategory = category => ({type: POST_CATEGORY, category})
 const editCategoryAction = category => ({type: EDIT_CATEGORY, category})
+const deleteCategoryAction = category => ({type: DELETE_CATEGORY, category})
 
 /**
  * THUNK CREATORS
@@ -30,8 +33,7 @@ export function fetchCategories () {
 		return axios.get('/api/categories')
 			.then(res => res.data)
 			.then(categories => {
-				const action = getProducts(categories)
-				dispatch(action)
+				dispatch(getProducts(categories))
 			})
 	}
 }
@@ -53,8 +55,23 @@ export function editCategory (category) {
 		return axios.put(`/api/categories/${category.id}`, category)
 			.then(res => res.data)
 			.then(targetCategory => {
-				const action = editCategoryAction(targetCategory)
-				dispatch(action)
+				dispatch(editCategoryAction(targetCategory))
+				history.push('/admin')
+			})
+	}
+}
+
+export function deleteCategory (category) {
+
+	return function thunk (dispatch) {
+		return axios.delete(`/api/categories/${category.id}`)
+			.then(res => res.data)
+			.then( () => {
+				dispatch(deleteCategoryAction(category))
+			})
+			// Refreshing products to update lack of deleted category
+			.then(() => {
+				dispatch(fetchProducts())
 				history.push('/admin')
 			})
 	}
@@ -71,6 +88,8 @@ export default function (state = categoryState, action) {
 		return state.concat(action.category)
 	case EDIT_CATEGORY:
 		return state.filter(category => Number(category.id) !== Number(action.category.id)).concat(action.category)
+	case DELETE_CATEGORY:
+		return state.filter(category => Number(category.id) !== Number(action.category.id))
 	default:
 		return state
 	}
