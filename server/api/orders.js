@@ -10,6 +10,22 @@ router.get('/', (req, res, next) => {
 		.catch(next)
 })
 
+router.put('/:orderId/:productId', (req, res, next) =>{
+	return OrderProduct.findOne({
+		where: {
+			orderId: req.params.orderId,
+			productId: req.params.productId
+		}
+	})
+		.then((orderProduct) => {
+			orderProduct.update({quantity: req.body.quantity})
+		})
+		.then(() => {
+			res.send('Product on cart updated')
+		})
+		.catch(next)
+})
+
 router.delete('/:orderId/:productId', (req, res, next) =>{
 	return OrderProduct.findOne({
 		where: {
@@ -73,7 +89,11 @@ router.post('/', (req, res, next) => {
 			userId: req.body.userId
 		}})
 		.spread((order)  => {
-			order.setProducts(req.body.products)
+			OrderProduct.create({
+				orderId: order.id,
+				productId: req.body.product,
+				quantity: req.body.quantity
+			})
 			return order.id
 		})
 		.then((orderId) => {
