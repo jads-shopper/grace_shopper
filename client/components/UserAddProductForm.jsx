@@ -25,7 +25,6 @@ export default class UserAddProductForm extends Component {
 	componentWillReceiveProps(nextProps) {
 		axios.post('/api/cart', nextProps.cart)
 			.catch(console.error)
-
 	}
 
 	filterRelatedProducts() {
@@ -71,7 +70,6 @@ export default class UserAddProductForm extends Component {
 										}
 									</FormGroup>
 									<FormGroup controlId="formControlsSelect">
-										<ControlLabel>Select</ControlLabel>
 										<select className="form-control" onChange={this.handleSelectChange} value={this.state.quantity}>
 											{/*
 											TODO: Quantity should max out at the number of remaining items and prevent adding to cart if exceeds remaining

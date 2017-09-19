@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Grid} from 'react-bootstrap'
-import {setModal} from '../store'
-
+import {postOrder, resetCart} from './../store'
+import history from '../history'
 
 export class CheckoutView extends Component {
 	constructor(props) {
@@ -21,12 +21,13 @@ export class CheckoutView extends Component {
 			shipping: 'standard'
 		}
 
-		this.handleChange = this.handleChange.bind(this)
 		this.cart = Object.keys(this.props.cart).map((id) => {
 			return {id: id, ...this.props.cart[id]}
 		})
 
+		this.handleChange = this.handleChange.bind(this)
 		this.calcTotal = this.calcTotal.bind(this)
+		this.onCheckout = this.onCheckout.bind(this)
 	}
 
 	calcTotal() {
@@ -39,10 +40,27 @@ export class CheckoutView extends Component {
 		this.setState({[e.target.name]: e.target.value})
 	}
 
+	onCheckout() {
+		// pass order and product into handleCheckout
+		const {address, city, state, country, zipcode} = this.state
+		const order = {
+			shippingAddress: `${address}, ${city}, ${state}, ${zipcode}, ${country}`,
+			userId: null,
+			fulfilled: false
+		}
+
+		const productArr = Object.keys(this.cart).map((id) => {
+			return {id: id, ...this.cart[id]}
+		})
+		this.props.handleCheckout(order, productArr)
+	}
+
+	// TODO: render fixed input with user's email value if authenticated user
+	// TODO: remove email label popup when focused
 	render() {
-	    console.log(this.calcTotal())
 		return (
 		    <Grid>
+				<h3>Checkout</h3>
 				<div id="wrap">
 					<div id="accordian">
 						<div className="step" id="step1">
@@ -189,9 +207,9 @@ export class CheckoutView extends Component {
 							<div>
 								<input type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
 							</div>
-							<div>
-								<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>
-							</div>
+							{/*<div>*/}
+							{/*<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>*/}
+							{/*</div>*/}
 						</div>
 
 						<div className="step" id="step4">
@@ -242,7 +260,7 @@ export class CheckoutView extends Component {
 								<div className="totals">
 									<span className="subtitle">Subtotal <span id="sub_price">${this.calcTotal().toFixed(2)}</span></span>
 									<span className="subtitle">Tax <span id="sub_tax">$0.00</span></span>
-									<span className="subtitle">Shipping <span id="sub_ship">$4</span></span>
+									<span className="subtitle">Shipping <span id="sub_ship">$4.00</span></span>
 								</div>
 								<div className="final">
 									<span className="title">Total <span id="calculated_total">${(this.calcTotal() + 4).toFixed(2)}</span></span>
@@ -270,7 +288,7 @@ export class CheckoutView extends Component {
 								{/*</div>*/}
 								<div id="complete">
 									{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
-									<Button>Checkout</Button>
+									<Button onClick={() => this.onCheckout()} bsStyle="info" bsSize="large">Checkout</Button>
 									<span className="sub">By selecting this Button you agree to the purchase and subsequent payment for this order.</span>
 								</div>
 							</div>
@@ -286,9 +304,14 @@ const mapStateToProps = ({cart}) => ({cart})
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleLogin (modalType) {
-			dispatch(setModal(modalType))
+		handleCheckout: (order, productArr) => {
+			// pass
+			dispatch(postOrder(order, productArr))
+			// TODO: Bug, cart will be reset whether or not the order is posted successfully
+			dispatch(resetCart())
+			history.push('/')
 		},
+
 	}
 }
 
