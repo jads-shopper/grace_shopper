@@ -305,6 +305,7 @@ form.go-right input:focus + label.same{
 }
 #accordian #shipping label{
 	padding:0;
+	display: inline
 }
 #accordian #shipping .price{
 	text-align:center;
@@ -495,6 +496,7 @@ form.go-right input:focus + label.same{
 	width:100%;
 	padding-top:5px;
 	border-top:1px dotted #aaa;
+	margin-top: 3em
 }
 /*#accordian #reviewed .big_button{*/
 	/*clear:both;*/

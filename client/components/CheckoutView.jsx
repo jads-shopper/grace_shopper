@@ -14,7 +14,8 @@ export default class CheckoutView extends Component {
 			city: '',
 			state: 'NY',
 			country: 'USA',
-			zipcode: ''
+			zipcode: '',
+			shipping: 'standard'
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -69,7 +70,7 @@ export default class CheckoutView extends Component {
 								<div>
 									<input type="phone" name="phoneNumber" onChange={this.handleChange} value={this.state.phoneNumber} id="telephone" placeholder="Phone number" data-trigger="change" data-validation-minlength="1" data-type="number" data-required="true" data-error-message="Enter Your Telephone Number"/>
 								</div>
-                                <br />
+								<br />
 								<div>
 									<input type="name" name="firstName" onChange={this.handleChange} value={this.state.firstName} id="first_name" placeholder="First name" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your First Name"/>
 								</div>
@@ -173,21 +174,12 @@ export default class CheckoutView extends Component {
 							</div>
 						</div>
 						<div className="content" id="shipping">
-							<form>
-								<div>
-									<input type="radio" id="shipping_1" value="1"/>
-								</div>			<div>
-									<input type="radio" id="shipping_1" value="2"/>
-								</div>			<div>
-									<input type="radio" id="shipping_1" value="3"/>
-								</div>
-								{/*<div>*/}
-								{/*<input type="radio" id="shipping_2" value="2"/><label htmlFor="shipping_2"> Express Shipping <span className="price">$8.00</span></label>*/}
-								{/*</div>*/}
-								{/*<div>*/}
-								{/*<input type="radio" id="shipping_3" value="3"/><label htmlFor="shipping_3"> Overnight Shipping <span className="price">$12.00</span></label>*/}
-								{/*</div>*/}
-							</form>
+							<div>
+								<input type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
+							</div>
+                            <div>
+								<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>
+							</div>
 						</div>
 
 						<div className="step" id="step4">
@@ -224,25 +216,26 @@ export default class CheckoutView extends Component {
 									<span className="title">Total <span id="calculated_total">$51.00</span></span>
 								</div>
 							</div>
+							{/*// TODO: Add billing address*/}
 							<div className="right" id="reviewed">
 								<div className="billing">
-									<span className="title">Shipping:</span>
+									<span className="title">Billing:</span>
 									<div className="address_reviewed">
-										<span className="name">John Smith</span>
-										<span className="address">123 Main Street</span>
-										<span className="location">Everytown, USA, 12345</span>
-										<span className="phone">(123)867-5309</span>
+										<span className="name">{`${this.state.firstName} ${this.state.lastName}`}</span>
+										<span className="address">{`${this.state.address}`}</span>
+										<span className="location">{`${this.state.city}, ${this.state.country}, ${this.state.zipcode}`}</span>
+										<span className="phone">${this.state.phoneNumber}</span>
 									</div>
 								</div>
-								<div className="shipping">
-									<span className="title">Shipping:</span>
-									<div className="address_reviewed">
-										<span className="name">John Smith</span>
-										<span className="address">123 Main Street</span>
-										<span className="location">Everytown, USA, 12345</span>
-										<span className="phone">(123)867-5309</span>
-									</div>
-								</div>
+								{/*<div className="shipping">*/}
+								{/*<span className="title">Shipping:</span>*/}
+								{/*<div className="address_reviewed">*/}
+								{/*<span className="name">John Smith</span>*/}
+								{/*<span className="address">123 Main Street</span>*/}
+								{/*<span className="location">Everytown, USA, 12345</span>*/}
+								{/*<span className="phone">(123)867-5309</span>*/}
+								{/*</div>*/}
+								{/*</div>*/}
 								<div id="complete">
 									{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
 									<Button>Checkout</Button>
