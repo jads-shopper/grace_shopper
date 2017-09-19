@@ -3,7 +3,6 @@ import {LinkContainer} from 'react-router-bootstrap'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Label} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
 import history from './../history'
-import store from '../store/index.js'
 import {setModal, removeModal, getMe, logout} from '../store'
 import {connect} from 'react-redux'
 import SearchQ from './Search.jsx'
@@ -11,7 +10,6 @@ import SearchQ from './Search.jsx'
 function navbarInstance(props) {
 
 	const {handleLogin, cart} = props
-	console.log('in navbar', cart)
 
 	const getCartData = () => {
 		var quantity = 0
@@ -58,7 +56,7 @@ function navbarInstance(props) {
 						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
 					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
 					{/*// TODO: Increase size of shopping cart*/}
-					<NavItem><Label className="black-label"><i className="fa fa-shopping-cart"></i> {cartData.quantity} ITEMS - ${cartData.totalPrice}</Label></NavItem>
+					<NavItem onClick={() => handleLogin('CART')}><Label className="black-label"><i className="fa fa-shopping-cart"></i> {cartData.quantity} ITEMS - ${cartData.totalPrice}</Label></NavItem>
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
@@ -83,6 +81,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		handleLogOut(){
 			dispatch(logout())
+		},
+		handleCartModal(modalType) {
+			dispatch(setModal(modalType))
 		}
 	}
 }

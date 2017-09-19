@@ -56,29 +56,23 @@ export default function (state = cartState, action) {
 		newState[action.product.id].quantity = action.quantity
 		return newState
 	case LOAD_CART_FROM_SESSION:
-		console.log('inside cart reducer for session cart', action.cart)
 		return action.cart
 	default:
 		return state
 	}
 }
 
-export const postCartSession = (cart) => {
-	return function() {
-		axios.post('/api/cart', cart)
-			.then((response) => {
-				console.log('SESSION',response)
-			})
-			.catch(console.error)
-	}
-}
+// export const postCartSession = (cart) => {
+// 	return function() {
+// 		axios.post('/api/cart', cart)
+// 			.catch(console.error)
+// 	}
+// }
 
 export const fetchCartSession = () => {
 	return function(dispatch) {
 		axios.get('/api/cart')
 			.then((response) => {
-				console.log('cart from session', response.data)
-				// dispatch update cart
 				dispatch(loadSessionCart(response.data))
 			})
 			.catch(console.error)
