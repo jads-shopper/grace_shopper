@@ -7,200 +7,252 @@ export default class CheckoutView extends Component {
 
 		this.state = {
 		    email: '',
-			shipping: {
-		        firstName: '',
-				lastName: '',
-				phoneNumber: '',
-				address: '',
-				city: '',
-				state: '',
-				country: '',
-				zipcode: ''
-			}
-
+			firstName: '',
+			lastName: '',
+			phoneNumber: '',
+			address: '',
+			city: '',
+			state: 'NY',
+			country: 'USA',
+			zipcode: ''
 		}
+
+		this.handleChange = this.handleChange.bind(this)
+	}
+
+	handleChange(e) {
+	    console.dir('in checkout')
+		console.log(e.target.name, e.target.value)
+		this.setState({[e.target.name]: e.target.value})
 	}
 
 	render() {
 		return (
-			<div id="wrap">
-				<div id="accordian">
-					<div className="step" id="step1">
-						<div className="number">
-							<span>1</span>
-						</div>
-						<div className="title">
-							<h1>Email Address</h1>
-						</div>
-						<div className="modify">
-							<i className="fa fa-plus-circle"></i>
-						</div>
-					</div>
-					<div className="content" id="email">
-						<form className="go-right">
-							<div>
-								<input type="email" name="email" value="" id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/><label htmlFor="email">Email Address</label>
+		    <Grid>
+				<div id="wrap">
+					<div id="accordian">
+						<div className="step" id="step1">
+							<div className="number">
+								<span>1</span>
 							</div>
-							<Button>Login</Button>
-							<Button>Create Account</Button>
-						</form>
-						{/*<a className="continue" href="#">Continue</a>*/}
-					</div>
-					<div className="step" id="step2">
-						<div className="number">
-							<span>2</span>
+							<div className="title">
+								<h1>Email Address</h1>
+							</div>
+							<div className="modify">
+								<i className="fa fa-plus-circle"></i>
+							</div>
 						</div>
-						<div className="title">
-							<h1>Shipping Information</h1>
+						<div className="content" id="email">
+							<form className="go-right">
+								<div>
+									<input onChange={this.handleChange} type="email" name="email" value={this.state.email} id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/><label htmlFor="email">Email Address</label>
+								</div>
+								<Button>Login</Button>
+								<Button>Create Account</Button>
+							</form>
+							{/*<a className="continue" href="#">Continue</a>*/}
 						</div>
-						<div className="modify">
-							<i className="fa fa-plus-circle"></i>
+						<div className="step" id="step2">
+							<div className="number">
+								<span>2</span>
+							</div>
+							<div className="title">
+								<h1>Shipping Information</h1>
+							</div>
+							<div className="modify">
+								<i className="fa fa-plus-circle"></i>
+							</div>
 						</div>
-					</div>
 
-					<div className="content" id="address">
-						<form className="go-right">
-							<div>
-								<input type="name" name="first_name" value="" id="first_name" placeholder="John" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your First Name"/>
-							</div>
-							<div>
-								<label htmlFor="last_name">Last Name</label>
-								<input type="name" name="last_name" value="" id="last_name" placeholder="Smith" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your Last Name"/>
-							</div>
-							<div>
-								<input type="phone" name="telephone" value="" id="telephone" placeholder="(555)-867-5309" data-trigger="change" data-validation-minlength="1" data-type="number" data-required="true" data-error-message="Enter Your Telephone Number"/>
-							</div>
-							<div>
-								<input type="text" name="address" value="" id="address" placeholder="123 Main Street" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping Address"/>
-							</div>
-							<div>
-								<input type="text" name="city" value="" id="city" placeholder="Everytown" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping City"/>
-							</div>
-                            <div>
-                                <input type="text" name="zip" value="" id="zip" placeholder="12345" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping Zip Code"/>
-                            </div>
-							<div>
-								<div className="state_options">
-									<div className="select">
-										<select id="state">
-											<option value = "1">Alabama</option>
-											<option value = "2">Alaska</option>
-											<option value = "3">Arkansas</option>
-											<option value = "4">Etc.</option>
-										</select>
+						<div className="content" id="address">
+							<form className="go-right">
+								<div>
+									<input type="phone" name="phoneNumber" onChange={this.handleChange} value={this.state.phoneNumber} id="telephone" placeholder="Phone number" data-trigger="change" data-validation-minlength="1" data-type="number" data-required="true" data-error-message="Enter Your Telephone Number"/>
+								</div>
+                                <br />
+								<div>
+									<input type="name" name="firstName" onChange={this.handleChange} value={this.state.firstName} id="first_name" placeholder="First name" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your First Name"/>
+								</div>
+								<div>
+									<label htmlFor="last_name">Last Name</label>
+									<input type="name" name="lastName" onChange={this.handleChange} value={this.state.lastName} id="last_name" placeholder="Last name" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="true" data-error-message="Enter Your Last Name"/>
+								</div>
+								<div>
+									<input type="text" name="address" onChange={this.handleChange} value={this.state.address} id="address" placeholder="Address" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping Address"/>
+								</div>
+								<div>
+									<input type="text" name="city" onChange={this.handleChange} value={this.state.city} id="city" placeholder="City" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping City"/>
+								</div>
+								<div>
+									<input type="text" name="zipcode" onChange={this.handleChange} value={this.state.zipcode} id="zip" placeholder="Zipcode" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping Zip Code"/>
+								</div>
+								<div>
+									<div className="state_options">
+										<div className="select">
+											<select id="state" onChange={this.handleChange} value={this.state.state}>
+												<option value="AL">Alabama</option>
+												<option value="AK">Alaska</option>
+												<option value="AZ">Arizona</option>
+												<option value="AR">Arkansas</option>
+												<option value="CA">California</option>
+												<option value="CO">Colorado</option>
+												<option value="CT">Connecticut</option>
+												<option value="DE">Delaware</option>
+												<option value="DC">District Of Columbia</option>
+												<option value="FL">Florida</option>
+												<option value="GA">Georgia</option>
+												<option value="HI">Hawaii</option>
+												<option value="ID">Idaho</option>
+												<option value="IL">Illinois</option>
+												<option value="IN">Indiana</option>
+												<option value="IA">Iowa</option>
+												<option value="KS">Kansas</option>
+												<option value="KY">Kentucky</option>
+												<option value="LA">Louisiana</option>
+												<option value="ME">Maine</option>
+												<option value="MD">Maryland</option>
+												<option value="MA">Massachusetts</option>
+												<option value="MI">Michigan</option>
+												<option value="MN">Minnesota</option>
+												<option value="MS">Mississippi</option>
+												<option value="MO">Missouri</option>
+												<option value="MT">Montana</option>
+												<option value="NE">Nebraska</option>
+												<option value="NV">Nevada</option>
+												<option value="NH">New Hampshire</option>
+												<option value="NJ">New Jersey</option>
+												<option value="NM">New Mexico</option>
+												<option value="NY">New York</option>
+												<option value="NC">North Carolina</option>
+												<option value="ND">North Dakota</option>
+												<option value="OH">Ohio</option>
+												<option value="OK">Oklahoma</option>
+												<option value="OR">Oregon</option>
+												<option value="PA">Pennsylvania</option>
+												<option value="RI">Rhode Island</option>
+												<option value="SC">South Carolina</option>
+												<option value="SD">South Dakota</option>
+												<option value="TN">Tennessee</option>
+												<option value="TX">Texas</option>
+												<option value="UT">Utah</option>
+												<option value="VT">Vermont</option>
+												<option value="VA">Virginia</option>
+												<option value="WA">Washington</option>
+												<option value="WV">West Virginia</option>
+												<option value="WI">Wisconsin</option>
+												<option value="WY">Wyoming</option>
+											</select>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div>
-								<div className="country_options">
-									<div className="select">
-										<select id="country">
-											<option value = "1">United States</option>
-											<option value = "2">United Kingdom</option>
-											<option value = "3">Uganda</option>
-											<option value = "4">Etc.</option>
-										</select>
+								<div>
+									<div className="country_options">
+										<div className="select">
+											<select id="country">
+												<option value = "USA">United States</option>
+											</select>
+										</div>
 									</div>
 								</div>
+								{/*<div>*/}
+								{/*<input type="checkbox"/>*/}
+								{/*<label className="same" htmlFor="same_as_shipping">Same As Shipping Address</label><span></span>*/}
+								{/*</div>*/}
+							</form>
+						</div>
+
+						<div className="step" id="step3">
+							<div className="number">
+								<span>3</span>
 							</div>
-							{/*<div>*/}
-							{/*<input type="checkbox"/>*/}
-							{/*<label className="same" htmlFor="same_as_shipping">Same As Shipping Address</label><span></span>*/}
-							{/*</div>*/}
-						</form>
-					</div>
-
-					<div className="step" id="step3">
-						<div className="number">
-							<span>3</span>
-						</div>
-						<div className="title">
-							<h1>Shipping Method</h1>
-						</div>
-						<div className="modify">
-							<i className="fa fa-plus-circle"></i>
-						</div>
-					</div>
-					<div className="content" id="shipping">
-						<form>
-							<div>
-								<input type="radio" id="shipping_1" value="1"/>
-							</div>			<div>
-								<input type="radio" id="shipping_1" value="2"/>
-							</div>			<div>
-								<input type="radio" id="shipping_1" value="3"/>
+							<div className="title">
+								<h1>Shipping Method</h1>
 							</div>
-							{/*<div>*/}
-							{/*<input type="radio" id="shipping_2" value="2"/><label htmlFor="shipping_2"> Express Shipping <span className="price">$8.00</span></label>*/}
-							{/*</div>*/}
-							{/*<div>*/}
-							{/*<input type="radio" id="shipping_3" value="3"/><label htmlFor="shipping_3"> Overnight Shipping <span className="price">$12.00</span></label>*/}
-							{/*</div>*/}
-						</form>
-					</div>
-
-					<div className="step" id="step4">
-						<div className="number">
-							<span>4</span>
+							<div className="modify">
+								<i className="fa fa-plus-circle"></i>
+							</div>
 						</div>
-						<div className="title">
-							<h1>Finalize Order</h1>
-						</div>
-						<div className="modify">
-							<i className="fa fa-plus-circle"></i>
-						</div>
-					</div>
-
-					<div className="content" id="final_products">
-						<div className="left" id="ordered">
-							<div className="products">
-								<div className="product_image">
-									{/*<img src="https://i.imgur.com/YwqxBXc.jpg"/>*/}
-
+						<div className="content" id="shipping">
+							<form>
+								<div>
+									<input type="radio" id="shipping_1" value="1"/>
+								</div>			<div>
+									<input type="radio" id="shipping_1" value="2"/>
+								</div>			<div>
+									<input type="radio" id="shipping_1" value="3"/>
 								</div>
-								<div className="product_details">
-									<span className="product_name">Cherry Bikini</span>
-									<span className="quantity">1</span>
-									<span className="price">$45.00</span>
-								</div>
+								{/*<div>*/}
+								{/*<input type="radio" id="shipping_2" value="2"/><label htmlFor="shipping_2"> Express Shipping <span className="price">$8.00</span></label>*/}
+								{/*</div>*/}
+								{/*<div>*/}
+								{/*<input type="radio" id="shipping_3" value="3"/><label htmlFor="shipping_3"> Overnight Shipping <span className="price">$12.00</span></label>*/}
+								{/*</div>*/}
+							</form>
+						</div>
+
+						<div className="step" id="step4">
+							<div className="number">
+								<span>4</span>
 							</div>
-							<div className="totals">
-								<span className="subtitle">Subtotal <span id="sub_price">$45.00</span></span>
-								<span className="subtitle">Tax <span id="sub_tax">$2.00</span></span>
-								<span className="subtitle">Shipping <span id="sub_ship">$4.00</span></span>
+							<div className="title">
+								<h1>Finalize Order</h1>
 							</div>
-							<div className="final">
-								<span className="title">Total <span id="calculated_total">$51.00</span></span>
+							<div className="modify">
+								<i className="fa fa-plus-circle"></i>
 							</div>
 						</div>
-						<div className="right" id="reviewed">
-							<div className="billing">
-								<span className="title">Shipping:</span>
-								<div className="address_reviewed">
-									<span className="name">John Smith</span>
-									<span className="address">123 Main Street</span>
-									<span className="location">Everytown, USA, 12345</span>
-									<span className="phone">(123)867-5309</span>
+
+						<div className="content" id="final_products">
+							<div className="left" id="ordered">
+								<div className="products">
+									<div className="product_image">
+										{/*<img src="https://i.imgur.com/YwqxBXc.jpg"/>*/}
+
+									</div>
+									<div className="product_details">
+										<span className="product_name">Cherry Bikini</span>
+										<span className="quantity">1</span>
+										<span className="price">$45.00</span>
+									</div>
+								</div>
+								<div className="totals">
+									<span className="subtitle">Subtotal <span id="sub_price">$45.00</span></span>
+									<span className="subtitle">Tax <span id="sub_tax">$2.00</span></span>
+									<span className="subtitle">Shipping <span id="sub_ship">$4.00</span></span>
+								</div>
+								<div className="final">
+									<span className="title">Total <span id="calculated_total">$51.00</span></span>
 								</div>
 							</div>
-							<div className="shipping">
-								<span className="title">Shipping:</span>
-								<div className="address_reviewed">
-									<span className="name">John Smith</span>
-									<span className="address">123 Main Street</span>
-									<span className="location">Everytown, USA, 12345</span>
-									<span className="phone">(123)867-5309</span>
+							<div className="right" id="reviewed">
+								<div className="billing">
+									<span className="title">Shipping:</span>
+									<div className="address_reviewed">
+										<span className="name">John Smith</span>
+										<span className="address">123 Main Street</span>
+										<span className="location">Everytown, USA, 12345</span>
+										<span className="phone">(123)867-5309</span>
+									</div>
 								</div>
-							</div>
-							<div id="complete">
-								{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
-								<Button>Checkout</Button>
-								<span className="sub">By selecting this Button you agree to the purchase and subsequent payment for this order.</span>
+								<div className="shipping">
+									<span className="title">Shipping:</span>
+									<div className="address_reviewed">
+										<span className="name">John Smith</span>
+										<span className="address">123 Main Street</span>
+										<span className="location">Everytown, USA, 12345</span>
+										<span className="phone">(123)867-5309</span>
+									</div>
+								</div>
+								<div id="complete">
+									{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
+									<Button>Checkout</Button>
+									<span className="sub">By selecting this Button you agree to the purchase and subsequent payment for this order.</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</Grid>
 		)
 	}
 }
