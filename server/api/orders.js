@@ -90,7 +90,12 @@ router.post('/:orderId', (req, res, next) => {
 })
 
 router.get('/:orderId', (req, res, next) => {
-	return Order.findById(req.params.orderId)
+	return Order.findAll({
+		where: {
+			id: req.params.orderId
+		},
+		include: [{all: true}]
+	})
 		.then((orders) => {
 			return res.json(orders)
 		})
@@ -102,8 +107,13 @@ router.get('/user/:userId', (req, res, next) => {
 		where: {
 			userId: req.params.userId,
 			fulfilled: true
-		}
+		},
+		include: [{all: true}]
 	})
+		.then((orders) => {
+			return res.json(orders)
+		})
+		.catch(next)
 })
 
 router.delete('/:orderId', (req, res, next) => {

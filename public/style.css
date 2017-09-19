@@ -6,6 +6,16 @@
 	width: 90%;
 }
 
+div#order{
+	border: #337ab7 solid 3px;
+	border-radius: 4px;
+	margin: 5px 10px;
+	width: 40%;
+}
+
+
+
+
 .productImage {
 	height: 120px;
 	width: 120px;

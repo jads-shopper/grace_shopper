@@ -23,9 +23,22 @@ const makeOrder = order => ({type: POST_ORDER, order})
 const editOrderAction = order => ({type: EDIT_ORDER, order})
 const deleteOrderAction = order => ({type: DELETE_ORDER, order})
 
+
 /**
  * THUNK CREATORS
  */
+
+
+export function fetchOrdersUser (userId) {
+
+	return function thunk (dispatch) {
+		return axios.get(`/api/orders/user/${userId}`)
+    	.then(res => res.data)
+			.then(orders => {
+				dispatch(getOrders(orders))
+			})
+	}
+}
 
 export function fetchOrders () {
 
@@ -84,6 +97,7 @@ export function deleteOrder (order) {
 /**
  * REDUCER
  */
+
 export default function (state = orderState, action) {
 	switch (action.type) {
 	case GET_ORDERS:

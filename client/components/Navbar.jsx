@@ -1,4 +1,5 @@
 import React from 'react'
+import {LinkContainer} from 'react-router-bootstrap'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Label} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
 import history from './../history'
@@ -43,12 +44,15 @@ function navbarInstance(props) {
 					<NavItem eventKey={1} onClick={() => {history.push('/admin')}}>Admin View</NavItem>
 					<NavDropdown eventKey={2} title="Options" id="basic-nav-dropdown">
 						<MenuItem eventKey={3.1}>Settings</MenuItem>
-						<MenuItem eventKey={3.2}>Orders</MenuItem>
+						{props.user.id ?
+							<LinkContainer to = {`orders/${props.user.id}`}>
+								<MenuItem eventKey={3.2}>Orders</MenuItem>
+							</LinkContainer>
+							: ''}
 						<MenuItem eventKey={3.3}>Reviews</MenuItem>
 						<MenuItem divider />
 						<MenuItem eventKey={3.3}>Logout</MenuItem>
 					</NavDropdown>
-
 					{props.user.id ?
 						<NavItem eventKey={3} onClick={() => {props.handleLogOut()}} href="#">Logout</NavItem>
 						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
