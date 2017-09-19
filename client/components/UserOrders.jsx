@@ -72,18 +72,20 @@ class UserOrders extends Component {
 													<th>Price</th>
 													<th>Quantity</th>
 													<th>Active</th>
+													<th>Add Review</th>
 												</tr>
 											</thead>
 											<tbody>
 												{
 													order.products.map(product => {
 														return (
-															<tr key={product.id} onClick={() => {history.push(`/admin/edit/product/${product.id}`)}}>
+															<tr key={product.id}>
 																<td>{product.id}</td>
 																<td>{product.name}</td>
 																<td>${product.price}</td>
 																<td>{product.orderProduct.quantity}</td>
 																<td>{product.isActive ? 'Yes' : 'No'}</td>
+																<td><NavLink to={`/products/review/${product.id}`}>Review your {product.name}</NavLink></td>
 															</tr>
 														)
 													})
