@@ -52,7 +52,7 @@ export function fetchOrders () {
 }
 
 export function postOrder (order, productArray) {
-
+console.log('inside postorder', order, productArray)
 	return function thunk (dispatch) {
 		return axios.post('/api/orders/admin', order)
 			.then(res => res.data)

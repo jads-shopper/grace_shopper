@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Grid} from 'react-bootstrap'
-import {setModal} from '../store'
-
+import {postOrder} from './../store'
 
 export class CheckoutView extends Component {
 	constructor(props) {
@@ -40,6 +39,7 @@ export class CheckoutView extends Component {
 	}
 
 	// TODO: render fixed input with user's email value if authenticated user
+	// TODO: remove email label popup when focused
 	render() {
 	    console.log(this.calcTotal())
 		return (
@@ -192,7 +192,7 @@ export class CheckoutView extends Component {
 								<input type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
 							</div>
 							{/*<div>*/}
-								{/*<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>*/}
+							{/*<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>*/}
 							{/*</div>*/}
 						</div>
 
@@ -288,9 +288,11 @@ const mapStateToProps = ({cart}) => ({cart})
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleLogin (modalType) {
-			dispatch(setModal(modalType))
+		handleCheckout: () => {
+			dispatch(postOrder({shippingAddress: evt.target.shippingAddress.value, userId: evt.target.userId.value, fulfilled: evt.target.fulfilled.value}, productArray))
 		},
+
+
 	}
 }
 

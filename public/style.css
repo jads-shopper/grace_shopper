@@ -743,3 +743,8 @@ form.go-right input:focus + label, form.go-right textarea:focus + label {
 .have-account {
 	float:right
 }
+
+.categoryH3 {
+	margin-top: 0px;
+	color: white;
+}
