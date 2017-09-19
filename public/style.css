@@ -203,19 +203,19 @@ input[type=text]:focus {
 	display:inline-block;
 	font-size: 1em;
 }
-#accordian .content button{
-	display:block;
-	float:right;
-	background:#80c0ff;
-	width:200px;
-	border:0;
-	padding:5px 15px;
-	font-size:1.6em;
-	color:#FFF;
-	border-bottom:3px solid #4da7ff;
-	border-radius:2px;
-	clear:both;
-}
+/*#accordian .content button{*/
+	/*display:block;*/
+	/*float:right;*/
+	/*background:#80c0ff;*/
+	/*width:200px;*/
+	/*border:0;*/
+	/*padding:5px 15px;*/
+	/*font-size:1.6em;*/
+	/*color:#FFF;*/
+	/*border-bottom:3px solid #4da7ff;*/
+	/*border-radius:2px;*/
+	/*clear:both;*/
+/*}*/
 #accordian .content .continue{
 	display:block;
 	float:right;
@@ -249,6 +249,7 @@ input[type=text]:focus {
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	display: inline-block;
+	font-size: 1em;
 }
 #accordian .country_options label,
 #accordian .state_options label{
@@ -271,7 +272,7 @@ input[type=text]:focus {
 	display:inline-block;
 	width: 100%;
 	padding: 5px;
-	font-size: 2em;
+	font-size: 1em;
 	line-height: 1;
 	border: 0;
 	border-radius:0;
@@ -360,7 +361,7 @@ form.go-right input:focus + label.same{
 	display:inline-block;
 	width: 100%;
 	padding: 5px;
-	font-size: 2em;
+	font-size: 1em;
 	line-height: 1;
 	border: 0;
 	border-radius:0;
@@ -495,21 +496,21 @@ form.go-right input:focus + label.same{
 	padding-top:5px;
 	border-top:1px dotted #aaa;
 }
-#accordian #reviewed .big_button{
-	clear:both;
-	display:block;
-	width:70%;
-	margin:0 auto;
-	padding-top:15px;
-	padding-bottom:10px;
-	color:#fff;
-	font-size:2em;
-	text-decoration: none;
-	background:#80c0ff;
-	text-align:center;
-	border-bottom: 3px solid #4da7ff;
-	border-radius: 2px;
-}
+/*#accordian #reviewed .big_button{*/
+	/*clear:both;*/
+	/*display:block;*/
+	/*width:70%;*/
+	/*margin:0 auto;*/
+	/*padding-top:15px;*/
+	/*padding-bottom:10px;*/
+	/*color:#fff;*/
+	/*font-size:2em;*/
+	/*text-decoration: none;*/
+	/*background:#80c0ff;*/
+	/*text-align:center;*/
+	/*border-bottom: 3px solid #4da7ff;*/
+	/*border-radius: 2px;*/
+/*}*/
 
 #accordian #reviewed #complete .sub{
 	color:#aaa;
