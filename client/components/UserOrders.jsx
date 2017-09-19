@@ -2,13 +2,17 @@ import React, {Component} from 'react'
 import AllProducts from './Home.jsx'
 import {fetchOrdersUser, getMe} from '../store'
 import {connect} from 'react-redux'
-import {PageHeader, Col, Row} from 'react-bootstrap'
+import {PageHeader, Col, Row, Table} from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
 class UserOrders extends Component {
-	constructor ( props ) {
+	constructor (props) {
 		super(props)
 
+	}
+
+	componentWillMount(){
+		this.props.renderOrders(this.props.user.id)
 	}
 
 	componentWillReceiveProps(nextProps){
@@ -23,33 +27,75 @@ class UserOrders extends Component {
 			return (
 				<div id = "orderRow">
 					<Row>
-						<Col xs={12} xsOffset={3}>
-							<PageHeader>Your Orders </PageHeader>
-							{this.props.orders.map((order) => {
-								return (
-									<div id = "order" key = {order.id}>
-										<h2>Order Placed: {order.orderDate}</h2>
-										<ul className="list-unstyled">
-											{order.products.map((product) => {
-												return (
-													<li key={product.id}>
-														<NavLink to={`/products/${product.id}`}>
-															<div className="productImage">
-																<img src={`${product.imageUrl}`} alt={`${product.name} image`} height="99" width="99" />
-															</div>
-														</NavLink>
-														<div className="productInfo">
-															<NavLink to={`/products/${product.id}`}><div><h4>Product: {product.name}</h4></div></NavLink>
-															<div><h4>${product.price}</h4></div>
-															<div><h5>Amount Remaining: {product.quantity}</h5></div>
-														</div>
-													</li>
-												)})}
-										</ul>
-									</div>
-								)})}
+						<Col xs={0} sm={1}>
+						</Col>
+						<Col xs={12} sm={10}>
+							<PageHeader>Orders</PageHeader>
 						</Col>
 					</Row>
+					{this.props.orders.map((order) => {
+						//Calculating the total of an order
+						let orderTotal = 0
+						order.products.forEach(product => {
+							let quantityCost = product.price * product.orderProduct.quantity
+							orderTotal += quantityCost
+						})
+						return (
+							<div key={order.id}>
+								<Row>
+									<Col xs={0} sm={1}>
+									</Col>
+									<Col xs={12} sm={10}>
+										<h3>Order #{order.id}</h3>
+										<span>
+											<h5>Total: ${orderTotal}</h5>
+										</span>
+										<span>
+											<h5>Shipping Address: {order.shippingAddress}</h5>
+										</span>
+										<span>
+											<h5>Status: {order.fulfilled ? 'Fulfilled' : 'Unfulfilled'}</h5>
+										</span>
+
+									</Col>
+								</Row>
+								<Row>
+									<Col xs={0} sm={1}>
+									</Col>
+									<Col xs={12} sm={10}>
+										<h4>Products</h4>
+										<Table striped bordered condensed hover>
+											<thead>
+												<tr>
+													<th>Product #</th>
+													<th>Name</th>
+													<th>Price</th>
+													<th>Quantity</th>
+													<th>Active</th>
+													<th>Add Review</th>
+												</tr>
+											</thead>
+											<tbody>
+												{
+													order.products.map(product => {
+														return (
+															<tr key={product.id}>
+																<td>{product.id}</td>
+																<td>{product.name}</td>
+																<td>${product.price}</td>
+																<td>{product.orderProduct.quantity}</td>
+																<td>{product.isActive ? 'Yes' : 'No'}</td>
+																<td><NavLink to={`/products/review/${product.id}`}>Review your {product.name}</NavLink></td>
+															</tr>
+														)
+													})
+												}
+											</tbody>
+										</Table>
+									</Col>
+								</Row>
+							</div>
+						)})}
 				</div>
 			)
 		} else {
@@ -72,9 +118,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		renderOrders (userId) {
-
-			dispatch(fetchOrdersUser(userId))
-
+			if(userId){
+				dispatch(fetchOrdersUser(userId))
+			}
 		},
 		renderMe(){
 			dispatch(getMe())

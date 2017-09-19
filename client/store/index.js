@@ -16,7 +16,8 @@ import newOrder from './newOrder'
 import cart from './cart'
 import searchProduct from './search'
 import orderProduct from './orderProduct'
-const reducer = combineReducers({user, products, categories, orders, users, newUser, newCategory, newProduct, newOrder, searchProduct, modals, cart, orderProduct})
+import newReview from './newReview'
+const reducer = combineReducers({user, products, categories, orders, users, newUser, newCategory, newProduct, newReview, newOrder, searchProduct, modals, cart, orderProduct})
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, composeWithDevTools(middleware))
 
@@ -34,5 +35,6 @@ export * from './newProduct'
 export * from './newOrder'
 export * from './cart'
 export * from './orderProduct'
+export * from './newReview'
 
 

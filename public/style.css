@@ -153,6 +153,11 @@ div#order{
 	color: teal;
 }
 
+.row {
+	margin-right: 0;
+	margin-right: 0;
+}
+
 input[type=text] {
 	width: 230px;
 	box-sizing: border-box;

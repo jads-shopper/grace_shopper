@@ -69,7 +69,7 @@ export class CartModal extends Component {
 										return (
 											<tr key={product.id}>
 												<td>
-													<h3>{product.name}</h3>
+													<h4>{product.name}</h4>
 													<div className="productImage">
 														<img src={product.imageUrl} alt={`${product.name} image`} height="99"
 															width="99"/>
