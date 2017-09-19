@@ -20,12 +20,13 @@ export class CheckoutView extends Component {
 			shipping: 'standard'
 		}
 
-		this.handleChange = this.handleChange.bind(this)
 		this.cart = Object.keys(this.props.cart).map((id) => {
 			return {id: id, ...this.props.cart[id]}
 		})
 
+		this.handleChange = this.handleChange.bind(this)
 		this.calcTotal = this.calcTotal.bind(this)
+		this.onCheckout = this.onCheckout.bind(this)
 	}
 
 	calcTotal() {
@@ -38,10 +39,24 @@ export class CheckoutView extends Component {
 		this.setState({[e.target.name]: e.target.value})
 	}
 
+	onCheckout() {
+		// pass order and product into handleCheckout
+		const {address, city, state, country, zipcode} = this.state
+		const order = {
+			shippingAddress: `${address}, ${city}, ${state}, ${zipcode}, ${country}`,
+			userId: null,
+			fulfilled: false
+		}
+
+		const productArr = Object.keys(this.cart).map((id) => {
+			return {id: id, ...this.cart[id]}
+		})
+		this.props.handleCheckout(order, productArr)
+	}
+
 	// TODO: render fixed input with user's email value if authenticated user
 	// TODO: remove email label popup when focused
 	render() {
-	    console.log(this.calcTotal())
 		return (
 		    <Grid>
 				<h3>Checkout</h3>
@@ -272,7 +287,7 @@ export class CheckoutView extends Component {
 								{/*</div>*/}
 								<div id="complete">
 									{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
-									<Button bsStyle="info" bsSize="large">Checkout</Button>
+									<Button onClick={() => this.onCheckout()} bsStyle="info" bsSize="large">Checkout</Button>
 									<span className="sub">By selecting this Button you agree to the purchase and subsequent payment for this order.</span>
 								</div>
 							</div>
@@ -288,8 +303,9 @@ const mapStateToProps = ({cart}) => ({cart})
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleCheckout: () => {
-			dispatch(postOrder({shippingAddress: evt.target.shippingAddress.value, userId: evt.target.userId.value, fulfilled: evt.target.fulfilled.value}, productArray))
+		handleCheckout: (order, productArr) => {
+			// pass
+			dispatch(postOrder(order, productArr))
 		},
 
 

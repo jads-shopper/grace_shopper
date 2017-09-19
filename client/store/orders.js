@@ -65,7 +65,6 @@ console.log('inside postorder', order, productArray)
 			})
 			.then((newOrder) => {
 				dispatch(makeOrder(newOrder))
-				history.push('/admin')
 			})
 	}
 }

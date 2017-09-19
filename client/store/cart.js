@@ -49,8 +49,8 @@ export default function (state = cartState, action) {
 		newState[action.product.id] = cartObject
 		return newState
 		//return {...state, ...action.product, ...{quantity: action.quantity}}
-		case REMOVE_FROM_CART:
-			// TODO: return new state with deleted product without mutating
+	case REMOVE_FROM_CART:
+		// TODO: return new state with deleted product without mutating
 		delete newState[action.product.id]
 		return newState
 		// 	return {...state, ...action.product.id}
