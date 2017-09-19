@@ -11,7 +11,7 @@ const LOAD_CART_FROM_SESSION = 'LOAD_CART_FROM_SESSION'
  * INITIAL STATE
  */
 
-const cartState = {}
+const cartState = []
 
 /**
  * ACTION CREATORS
@@ -28,7 +28,6 @@ export const loadSessionCart = (cart) => ({type: LOAD_CART_FROM_SESSION, cart})
 
 
 export default function (state = cartState, action) {
-	let newState = {...state}
 	switch (action.type) {
 	case ADD_TO_CART:
 		const productKey = action.product.id
@@ -40,13 +39,14 @@ export default function (state = cartState, action) {
 		}
 		const cartObject =
 			{
+				id: action.product.id,
 				name: action.product.name,
 				quantity: priorQuantity + action.quantity,
 				price: action.product.price,
 				imageUrl: action.product.imageUrl,
 
 			}
-		newState[action.product.id] = cartObject
+		let newState = [...state, cartObject ]
 		return newState
 		//return {...state, ...action.product, ...{quantity: action.quantity}}
 	case REMOVE_FROM_CART:
