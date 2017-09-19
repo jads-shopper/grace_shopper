@@ -1,15 +1,31 @@
 import React from 'react'
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap'
+import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Label} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
 import history from './../history'
-import store from '../store/index.js'
 import {setModal, removeModal, getMe, logout} from '../store'
 import {connect} from 'react-redux'
 import SearchQ from './Search.jsx'
 
 function navbarInstance(props) {
 
-	const {handleLogin} = props
+	const {handleLogin, cart} = props
+
+	const getCartData = () => {
+		var quantity = 0
+		var totalPrice = 0
+		for (var key in cart) {
+			if (cart.hasOwnProperty(key)) {
+				var product = cart[key]
+				quantity += product.quantity
+				totalPrice = product.quantity * product.price
+			}
+		}
+
+		return {quantity, totalPrice: totalPrice.toFixed(2)}
+	}
+
+	const cartData = getCartData()
 	return (
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>
@@ -26,16 +42,21 @@ function navbarInstance(props) {
 					<NavItem eventKey={1} onClick={() => {history.push('/admin')}}>Admin View</NavItem>
 					<NavDropdown eventKey={2} title="Options" id="basic-nav-dropdown">
 						<MenuItem eventKey={3.1}>Settings</MenuItem>
-						<MenuItem eventKey={3.2}>Orders</MenuItem>
+						{props.user.id ?
+							<LinkContainer to = {`orders/${props.user.id}`}>
+								<MenuItem eventKey={3.2}>Orders</MenuItem>
+							</LinkContainer>
+							: ''}
 						<MenuItem eventKey={3.3}>Reviews</MenuItem>
 						<MenuItem divider />
 						<MenuItem eventKey={3.3}>Logout</MenuItem>
 					</NavDropdown>
-
 					{props.user.id ?
 						<NavItem eventKey={3} onClick={() => {props.handleLogOut()}} href="#">Logout</NavItem>
 						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
 					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
+					{/*// TODO: Increase size of shopping cart*/}
+					<NavItem onClick={() => handleLogin('CART')}><Label className="black-label"><i className="fa fa-shopping-cart"></i> {cartData.quantity} ITEMS - ${cartData.totalPrice}</Label></NavItem>
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
@@ -45,7 +66,8 @@ function navbarInstance(props) {
 const mapStateToProps = (state) => {
 	return {
 		modals: state.modals,
-		user: state.user
+		user: state.user,
+		cart: state.cart
 	}
 }
 
@@ -59,6 +81,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		handleLogOut(){
 			dispatch(logout())
+		},
+		handleCartModal(modalType) {
+			dispatch(setModal(modalType))
 		}
 	}
 }

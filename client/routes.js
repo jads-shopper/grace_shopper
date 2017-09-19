@@ -12,12 +12,16 @@ import Modal from './components/ModalConductor.jsx'
 import AdminAddUser from './components/AdminAddUser.jsx'
 import AdminAddCategory from './components/AdminAddCategory.jsx'
 import AdminAddProduct from './components/AdminAddProduct.jsx'
+import AdminAddOrder from './components/AdminAddOrder.jsx'
 import EditUser from './components/EditUser.jsx'
 import EditCategory from './components/EditCategory.jsx'
 import EditProduct from './components/EditProduct.jsx'
+import EditOrder from './components/EditOrder.jsx'
 import SingleCategory from './components/SingleCategory.jsx'
 import SingleProductView from './components/SingleProductView.jsx'
-import {getMe, fetchProducts, fetchCategories} from './store'
+import UserOrders from './components/UserOrders.jsx'
+import {getMe, fetchProducts, fetchCategories, fetchCartSession} from './store'
+
 
 /**
  * COMPONENT
@@ -33,7 +37,7 @@ class Routes extends Component {
 		return (
 			<Router history={history}>
 				<div>
-					<Navbar />
+					<Navbar cart={this.props.cart}/>
 					<Modal currentModal = {currentModal} />
 					<Switch>
 						<Route exact path="/home" component={Home} />
@@ -41,11 +45,14 @@ class Routes extends Component {
 						<Route exact path="/admin/newUser" component={AdminAddUser} />
 						<Route exact path="/admin/newCategory" component={AdminAddCategory} />
 						<Route exact path="/admin/newProduct" component={AdminAddProduct} />
+						<Route exact path="/admin/newOrder" component={AdminAddOrder} />
 						<Route exact path="/products/:id" component={SingleProductView} />
 						<Route path="/admin/edit/user/:id" component={EditUser} />
 						<Route path="/admin/edit/category/:id" component={EditCategory} />
 						<Route path="/admin/edit/product/:id" component={EditProduct} />
+						<Route path="/admin/edit/order/:id" component={EditOrder} />
 						<Route path="/category/:id" component={SingleCategory} />
+						<Route path="/orders/:userId" component={UserOrders} />
 						<Redirect to="/home" />
 					</Switch>
 				</div>
@@ -62,7 +69,8 @@ const mapState = (state) => {
 		// Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
 		// Otherwise, state.user will be an empty object, and state.user.id will be falsey
 		isLoggedIn: !!state.user.id,
-		currentModal: state.modals
+		currentModal: state.modals,
+		cart: state.cart
 
 	}
 }
@@ -73,6 +81,7 @@ const mapDispatch = (dispatch) => {
 			dispatch(getMe())
 			dispatch(fetchProducts())
 			dispatch(fetchCategories())
+			dispatch(fetchCartSession())
 		}
 	}
 }

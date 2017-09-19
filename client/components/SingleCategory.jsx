@@ -3,12 +3,22 @@ import { NavLink } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
 import Categories from './Categories.jsx'
+import SingleProductRating from './SingleProductRating.jsx'
+import {addToCart} from "../store/cart";
 
 const mapStateToProps = function(state) {
 	return {
 		products: state.products,
 		categories: state.categories,
 		search: state.searchProduct,
+	}
+}
+
+const mapDispatchToProps = function (dispatch) {
+	return {
+		handleAddToCart: (product, quantity) => {
+			return dispatch(addToCart(product, quantity))
+		}
 	}
 }
 
@@ -49,9 +59,9 @@ function SingleCategoryList(props){
 												<NavLink to={`/products/${product.id}`}><div><h4>Product: {product.name}</h4></div></NavLink>
 												<div><h4>${product.price}</h4></div>
 												<div><h5>Category: {product.categories.length ? categoryNameArray.join(', ') : 'None'}</h5></div>
-												<div><h5>Amount Remaining: {product.quantity}</h5></div>
+												<SingleProductRating currentProduct={product}/>
 											</div>
-											<Button bsStyle="success" className="catalogButton" onClick={() => {alert('Feature not yet implemented!')}}>Add to Cart</Button>
+											<Button bsStyle="info" className="catalogButton" onClick={() => props.handleAddToCart(product, 1)}>Add to Cart</Button>
 										</li>
 									)
 								}
@@ -71,6 +81,6 @@ function SingleCategoryList(props){
 	}
 }
 
-const SingleCategoryContainer = connect(mapStateToProps)(SingleCategoryList)
+const SingleCategoryContainer = connect(mapStateToProps, mapDispatchToProps)(SingleCategoryList)
 
 export default SingleCategoryContainer

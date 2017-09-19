@@ -6,6 +6,16 @@
 	width: 90%;
 }
 
+div#order{
+	border: #337ab7 solid 3px;
+	border-radius: 4px;
+	margin: 5px 10px;
+	width: 40%;
+}
+
+
+
+
 .productImage {
 	height: 120px;
 	width: 120px;
@@ -39,6 +49,10 @@
 
 .fa-star-half-o {
 	color: orange
+}
+
+.icon-shopping-cart {
+	color: teal
 }
 
 .icon-bar a {
@@ -75,6 +89,7 @@
 .react-autosuggest__input--focused {
 	outline: none;
 }
+
 
 .react-autosuggest__input--open {
 	border-bottom-left-radius: 0;
@@ -129,6 +144,16 @@
 	color: #777;
 }
 
+.black-label {
+	background-color: black
+}
+
+#subtitle {
+	text-align: right;
+	font-size: 16px;
+	color: teal;
+}
+
 input[type=text] {
 	width: 230px;
 	box-sizing: border-box;
@@ -149,3 +174,4 @@ input[type=text] {
 input[type=text]:focus {
 	width: 400px;
 }
+
