@@ -13,4 +13,9 @@ router.get('/', (req, res, next) => {
 	res.json(req.session.cart)
 })
 
+router.delete('/', (req, res, next) => {
+	req.session.cart = []
+	res.json(req.session.cart)
+})
+
 

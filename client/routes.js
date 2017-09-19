@@ -19,6 +19,7 @@ import EditProduct from './components/EditProduct.jsx'
 import EditOrder from './components/EditOrder.jsx'
 import SingleCategory from './components/SingleCategory.jsx'
 import SingleProductView from './components/SingleProductView.jsx'
+import CheckOutView from './components/CheckOutView.jsx'
 import {getMe, fetchProducts, fetchCategories, fetchCartSession} from './store'
 
 /**
@@ -45,6 +46,7 @@ class Routes extends Component {
 						<Route exact path="/admin/newProduct" component={AdminAddProduct} />
 						<Route exact path="/admin/newOrder" component={AdminAddOrder} />
 						<Route exact path="/products/:id" component={SingleProductView} />
+						<Route exact path="/checkout" component={CheckOutView} />
 						<Route path="/admin/edit/user/:id" component={EditUser} />
 						<Route path="/admin/edit/category/:id" component={EditCategory} />
 						<Route path="/admin/edit/product/:id" component={EditProduct} />
