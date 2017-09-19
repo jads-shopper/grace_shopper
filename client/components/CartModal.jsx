@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {Modal, Table, Button} from 'react-bootstrap'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {removeModal, updateCart, removeFromCart } from '../store'
 import axios from 'axios'
+import history from '../history'
 
 export class CartModal extends Component {
 	constructor(props) {
@@ -11,6 +11,7 @@ export class CartModal extends Component {
 
 		this.handleSelectChange = this.handleSelectChange.bind(this)
 		this.callNumOfOptions = this.callNumOfOptions.bind(this)
+		this.handleNavigateToCheckout = this.handleNavigateToCheckout.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -24,7 +25,6 @@ export class CartModal extends Component {
 	}
 
 	callNumOfOptions(quantityOfCartProduct, quantityOfInventoryProduct) {
-	    console.log('inside callnumofoptions', quantityOfCartProduct, quantityOfInventoryProduct)
 	    if (quantityOfCartProduct  > quantityOfInventoryProduct) {
 	        return quantityOfCartProduct + 1
 		} else {
@@ -33,7 +33,8 @@ export class CartModal extends Component {
 	}
 
 	handleNavigateToCheckout() {
-
+		this.props.handleRemoveModal()
+		history.push('/checkout')
 	}
 
 	render() {
@@ -42,7 +43,6 @@ export class CartModal extends Component {
 		const cartProducts = Object.keys(cart).map((id) => {
 		    return {id: id, ...cart[id]}
 		})
-		console.log('inside cartmodal', cartProducts)
 		if(cartProducts.length > 0) {
 			return (
 				<Modal bsSize="large" show={true} onHide={() => {
@@ -104,7 +104,7 @@ export class CartModal extends Component {
 						</h3>
 					</Modal.Body>
 					<Modal.Footer>
-						<Link to="/checkout"><Button bsSize="large" block bsStyle="info">Checkout</Button></Link>
+						<Button onClick={() => this.handleNavigateToCheckout()} bsSize="large" block bsStyle="info">Checkout</Button>
 					</Modal.Footer>
 				</Modal>
 			)

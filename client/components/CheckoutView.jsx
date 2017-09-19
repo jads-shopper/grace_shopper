@@ -285,11 +285,11 @@ export class CheckoutView extends Component {
 const mapStateToProps = ({cart}) => ({cart})
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        handleLogin (modalType) {
-            dispatch(setModal(modalType))
-        },
-    }
+	return {
+		handleLogin (modalType) {
+			dispatch(setModal(modalType))
+		},
+	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutView)
