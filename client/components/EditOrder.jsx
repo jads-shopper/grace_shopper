@@ -27,7 +27,7 @@ class EditOrderForm extends Component {
 					<Row>
 						<Col xs={0} sm={1}>
 						</Col>
-						<Col xs={12} sm={11}>
+						<Col xs={12} sm={10}>
 							<h3>Order #{orderId}</h3>
 							<span>
 								<h4>Shipping Address: {theOrder.shippingAddress}</h4>
@@ -40,6 +40,8 @@ class EditOrderForm extends Component {
 							</span>
 							<Button onClick={(evt) => {this.props.handleToggle(evt, theOrder)}}>Toggle Status</Button>
 						</Col>
+						<Col xs={0} sm={1}>
+						</Col>
 					</Row>
 					<Row>
 						<Col xs={0} sm={1}>
@@ -49,7 +51,7 @@ class EditOrderForm extends Component {
 							<Table striped bordered condensed hover>
 								<thead>
 									<tr>
-										<th>#</th>
+										<th>Product #</th>
 										<th>Name</th>
 										<th>Price</th>
 										<th>Quantity</th>

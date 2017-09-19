@@ -47,12 +47,12 @@ class Routes extends Component {
 						<Route exact path="/admin/newProduct" component={AdminAddProduct} />
 						<Route exact path="/admin/newOrder" component={AdminAddOrder} />
 						<Route exact path="/products/:id" component={SingleProductView} />
+						<Route exact path="/orders" component={UserOrders} />
 						<Route path="/admin/edit/user/:id" component={EditUser} />
 						<Route path="/admin/edit/category/:id" component={EditCategory} />
 						<Route path="/admin/edit/product/:id" component={EditProduct} />
 						<Route path="/admin/edit/order/:id" component={EditOrder} />
 						<Route path="/category/:id" component={SingleCategory} />
-						<Route path="/orders/:userId" component={UserOrders} />
 						<Redirect to="/home" />
 					</Switch>
 				</div>

@@ -33,7 +33,7 @@ export function fetchOrdersUser (userId) {
 
 	return function thunk (dispatch) {
 		return axios.get(`/api/orders/user/${userId}`)
-    	.then(res => res.data)
+			.then(res => res.data)
 			.then(orders => {
 				dispatch(getOrders(orders))
 			})
