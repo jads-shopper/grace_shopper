@@ -53,12 +53,15 @@ class SearchQ extends React.Component {
 	}
 
 	renderSuggestion = suggestion => {
-		console.log(suggestion)
-		console.log(suggestion.title.id)
+
 		return (suggestion.title
 				?
-				<Link to={`/category/${suggestion.title.id}`}><h4>{suggestion.title.name}</h4> </Link>
-			: <Link to={`/products/${suggestion.id}`}><span> <img className="searchImg" src={suggestion.imageUrl}/> {suggestion.name}</span>     |   ${suggestion.price}</Link>
+				<Link to={`/category/${suggestion.title.id}`}><h4>{suggestion.title.name}</h4></Link>
+				:
+				<Link to={`/products/${suggestion.id}`}>
+					<span> <img className="searchImg" src={suggestion.imageUrl}/></span><span className="productSearchName">{suggestion.name}</span>
+					<span className="searchPrice">${suggestion.price}</span>
+				</Link>
 		)
 	}
 
