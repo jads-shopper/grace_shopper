@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {Button, Grid} from 'react-bootstrap'
 
-export default class CheckoutView extends Component {
+export class CheckoutView extends Component {
 	constructor(props) {
 		super(props)
 
@@ -19,15 +20,25 @@ export default class CheckoutView extends Component {
 		}
 
 		this.handleChange = this.handleChange.bind(this)
+		this.cart = Object.keys(this.props.cart).map((id) => {
+			return {id: id, ...this.props.cart[id]}
+		})
+
+		this.calcTotal = this.calcTotal.bind(this)
+	}
+
+	calcTotal() {
+		return Object.keys(this.cart)
+			.map((product) => this.cart[product].price * this.cart[product].quantity)
+			.reduce((acc, curr) => acc + curr, 0)
 	}
 
 	handleChange(e) {
-	    console.dir('in checkout')
-		console.log(e.target.name, e.target.value)
 		this.setState({[e.target.name]: e.target.value})
 	}
 
 	render() {
+	    console.log(this.calcTotal())
 		return (
 		    <Grid>
 				<div id="wrap">
@@ -177,7 +188,7 @@ export default class CheckoutView extends Component {
 							<div>
 								<input type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
 							</div>
-                            <div>
+							<div>
 								<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>
 							</div>
 						</div>
@@ -197,23 +208,43 @@ export default class CheckoutView extends Component {
 						<div className="content" id="final_products">
 							<div className="left" id="ordered">
 								<div className="products">
-									<div className="product_image">
-										{/*<img src="https://i.imgur.com/YwqxBXc.jpg"/>*/}
 
-									</div>
-									<div className="product_details">
-										<span className="product_name">Cherry Bikini</span>
-										<span className="quantity">1</span>
-										<span className="price">$45.00</span>
-									</div>
+									{
+									    this.cart.length > 0 && this.cart.map((product) => {
+									        return (
+												<div key={product.id}>
+													<div className="product_image">
+														{/*<img src="https://i.imgur.com/YwqxBXc.jpg"/>*/}
+
+													</div>
+													<div className="product_details">
+														<span className="product_name">{product.name}</span>
+														<span className="quantity">{product.quantity}</span>
+														<span className="price">${product.price}</span>
+													</div>
+												</div>
+											)
+										})
+									}
+									{/*<div>*/}
+									{/*<div className="product_image">*/}
+									{/*/!*<img src="https://i.imgur.com/YwqxBXc.jpg"/>*!/*/}
+
+									{/*</div>*/}
+									{/*<div className="product_details">*/}
+									{/*<span className="product_name">Cherry Bikini</span>*/}
+									{/*<span className="quantity">1</span>*/}
+									{/*<span className="price">$45.00</span>*/}
+									{/*</div>*/}
+									{/*</div>*/}
 								</div>
 								<div className="totals">
-									<span className="subtitle">Subtotal <span id="sub_price">$45.00</span></span>
-									<span className="subtitle">Tax <span id="sub_tax">$2.00</span></span>
-									<span className="subtitle">Shipping <span id="sub_ship">$4.00</span></span>
+									<span className="subtitle">Subtotal <span id="sub_price">${this.calcTotal().toFixed(2)}</span></span>
+									<span className="subtitle">Tax <span id="sub_tax">$0.00</span></span>
+									<span className="subtitle">Shipping <span id="sub_ship">$4</span></span>
 								</div>
 								<div className="final">
-									<span className="title">Total <span id="calculated_total">$51.00</span></span>
+									<span className="title">Total <span id="calculated_total">${(this.calcTotal() + 4).toFixed(2)}</span></span>
 								</div>
 							</div>
 							{/*// TODO: Add billing address*/}
@@ -249,3 +280,9 @@ export default class CheckoutView extends Component {
 		)
 	}
 }
+
+const mapStateToProps = ({cart}) => ({cart})
+
+export default connect(mapStateToProps, null)(CheckoutView)
+
+
