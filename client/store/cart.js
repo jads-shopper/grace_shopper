@@ -4,6 +4,7 @@ import axios from 'axios'
  */
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+const REMOVE_CART = 'REMOVE_CART'
 const UPDATE_CART = 'UPDATE_CART'
 const LOAD_CART_FROM_SESSION = 'LOAD_CART_FROM_SESSION'
 
@@ -19,6 +20,7 @@ const cartState = []
 
 export const addToCart = (product, quantity) => ({type: ADD_TO_CART, product, quantity})
 export const removeFromCart = (product) => ({type: REMOVE_FROM_CART, product})
+export const removeCart = () => ({type: REMOVE_CART})
 export const updateCart = (product, quantity) => ({type: UPDATE_CART, product, quantity})
 export const loadSessionCart = (cart) => ({type: LOAD_CART_FROM_SESSION, cart})
 
@@ -51,6 +53,9 @@ export default function (state = cartState, action) {
 		//return {...state, ...action.product, ...{quantity: action.quantity}}
 	case REMOVE_FROM_CART:
 		delete newState[action.product.id]
+		return newState
+	case REMOVE_CART:
+		newState = []
 		return newState
 	case UPDATE_CART:
 		newState[action.product.id].quantity = action.quantity

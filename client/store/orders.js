@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {removeCart} from './index.js'
 
 /**
  * ACTION TYPES
@@ -56,6 +57,33 @@ export function postOrder (order, productArray) {
 			})
 	}
 }
+
+export function postOrderCustomer (order, productArray) {
+
+	return function thunk (dispatch) {
+		return axios.post('/api/orders/admin', order)
+			.then(res => res.data)
+			.then(newOrder => {
+				productArray.forEach(productIdAndQuantity => {
+					let relationObject = {quantity: productIdAndQuantity.quantity, productId: productIdAndQuantity.id, orderId:newOrder.id}
+					axios.post('/api/orderProducts', relationObject)
+				})
+				return newOrder
+			})
+			.then((newOrder) => {
+				dispatch(makeOrder(newOrder))})
+			.then(() => {
+				return axios.delete('/api/cart')
+			})
+			.then((response) => {
+				console.log('EMPTYCART', response)
+				dispatch(removeCart())
+				history.push('/')
+			})
+	}
+}
+
+
 
 export function editOrder (order) {
 	return function thunk (dispatch) {
