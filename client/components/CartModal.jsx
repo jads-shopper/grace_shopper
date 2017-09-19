@@ -5,9 +5,6 @@ import {Link} from 'react-router-dom'
 import {removeModal, updateCart, removeFromCart } from '../store'
 import axios from 'axios'
 
-// TODO: Work on CSS
-// TODO: Add a checkout button page that routes to checkout page
-// TODO: Refactor class to function
 export class CartModal extends Component {
 	constructor(props) {
 		super(props)
@@ -34,12 +31,6 @@ export class CartModal extends Component {
 	        return quantityOfInventoryProduct + 1
 		}
 	}
-
-	// console.log('inside cartmodal', props.cart)
-	// get cart from state
-	// render products in cart
-	// allow products to be deleted or their quantity updated
-	// replace cart state when quantity or products are changed
 	render() {
 	    const cart = this.props.cart
 		const products = this.props.products
@@ -100,12 +91,12 @@ export class CartModal extends Component {
 								}
 							</tbody>
 						</Table>
-                        <h3 id="subtitle"> Subtotal: ${
-                            cartProducts
-                                .map((product) => product.price * product.quantity)
-                                .reduce((acc, curr) => acc + curr, 0).toFixed(2)
-                        }
-                        </h3>
+						<h3 id="subtitle"> Subtotal: ${
+							cartProducts
+								.map((product) => product.price * product.quantity)
+								.reduce((acc, curr) => acc + curr, 0).toFixed(2)
+						}
+						</h3>
 					</Modal.Body>
 					<Modal.Footer>
 						<Link to="/checkout"><Button bsSize="large" block bsStyle="info">Checkout</Button></Link>
