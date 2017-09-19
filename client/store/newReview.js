@@ -1,3 +1,4 @@
+import axios from 'axios'
 
 /**
  * ACTION TYPES
@@ -5,6 +6,7 @@
 const WRITE_TITLE = 'WRITE_TITLE'
 const WRITE_TEXT = 'WRITE_TEXT'
 const SET_RATING = 'SET_RATING'
+const POST_REVIEW = 'POST_REVIEW'
 
 /**
  * INITIAL STATE
@@ -20,21 +22,19 @@ const newReviewState = {
  */
 export function writeTitle (title) {return {type: WRITE_TITLE, title}}
 export function writeText (text) {return {type: WRITE_TEXT, text}}
-export function setRating (rating) {return {type: WRITE_TEXT, rating}}
+export function setRating (starRating) {return {type: SET_RATING, starRating}}
 
 /**
  * THUNK CREATORS
  */
 
-export function postReview () {
+export function postReview (review) {
+	console.log('========>', review)
 
-	// return function thunk (dispatch) {
-	// 	return axios.get('/api/products')
-	// 		.then(res => res.data)
-	// 		.then(products => {
-	// 			dispatch(getProducts(products))
-	// 		})
-	// }
+	return function thunk () {
+		return axios.post('/api/reviews', review)
+			.then(res => res.data)
+	}
 }
 
 /**
