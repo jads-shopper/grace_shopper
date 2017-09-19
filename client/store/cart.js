@@ -6,6 +6,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const UPDATE_CART = 'UPDATE_CART'
 const LOAD_CART_FROM_SESSION = 'LOAD_CART_FROM_SESSION'
+const RESET_CART = 'RESET_CART'
 
 /**
  * INITIAL STATE
@@ -21,6 +22,7 @@ export const addToCart = (product, quantity) => ({type: ADD_TO_CART, product, qu
 export const removeFromCart = (product) => ({type: REMOVE_FROM_CART, product})
 export const updateCart = (product, quantity) => ({type: UPDATE_CART, product, quantity})
 export const loadSessionCart = (cart) => ({type: LOAD_CART_FROM_SESSION, cart})
+export const resetCart = () => ({type: RESET_CART})
 
 /**
  * REDUCER
@@ -59,6 +61,8 @@ export default function (state = cartState, action) {
 		return newState
 	case LOAD_CART_FROM_SESSION:
 		return action.cart
+	case RESET_CART:
+		return cartState
 	default:
 		return state
 	}

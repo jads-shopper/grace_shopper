@@ -25,7 +25,6 @@ export default class UserAddProductForm extends Component {
 	componentWillReceiveProps(nextProps) {
 		axios.post('/api/cart', nextProps.cart)
 			.catch(console.error)
-
 	}
 
 	filterRelatedProducts() {

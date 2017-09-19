@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Grid} from 'react-bootstrap'
-import {postOrder} from './../store'
+import {postOrder, resetCart} from './../store'
+import history from '../history'
 
 export class CheckoutView extends Component {
 	constructor(props) {
@@ -306,8 +307,10 @@ const mapDispatchToProps = (dispatch) => {
 		handleCheckout: (order, productArr) => {
 			// pass
 			dispatch(postOrder(order, productArr))
+			// TODO: Bug, cart will be reset whether or not the order is posted successfully
+			dispatch(resetCart())
+			history.push('/')
 		},
-
 
 	}
 }
