@@ -127,7 +127,7 @@ div#order{
 }
 
 .react-autosuggest__suggestion--highlighted {
-	background-color: #ddd;
+	background-color: powderblue;
 }
 
 .react-autosuggest__section-container {
@@ -139,9 +139,10 @@ div#order{
 }
 
 .react-autosuggest__section-title {
-	padding: 10px 0 0 10px;
+	padding: 5px 0 0 5px;
+	background-color: lightgrey;
 	font-size: 12px;
-	color: #777;
+	color: black;
 }
 
 .black-label {
