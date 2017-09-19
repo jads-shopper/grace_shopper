@@ -12,17 +12,14 @@ function navbarInstance(props) {
 	const {handleLogin, cart} = props
 
 	const getCartData = () => {
-		var quantity = 0
-		var totalPrice = 0
-		for (var key in cart) {
-			if (cart.hasOwnProperty(key)) {
-				var product = cart[key]
-				quantity += product.quantity
-				totalPrice = product.quantity * product.price
-			}
-		}
 
-		return {quantity, totalPrice: totalPrice.toFixed(2)}
+		const quantity = Object.keys(cart)
+			.reduce((acc, curr) => acc + cart[curr].quantity, 0)
+
+		const totalPrice = Object.keys(cart)
+			.map((product) => cart[product].price * cart[product].quantity)
+			.reduce((acc, curr) => acc + curr, 0)
+		return {quantity, totalPrice}
 	}
 
 	const cartData = getCartData()
@@ -56,7 +53,7 @@ function navbarInstance(props) {
 						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
 					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
 					{/*// TODO: Increase size of shopping cart*/}
-					<NavItem onClick={() => handleLogin('CART')}><Label className="black-label"><i className="fa fa-shopping-cart"></i> {cartData.quantity} ITEMS - ${cartData.totalPrice}</Label></NavItem>
+					<NavItem onClick={() => handleLogin('CART')}><Label className="black-label"><i className="fa fa-shopping-cart"></i> {cartData.quantity} ITEMS - ${cartData.totalPrice.toFixed(2)}</Label></NavItem>
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
