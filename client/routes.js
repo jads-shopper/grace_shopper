@@ -17,6 +17,7 @@ import EditCategory from './components/EditCategory.jsx'
 import EditProduct from './components/EditProduct.jsx'
 import SingleCategory from './components/SingleCategory.jsx'
 import SingleProductView from './components/SingleProductView.jsx'
+import UserOrders from './components/UserOrders.jsx'
 import {getMe, fetchProducts, fetchCategories} from './store'
 
 /**
@@ -46,6 +47,7 @@ class Routes extends Component {
 						<Route path="/admin/edit/category/:id" component={EditCategory} />
 						<Route path="/admin/edit/product/:id" component={EditProduct} />
 						<Route path="/category/:id" component={SingleCategory} />
+						<Route path="/orders/:userId" component={UserOrders} />
 						<Redirect to="/home" />
 					</Switch>
 				</div>
