@@ -4,8 +4,22 @@ import {Button, Grid} from 'react-bootstrap'
 export default class CheckoutView extends Component {
 	constructor(props) {
 		super(props)
-	}
 
+		this.state = {
+		    email: '',
+			shipping: {
+		        firstName: '',
+				lastName: '',
+				phoneNumber: '',
+				address: '',
+				city: '',
+				state: '',
+				country: '',
+				zipcode: ''
+			}
+
+		}
+	}
 
 	render() {
 		return (
@@ -57,14 +71,14 @@ export default class CheckoutView extends Component {
 								<input type="phone" name="telephone" value="" id="telephone" placeholder="(555)-867-5309" data-trigger="change" data-validation-minlength="1" data-type="number" data-required="true" data-error-message="Enter Your Telephone Number"/>
 							</div>
 							<div>
-								<input type="text" name="company" value="" id="company" placeholder="Company" data-trigger="change" data-validation-minlength="1" data-type="name" data-required="false"/>
-							</div>
-							<div>
 								<input type="text" name="address" value="" id="address" placeholder="123 Main Street" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping Address"/>
 							</div>
 							<div>
 								<input type="text" name="city" value="" id="city" placeholder="Everytown" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping City"/>
 							</div>
+                            <div>
+                                <input type="text" name="zip" value="" id="zip" placeholder="12345" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping Zip Code"/>
+                            </div>
 							<div>
 								<div className="state_options">
 									<div className="select">
@@ -76,9 +90,6 @@ export default class CheckoutView extends Component {
 										</select>
 									</div>
 								</div>
-							</div>
-							<div>
-								<input type="text" name="zip" value="" id="zip" placeholder="12345" data-trigger="change" data-validation-minlength="1" data-type="text" data-required="true" data-error-message="Enter Your Shipping Zip Code"/>
 							</div>
 							<div>
 								<div className="country_options">
@@ -93,8 +104,8 @@ export default class CheckoutView extends Component {
 								</div>
 							</div>
 							{/*<div>*/}
-								{/*<input type="checkbox"/>*/}
-								{/*<label className="same" htmlFor="same_as_shipping">Same As Shipping Address</label><span></span>*/}
+							{/*<input type="checkbox"/>*/}
+							{/*<label className="same" htmlFor="same_as_shipping">Same As Shipping Address</label><span></span>*/}
 							{/*</div>*/}
 						</form>
 					</div>
@@ -104,7 +115,7 @@ export default class CheckoutView extends Component {
 							<span>3</span>
 						</div>
 						<div className="title">
-							<h1>Shipping Information</h1>
+							<h1>Shipping Method</h1>
 						</div>
 						<div className="modify">
 							<i className="fa fa-plus-circle"></i>
@@ -120,10 +131,10 @@ export default class CheckoutView extends Component {
 								<input type="radio" id="shipping_1" value="3"/>
 							</div>
 							{/*<div>*/}
-								{/*<input type="radio" id="shipping_2" value="2"/><label htmlFor="shipping_2"> Express Shipping <span className="price">$8.00</span></label>*/}
+							{/*<input type="radio" id="shipping_2" value="2"/><label htmlFor="shipping_2"> Express Shipping <span className="price">$8.00</span></label>*/}
 							{/*</div>*/}
 							{/*<div>*/}
-								{/*<input type="radio" id="shipping_3" value="3"/><label htmlFor="shipping_3"> Overnight Shipping <span className="price">$12.00</span></label>*/}
+							{/*<input type="radio" id="shipping_3" value="3"/><label htmlFor="shipping_3"> Overnight Shipping <span className="price">$12.00</span></label>*/}
 							{/*</div>*/}
 						</form>
 					</div>
@@ -183,7 +194,7 @@ export default class CheckoutView extends Component {
 							</div>
 							<div id="complete">
 								{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
-                                <Button>Checkout</Button>
+								<Button>Checkout</Button>
 								<span className="sub">By selecting this Button you agree to the purchase and subsequent payment for this order.</span>
 							</div>
 						</div>
