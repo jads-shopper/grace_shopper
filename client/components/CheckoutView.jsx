@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Grid} from 'react-bootstrap'
+import {setModal} from '../store'
+
 
 export class CheckoutView extends Component {
 	constructor(props) {
@@ -59,8 +61,7 @@ export class CheckoutView extends Component {
 								<div>
 									<input onChange={this.handleChange} type="email" name="email" value={this.state.email} id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/><label htmlFor="email">Email Address</label>
 								</div>
-								<Button>Login</Button>
-								<Button>Create Account</Button>
+								{/*<Button onClick={() => this.props.handleLogin('SIGN_IN')}className="have-account" bsStyle="warning">Have an account?</Button>*/}
 							</form>
 							{/*<a className="continue" href="#">Continue</a>*/}
 						</div>
@@ -283,6 +284,14 @@ export class CheckoutView extends Component {
 
 const mapStateToProps = ({cart}) => ({cart})
 
-export default connect(mapStateToProps, null)(CheckoutView)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleLogin (modalType) {
+            dispatch(setModal(modalType))
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CheckoutView)
 
 

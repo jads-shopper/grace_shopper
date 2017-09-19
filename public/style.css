@@ -674,3 +674,7 @@ form.go-right input:focus + label, form.go-right textarea:focus + label {
 		-webkit-transform: scale(1); /* Adjust size here */
 	}
 }
+
+.have-account {
+	float:right
+}

@@ -31,6 +31,11 @@ export class CartModal extends Component {
 	        return quantityOfInventoryProduct + 1
 		}
 	}
+
+	handleNavigateToCheckout() {
+
+	}
+
 	render() {
 	    const cart = this.props.cart
 		const products = this.props.products
