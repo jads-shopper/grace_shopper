@@ -25,11 +25,6 @@ export default class UserAddProductForm extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		axios.post('/api/cart', nextProps.cart)
-			.then((response) => {
-				// this.setState({cart: nextProps.cart})
-				// console.log('SESSION', response)
-				console.log('cart session posted', response)
-			})
 			.catch(console.error)
 
 	}

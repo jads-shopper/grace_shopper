@@ -62,12 +62,12 @@ export default function (state = cartState, action) {
 	}
 }
 
-export const postCartSession = (cart) => {
-	return function() {
-		axios.post('/api/cart', cart)
-			.catch(console.error)
-	}
-}
+// export const postCartSession = (cart) => {
+// 	return function() {
+// 		axios.post('/api/cart', cart)
+// 			.catch(console.error)
+// 	}
+// }
 
 export const fetchCartSession = () => {
 	return function(dispatch) {
@@ -78,6 +78,9 @@ export const fetchCartSession = () => {
 			.catch(console.error)
 	}
 }
+
+// TODO: After changing quantity or removing item from cart, post cart session
+// TODO: Show max product quantities or max # of product quantities - whichever greater
 
 
 
