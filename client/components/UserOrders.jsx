@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import AllProducts from './Home.jsx'
-import {fetchOrders, getMe} from '../store'
+import {fetchOrdersUser, getMe} from '../store'
 import {connect} from 'react-redux'
 import {PageHeader, Col, Row} from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
@@ -11,12 +11,14 @@ class UserOrders extends Component {
 
 	}
 
-	componentDidMount(){
-		this.props.renderOrders(this.props.user.id)
+	componentWillReceiveProps(nextProps){
+		if (this.props.user.id !== nextProps.user.id){
+			this.props.renderOrders(nextProps.user.id)
+		}
 	}
 
+
 	render() {
-		console.log('ORDERS', this.props.orders, 'USERID', this.props.user.id)
 		if (this.props.orders.length && this.props.user.id) {
 			return (
 				<div id = "orderRow">
@@ -70,7 +72,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		renderOrders (userId) {
-			dispatch(fetchOrders(userId))
+
+			dispatch(fetchOrdersUser(userId))
+
 		},
 		renderMe(){
 			dispatch(getMe())
