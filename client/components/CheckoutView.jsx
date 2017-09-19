@@ -39,10 +39,12 @@ export class CheckoutView extends Component {
 		this.setState({[e.target.name]: e.target.value})
 	}
 
+	// TODO: render fixed input with user's email value if authenticated user
 	render() {
 	    console.log(this.calcTotal())
 		return (
 		    <Grid>
+				<h3>Checkout</h3>
 				<div id="wrap">
 					<div id="accordian">
 						<div className="step" id="step1">
@@ -189,9 +191,9 @@ export class CheckoutView extends Component {
 							<div>
 								<input type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
 							</div>
-							<div>
-								<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>
-							</div>
+							{/*<div>*/}
+								{/*<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>*/}
+							{/*</div>*/}
 						</div>
 
 						<div className="step" id="step4">
@@ -242,7 +244,7 @@ export class CheckoutView extends Component {
 								<div className="totals">
 									<span className="subtitle">Subtotal <span id="sub_price">${this.calcTotal().toFixed(2)}</span></span>
 									<span className="subtitle">Tax <span id="sub_tax">$0.00</span></span>
-									<span className="subtitle">Shipping <span id="sub_ship">$4</span></span>
+									<span className="subtitle">Shipping <span id="sub_ship">$4.00</span></span>
 								</div>
 								<div className="final">
 									<span className="title">Total <span id="calculated_total">${(this.calcTotal() + 4).toFixed(2)}</span></span>
@@ -270,7 +272,7 @@ export class CheckoutView extends Component {
 								{/*</div>*/}
 								<div id="complete">
 									{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
-									<Button>Checkout</Button>
+									<Button bsStyle="info" bsSize="large">Checkout</Button>
 									<span className="sub">By selecting this Button you agree to the purchase and subsequent payment for this order.</span>
 								</div>
 							</div>
