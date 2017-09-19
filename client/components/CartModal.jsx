@@ -13,7 +13,7 @@ export class CartModal extends Component {
 		super(props)
 
 		this.handleSelectChange = this.handleSelectChange.bind(this)
-        this.callNumOfOptions = this.callNumOfOptions.bind(this)
+		this.callNumOfOptions = this.callNumOfOptions.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -30,10 +30,10 @@ export class CartModal extends Component {
 	    console.log('inside callnumofoptions', quantityOfCartProduct, quantityOfInventoryProduct)
 	    if (quantityOfCartProduct  > quantityOfInventoryProduct) {
 	        return quantityOfCartProduct + 1
-        } else {
+		} else {
 	        return quantityOfInventoryProduct + 1
-        }
-    }
+		}
+	}
 
 	// console.log('inside cartmodal', props.cart)
 	// get cart from state
@@ -42,7 +42,7 @@ export class CartModal extends Component {
 	// replace cart state when quantity or products are changed
 	render() {
 	    const cart = this.props.cart
-        const products = this.props.products
+		const products = this.props.products
 		const cartProducts = Object.keys(cart).map((id) => {
 		    return {id: id, ...cart[id]}
 		})
@@ -81,13 +81,11 @@ export class CartModal extends Component {
 												</td>
 												<td>{product.price}</td>
 												<td>
-													{/*{product.quantity}*/}
 													<select className="form-control" placeholder="select" onChange={(e) => this.handleSelectChange(e, product.id)} value={product.quantity}>
 														{/*
 											TODO: Small bug when reducing quantity of product through selection. # of options also decrease
 											*/}
 														{
-														    // console.log(cartProducts, products)
 															[...Array(this.callNumOfOptions(product.quantity, products[product.id].quantity))]
 																.map((x, index) => index)
 																.filter((index) => index !== 0)
@@ -95,20 +93,23 @@ export class CartModal extends Component {
 														}
 													</select>
 												</td>
-												<td><Button onClick={() => this.props.removeProductFromCart(product.id)} bsStyle="danger">Remove</Button></td>
+												<td><div><Button onClick={() => this.props.removeProductFromCart(product.id)} bsStyle="danger">Remove</Button></div></td>
 											</tr>
 										)
 									})
 								}
 							</tbody>
 						</Table>
-                        Subtotal: {
-						    cartProducts
-								.map((product) => product.price * product.quantity)
-								.reduce((acc, curr) => acc + curr, 0).toFixed(2)
-						}
-                        <Link to="/checkout"><Button>Checkout</Button></Link>
+                        <h3 id="subtitle"> Subtotal: ${
+                            cartProducts
+                                .map((product) => product.price * product.quantity)
+                                .reduce((acc, curr) => acc + curr, 0).toFixed(2)
+                        }
+                        </h3>
 					</Modal.Body>
+					<Modal.Footer>
+						<Link to="/checkout"><Button bsSize="large" block bsStyle="info">Checkout</Button></Link>
+					</Modal.Footer>
 				</Modal>
 			)
 		} else {

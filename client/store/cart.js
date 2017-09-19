@@ -79,9 +79,6 @@ export const fetchCartSession = () => {
 	}
 }
 
-// TODO: After changing quantity or removing item from cart, post cart session
-// TODO: Show max product quantities or max # of product quantities - whichever greater
-
 
 
 
