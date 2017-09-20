@@ -19,7 +19,8 @@ export class CheckoutView extends Component {
 			state: 'NY',
 			country: 'USA',
 			zipcode: '',
-			shipping: 'standard'
+			shipping: 'standard',
+			invalid: null
 		}
 
 		this.cart = Object.keys(this.props.cart).map((id) => {
@@ -31,6 +32,7 @@ export class CheckoutView extends Component {
 		this.onCheckout = this.onCheckout.bind(this)
 		this.renderEmailInput = this.renderEmailInput.bind(this)
 		this.renderAlert = this.renderAlert.bind(this)
+		this.validateState = this.validateState.bind(this)
 	}
 
     componentDidUpdate() {
@@ -85,8 +87,34 @@ export class CheckoutView extends Component {
 		}
 	}
 
+	validateState() {
+		var validationArr = []
+        var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+		validationArr.push(emailRegex.test(this.state.email))
+		validationArr.push(this.state.address.length >= 1)
+		validationArr.push(this.state.phoneNumber.length >= 10)
+		validationArr.push(this.state.firstName.length >= 1)
+		validationArr.push(this.state.lastName.length >= 1)
+		validationArr.push(this.state.city.length >= 1)
+		validationArr.push(this.state.zipcode.length === 5)
+
+		for (var i = 0; i < validationArr.length; i++) {
+			if(!validationArr[i]) {
+				console.log('form invalid')
+				this.setState({invalid: true})
+				return false
+			}
+		}
+		this.setState({invalid: false})
+		return true
+
+	}
+
 	onCheckout() {
 		// pass order and product into handleCheckout
+		if(!this.validateState()) return
+
 		const {address, city, state, country, zipcode} = this.state
 		const order = {
 			shippingAddress: `${address}, ${city}, ${state}, ${zipcode}, ${country}`,
@@ -115,6 +143,13 @@ export class CheckoutView extends Component {
 				{/*<strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.*/}
 				{/*</Alert>*/}
 				{this.renderAlert()}
+				{
+					this.state.invalid && (
+						<Alert bsStyle="warning">
+							<strong>Warning</strong> Please enter valid fields :|
+						</Alert>
+					)
+				}
 				<h3>Checkout</h3>
 				<div id="wrap">
 					<div id="accordian">
