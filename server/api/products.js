@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const {Product, Category, Review} = require('../db/models')
+const gatekeepers = require('../utils/gatekeepers')
 module.exports = router
 
-router.get('/', (req, res, next) => {
+router.get('/', gatekeepers.admin,  (req, res, next) => {
 	Product.findAll({include: [Category, Review]})
 		.then(products => res.json(products))
 		.catch(next)
