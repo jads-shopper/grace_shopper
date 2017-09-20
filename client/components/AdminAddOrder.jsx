@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
 import {postOrder, writeAddress, writeUserId, fulfilledSelect} from './../store'
+import history from '../history'
 
 const mapStateToProps = function(state) {
 	return {
@@ -154,7 +155,8 @@ function mapDispatchToProps (dispatch){
 				}
 			}
 			dispatch(postOrder({shippingAddress: evt.target.shippingAddress.value, userId: evt.target.userId.value, fulfilled: evt.target.fulfilled.value}, productArray))
-			dispatch(writeAddress(''))
+            history.push('/admin')
+            dispatch(writeAddress(''))
 			dispatch(writeUserId(''))
 			dispatch(fulfilledSelect(false))
 		}

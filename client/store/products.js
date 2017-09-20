@@ -72,10 +72,28 @@ export function editProduct (product, categoryArray) {
 		return axios.put(`/api/products/${product.id}`, product)
 			.then(res => res.data)
 			.then(targetProduct => {
-				const action = editProductAction(targetProduct)
-				dispatch(action)
-				//find a way to deal with updating product categories
-				history.push('/admin')
+				//delete old category relations
+				axios.delete(`api/productCategories/${targetProduct.id}`)
+				return targetProduct})
+			.then(targetProduct => {
+				//add new category relations
+				categoryArray.forEach(categoryId => {
+					axios.post('/api/productCategories', {productId: targetProduct.id, categoryId})
+				})
+				return targetProduct
+			})
+			.then((targetProduct) => {
+				dispatch(editProductAction(targetProduct))
+				//refresh products so new product has relation to categories
+				return axios.get('/api/products')
+					.then(res => res.data)
+					.then(products => {
+						dispatch(getProducts(products))
+					})
+			})
+			//refresh categories so the categories have a relation to the new product
+			.then(() => {
+				dispatch(fetchCategories())
 			})
 	}
 }

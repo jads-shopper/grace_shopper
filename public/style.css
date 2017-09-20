@@ -146,13 +146,19 @@ div#order{
 }
 
 .black-label {
-	background-color: black
+	background-color: #5bc0de;
+	padding: 1em;
 }
 
 #subtitle {
 	text-align: right;
 	font-size: 16px;
 	color: teal;
+}
+
+.row {
+	margin-right: 0;
+	margin-right: 0;
 }
 
 input[type=text] {
@@ -744,4 +750,13 @@ form.go-right input:focus + label, form.go-right textarea:focus + label {
 
 .have-account {
 	float:right
+}
+
+.categoryH3 {
+	margin-top: 0px;
+	color: white;
+}
+
+.cart-margin-left {
+	margin-left: 1em;
 }

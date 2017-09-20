@@ -5,12 +5,21 @@ import {connect} from 'react-redux'
 import {Col, Row, Button} from 'react-bootstrap'
 import Categories from './Categories.jsx'
 import SingleProductRatings from './SingleProductRating.jsx'
+import {addToCart} from '../store/cart'
 
 const mapStateToProps = function(state) {
 	return {
 		products: state.products,
 		search: state.searchProduct,
 	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        handleAddToCart: (product, quantity) => {
+            return dispatch(addToCart(product, quantity))
+        },
+    }
 }
 
 class ProductList extends Component{
@@ -20,6 +29,7 @@ class ProductList extends Component{
 			products: this.props.products
 		}
 	}
+
 	render () {
 		console.log(this.props.search)
 		let results = this.props.search.query ? this.props.products.filter(val => val.name.includes(this.props.search.query)) : this.props.products
@@ -51,7 +61,7 @@ class ProductList extends Component{
 											{/*<div><h5>Amount Remaining: {product.quantity}</h5></div>*/}
 											<SingleProductRatings currentProduct={product}/>
 										</div>
-										<Button bsStyle="success" className="catalogButton" onClick={() => {alert('Feature not yet implemented!')}}>Add to Cart</Button>
+										{/*<Button bsStyle="info" className="catalogButton" onClick={() => this.props.handleAddToCart(product, 1)}>Add to Cart</Button>*/}
 									</li>
 								)
 							})
@@ -66,6 +76,6 @@ class ProductList extends Component{
 	}
 }
 
-const ProductContainer = connect(mapStateToProps)(ProductList)
+const ProductContainer = connect(mapStateToProps, mapDispatchToProps)(ProductList)
 
 export default ProductContainer

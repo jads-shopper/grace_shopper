@@ -25,7 +25,6 @@ export default class UserAddProductForm extends Component {
 	componentWillReceiveProps(nextProps) {
 		axios.post('/api/cart', nextProps.cart)
 			.catch(console.error)
-
 	}
 
 	filterRelatedProducts() {
@@ -63,15 +62,14 @@ export default class UserAddProductForm extends Component {
 						<div className="card-body text-dark">
 							{/*{renderRelatedProducts(filterRelatedProducts())}*/}
 							<div>
-								{filteredProducts.length > 0 && <h4 className="card-title">Add a :</h4>}
+								{/*{filteredProducts.length > 0 && <h4 className="card-title">Add a :</h4>}*/}
 								<form>
-									<FormGroup>
-										{
-											filteredProducts.length > 0 && this.renderRelatedProducts()
-										}
-									</FormGroup>
+									{/*<FormGroup>*/}
+										{/*{*/}
+											{/*filteredProducts.length > 0 && this.renderRelatedProducts()*/}
+										{/*}*/}
+									{/*</FormGroup>*/}
 									<FormGroup controlId="formControlsSelect">
-										<ControlLabel>Select</ControlLabel>
 										<select className="form-control" onChange={this.handleSelectChange} value={this.state.quantity}>
 											{/*
 											TODO: Quantity should max out at the number of remaining items and prevent adding to cart if exceeds remaining
@@ -86,6 +84,7 @@ export default class UserAddProductForm extends Component {
 										</select>
 									</FormGroup>
 									<Button
+										className="cart-margin-left"
 										onClick={() => {
 											this.props.handleAddToCart(this.currentProduct, this.state.quantity)}}
 										bsStyle="info">

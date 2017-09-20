@@ -9,6 +9,12 @@ router.get('/', (req, res, next) => {
 		.catch(next)
 })
 
+router.delete('/:id', (req, res, next) => {
+	ProductCategory.destroy({where : {productId: req.params.id}})
+		.then(result => res.json(result))
+		.catch(next)
+})
+
 router.post('/', (req, res, next) => {
 	ProductCategory.create(req.body)
 		.then((productCategory) => {

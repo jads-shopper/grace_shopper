@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Grid} from 'react-bootstrap'
-import {setModal} from '../store'
-
+import {Button, Grid, Alert} from 'react-bootstrap'
+import {postOrder, resetCart} from './../store'
+import axios from 'axios'
+import history from '../history'
 
 export class CheckoutView extends Component {
 	constructor(props) {
@@ -18,15 +19,30 @@ export class CheckoutView extends Component {
 			state: 'NY',
 			country: 'USA',
 			zipcode: '',
-			shipping: 'standard'
+			shipping: 'standard',
+			invalid: null
 		}
 
-		this.handleChange = this.handleChange.bind(this)
 		this.cart = Object.keys(this.props.cart).map((id) => {
 			return {id: id, ...this.props.cart[id]}
 		})
 
+		this.handleChange = this.handleChange.bind(this)
 		this.calcTotal = this.calcTotal.bind(this)
+		this.onCheckout = this.onCheckout.bind(this)
+		this.renderEmailInput = this.renderEmailInput.bind(this)
+		this.renderAlert = this.renderAlert.bind(this)
+		this.validateState = this.validateState.bind(this)
+	}
+
+	componentDidUpdate() {
+		window.scrollTo(0, 0)
+	}
+
+
+	componentWillReceiveProps(nextProps) {
+		axios.post('/api/cart', nextProps.cart)
+			.catch(console.error)
 	}
 
 	calcTotal() {
@@ -39,10 +55,103 @@ export class CheckoutView extends Component {
 		this.setState({[e.target.name]: e.target.value})
 	}
 
+	renderEmailInput() {
+		if(!this.props.user.hasOwnProperty('id')) {
+			return (
+				<div>
+					<input onChange={this.handleChange} type="email" name="email" value={this.state.email} id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					<input disabled onChange={this.handleChange} type="email" name="email" placeholder={this.props.user.email} value={this.state.email} id="email-address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
+				</div>
+			)
+		}
+	}
+
+	renderAlert() {
+		if(this.props.orderStatus === 'success') {
+			return (
+				<Alert bsStyle="success">
+					<strong>Success</strong> Your order was created :)
+				</Alert>
+			)
+		} else if(this.props.orderStatus === 'fail') {
+			return (
+				<Alert bsStyle="danger">
+					<strong>Error</strong> Something went wrong :(
+				</Alert>
+			)
+		}
+	}
+
+	validateState() {
+		var validationArr = []
+		var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+		validationArr.push(emailRegex.test(this.state.email))
+		validationArr.push(this.state.address.length >= 1)
+		validationArr.push(this.state.phoneNumber.length >= 10)
+		validationArr.push(this.state.firstName.length >= 1)
+		validationArr.push(this.state.lastName.length >= 1)
+		validationArr.push(this.state.city.length >= 1)
+		validationArr.push(this.state.zipcode.length === 5)
+
+		for (var i = 0; i < validationArr.length; i++) {
+			if(!validationArr[i]) {
+				console.log('form invalid')
+				this.setState({invalid: true})
+				return false
+			}
+		}
+		this.setState({invalid: false})
+		return true
+
+	}
+
+	onCheckout() {
+		// pass order and product into handleCheckout
+		if(!this.validateState()) return
+
+		const {address, city, state, country, zipcode} = this.state
+		const order = {
+			shippingAddress: `${address}, ${city}, ${state}, ${zipcode}, ${country}`,
+			userId: null,
+			fulfilled: false
+		}
+
+		if(this.props.user.hasOwnProperty('id')) {
+			order.userId = this.props.user.id
+		}
+
+		const productArr = Object.keys(this.cart).map((id) => {
+			return {id: id, ...this.cart[id]}
+		})
+
+		this.props.handleCheckout(order, productArr)
+
+	}
+
+	// TODO: render fixed input with user's email value if authenticated user
+	// TODO: remove email label popup when focused
 	render() {
-	    console.log(this.calcTotal())
+		console.log('cart', this.props.cart)
 		return (
 		    <Grid>
+				{/*<Alert bsStyle="warning">*/}
+				{/*<strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.*/}
+				{/*</Alert>*/}
+				{this.renderAlert()}
+				{
+					this.state.invalid && (
+						<Alert bsStyle="warning">
+							<strong>Warning</strong> Please enter valid fields :|
+						</Alert>
+					)
+				}
+				<h3>Checkout</h3>
 				<div id="wrap">
 					<div id="accordian">
 						<div className="step" id="step1">
@@ -58,9 +167,7 @@ export class CheckoutView extends Component {
 						</div>
 						<div className="content" id="email">
 							<form className="go-right">
-								<div>
-									<input onChange={this.handleChange} type="email" name="email" value={this.state.email} id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/><label htmlFor="email">Email Address</label>
-								</div>
+								{this.renderEmailInput()}
 								{/*<Button onClick={() => this.props.handleLogin('SIGN_IN')}className="have-account" bsStyle="warning">Have an account?</Button>*/}
 							</form>
 							{/*<a className="continue" href="#">Continue</a>*/}
@@ -187,11 +294,11 @@ export class CheckoutView extends Component {
 						</div>
 						<div className="content" id="shipping">
 							<div>
-								<input type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
+								<input checked type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
 							</div>
-							<div>
-								<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>
-							</div>
+							{/*<div>*/}
+							{/*<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>*/}
+							{/*</div>*/}
 						</div>
 
 						<div className="step" id="step4">
@@ -209,7 +316,6 @@ export class CheckoutView extends Component {
 						<div className="content" id="final_products">
 							<div className="left" id="ordered">
 								<div className="products">
-
 									{
 									    this.cart.length > 0 && this.cart.map((product) => {
 									        return (
@@ -242,7 +348,7 @@ export class CheckoutView extends Component {
 								<div className="totals">
 									<span className="subtitle">Subtotal <span id="sub_price">${this.calcTotal().toFixed(2)}</span></span>
 									<span className="subtitle">Tax <span id="sub_tax">$0.00</span></span>
-									<span className="subtitle">Shipping <span id="sub_ship">$4</span></span>
+									<span className="subtitle">Shipping <span id="sub_ship">$4.00</span></span>
 								</div>
 								<div className="final">
 									<span className="title">Total <span id="calculated_total">${(this.calcTotal() + 4).toFixed(2)}</span></span>
@@ -251,7 +357,7 @@ export class CheckoutView extends Component {
 							{/*// TODO: Add billing address*/}
 							<div className="right" id="reviewed">
 								<div className="billing">
-									<span className="title">Billing:</span>
+									<span className="title">Shipping:</span>
 									<div className="address_reviewed">
 										<span className="name">{`${this.state.firstName} ${this.state.lastName}`}</span>
 										<span className="address">{`${this.state.address}`}</span>
@@ -270,7 +376,7 @@ export class CheckoutView extends Component {
 								{/*</div>*/}
 								<div id="complete">
 									{/*<a className="big_Button" id="complete" href="#">Complete Order</a>*/}
-									<Button>Checkout</Button>
+									<Button onClick={() => this.onCheckout()} bsStyle="info" bsSize="large">Checkout</Button>
 									<span className="sub">By selecting this Button you agree to the purchase and subsequent payment for this order.</span>
 								</div>
 							</div>
@@ -282,13 +388,19 @@ export class CheckoutView extends Component {
 	}
 }
 
-const mapStateToProps = ({cart}) => ({cart})
+const mapStateToProps = ({cart, user, orderStatus}) => ({cart, user, orderStatus})
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		handleLogin (modalType) {
-			dispatch(setModal(modalType))
+		handleCheckout: (order, productArr) => {
+			// pass
+			dispatch(postOrder(order, productArr))
+			// TODO: Bug, cart will be reset whether or not the order is posted successfully
+			dispatch(resetCart())
+			console.log('order created')
+			// dispatch action to render checkout success/failure message
 		},
+
 	}
 }
 

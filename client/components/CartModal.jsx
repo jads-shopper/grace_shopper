@@ -69,7 +69,7 @@ export class CartModal extends Component {
 										return (
 											<tr key={product.id}>
 												<td>
-													<h3>{product.name}</h3>
+													<h4>{product.name}</h4>
 													<div className="productImage">
 														<img src={product.imageUrl} alt={`${product.name} image`} height="99"
 															width="99"/>
@@ -82,7 +82,7 @@ export class CartModal extends Component {
 											TODO: Small bug when reducing quantity of product through selection. # of options also decrease
 											*/}
 														{
-															[...Array(this.callNumOfOptions(product.quantity, products[product.id].quantity))]
+															[...Array(31)]
 																.map((x, index) => index)
 																.filter((index) => index !== 0)
 																.map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
@@ -109,8 +109,8 @@ export class CartModal extends Component {
 				</Modal>
 			)
 		} else {
-		    return (
-		        <div>Cart is empty</div>
+			return (
+				<div></div>
 			)
 		}
 

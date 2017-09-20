@@ -1,10 +1,12 @@
 import axios from 'axios'
 import history from '../history'
+import {createOrder, alertSuccessfulOrder, alertFailedOrder} from './orderStatus'
 
 /**
  * ACTION TYPES
  */
 const GET_ORDERS = 'GET_ORDERS'
+const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
 const POST_ORDER = 'POST_ORDER'
 const EDIT_ORDER = 'EDIT_ORDER'
 const DELETE_ORDER = 'DELETE_ORDER'
@@ -33,9 +35,20 @@ export function fetchOrdersUser (userId) {
 
 	return function thunk (dispatch) {
 		return axios.get(`/api/orders/user/${userId}`)
-    	.then(res => res.data)
+			.then(res => res.data)
 			.then(orders => {
 				dispatch(getOrders(orders))
+			})
+	}
+}
+
+export function fetchSingleOrder (orderId) {
+
+	return function thunk (dispatch) {
+		return axios.get(`/api/orders/${orderId}`)
+			.then(res => res.data)
+			.then(order => {
+				dispatch(getOrders(order))
 			})
 	}
 }
@@ -51,10 +64,38 @@ export function fetchOrders () {
 	}
 }
 
-export function postOrder (order, productArray) {
+//make a new function to send a req.body w/ order info to auto - emailing route
 
+// export function postOrderCheckout (order, productArray, email) {
+// 	console.log('inside postorder', order, productArray)
+// 	let emailrequestBody = {
+// 		email,
+// 		orders: productArray
+// 	}
+// 	return function thunk (dispatch) {
+// 		return axios.post('/api/orders/admin', order)
+// 			.then(res => res.data)
+// 			.then(newOrder => {
+// 				productArray.forEach(productIdAndQuantity => {
+// 					let relationObject = {quantity: productIdAndQuantity.quantity, productId: productIdAndQuantity.id, orderId:newOrder.id}
+// 					axios.post('/api/orderProducts', relationObject)
+// 				})
+// 				return newOrder
+// 			})
+// 			.then((newOrder) => {
+// 				dispatch(makeOrder(newOrder))
+// 			})
+// 			.then(() => {
+// 				axios.post('api/email', emailrequestBody)
+// 			})
+// 	}
+// }
+
+export function postOrder (order, productArray) {
+	console.log('inside postorder', order, productArray)
 	return function thunk (dispatch) {
-		return axios.post('/api/orders/admin', order)
+		dispatch(createOrder())
+		axios.post('/api/orders/admin', order)
 			.then(res => res.data)
 			.then(newOrder => {
 				productArray.forEach(productIdAndQuantity => {
@@ -64,8 +105,12 @@ export function postOrder (order, productArray) {
 				return newOrder
 			})
 			.then((newOrder) => {
+				dispatch(alertSuccessfulOrder())
 				dispatch(makeOrder(newOrder))
-				history.push('/admin')
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch(alertFailedOrder())
 			})
 	}
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {LinkContainer} from 'react-router-bootstrap'
+import {IndexLinkContainer} from 'react-router-bootstrap'
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, Label} from 'react-bootstrap'
 import {NavLink} from 'react-router-dom'
 import history from './../history'
@@ -40,9 +40,9 @@ function navbarInstance(props) {
 					<NavDropdown eventKey={2} title="Options" id="basic-nav-dropdown">
 						<MenuItem eventKey={3.1}>Settings</MenuItem>
 						{props.user.id ?
-							<LinkContainer to = {`orders/${props.user.id}`}>
+							<IndexLinkContainer to ="/orders">
 								<MenuItem eventKey={3.2}>Orders</MenuItem>
-							</LinkContainer>
+							</IndexLinkContainer>
 							: ''}
 						<MenuItem eventKey={3.3}>Reviews</MenuItem>
 						<MenuItem divider />
@@ -50,8 +50,13 @@ function navbarInstance(props) {
 					</NavDropdown>
 					{props.user.id ?
 						<NavItem eventKey={3} onClick={() => {props.handleLogOut()}} href="#">Logout</NavItem>
-						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
-					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
+						:
+						<NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
+
+					{props.user.id ?
+						''
+						:<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
+					}
 					{/*// TODO: Increase size of shopping cart*/}
 					<NavItem onClick={() => handleLogin('CART')}><Label className="black-label"><i className="fa fa-shopping-cart"></i> {cartData.quantity} ITEMS - ${cartData.totalPrice.toFixed(2)}</Label></NavItem>
 				</Nav>
