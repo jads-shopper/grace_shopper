@@ -23,4 +23,29 @@ body {
 .searchImg {
   width: 50px;
   height: 50px;
+  align-content: left;
+  magin-left: 1px;
+  magin-right: 5px;
+}
+
+.searchPrice {
+  text-align: right;
+  color: green;
+  font-size: large;
+  margin-left: 8px;
+  magin-right: 1px;
+
+}
+
+.searchPrice:hover {
+  color: darkgreen;
+  font-size: larger;
+}
+
+.productSearchName {
+  text-align: center;
+  color: indigo;
+  font-size: larger;
+  margin-left: 5px;
+  magin-right: 5px;
 }

@@ -44,7 +44,7 @@ class SearchQ extends React.Component {
 			})
 
 			catArr.push({
-				title   : cat.name,
+				title   : {name: cat.name, id: cat.id},
 				products: cat.products.filter(p => p.name.includes(inputValue)),
 			})
 		})
@@ -53,11 +53,15 @@ class SearchQ extends React.Component {
 	}
 
 	renderSuggestion = suggestion => {
-		console.log(suggestion)
+
 		return (suggestion.title
 				?
-				<Link to={`/category/1`}><h4>{suggestion.title}</h4> </Link>
-			: <Link to={`/products/${suggestion.id}`}><span> <img className="searchImg" src={suggestion.imageUrl}/> {suggestion.name}</span>     |   ${suggestion.price}</Link>
+				<Link to={`/category/${suggestion.title.id}`}><h4>{suggestion.title.name}</h4></Link>
+				:
+				<Link to={`/products/${suggestion.id}`}>
+					<span> <img className="searchImg" src={suggestion.imageUrl}/></span><span className="productSearchName">{suggestion.name}</span>
+					<span className="searchPrice">${suggestion.price}</span>
+				</Link>
 		)
 	}
 
