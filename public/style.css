@@ -144,7 +144,8 @@ div#order{
 }
 
 .black-label {
-	background-color: black
+	background-color: #5bc0de;
+	padding: 1em;
 }
 
 #subtitle {
@@ -752,4 +753,8 @@ form.go-right input:focus + label, form.go-right textarea:focus + label {
 .categoryH3 {
 	margin-top: 0px;
 	color: white;
+}
+
+.cart-margin-left {
+	margin-left: 1em;
 }

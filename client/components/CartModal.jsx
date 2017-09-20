@@ -82,7 +82,7 @@ export class CartModal extends Component {
 											TODO: Small bug when reducing quantity of product through selection. # of options also decrease
 											*/}
 														{
-															[...Array(this.callNumOfOptions(product.quantity, products[product.id].quantity))]
+															[...Array(31)]
 																.map((x, index) => index)
 																.filter((index) => index !== 0)
 																.map((quantity) => <option key={quantity} value={quantity}>{quantity}</option>)
@@ -110,7 +110,7 @@ export class CartModal extends Component {
 			)
 		} else {
 		    return (
-		        <div>Cart is empty</div>
+		        <div></div>
 			)
 		}
 

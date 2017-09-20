@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Grid} from 'react-bootstrap'
+import {Button, Grid, Alert} from 'react-bootstrap'
 import {postOrder, resetCart} from './../store'
+import axios from 'axios'
 import history from '../history'
 
 export class CheckoutView extends Component {
@@ -18,7 +19,8 @@ export class CheckoutView extends Component {
 			state: 'NY',
 			country: 'USA',
 			zipcode: '',
-			shipping: 'standard'
+			shipping: 'standard',
+			invalid: null
 		}
 
 		this.cart = Object.keys(this.props.cart).map((id) => {
@@ -28,6 +30,19 @@ export class CheckoutView extends Component {
 		this.handleChange = this.handleChange.bind(this)
 		this.calcTotal = this.calcTotal.bind(this)
 		this.onCheckout = this.onCheckout.bind(this)
+		this.renderEmailInput = this.renderEmailInput.bind(this)
+		this.renderAlert = this.renderAlert.bind(this)
+		this.validateState = this.validateState.bind(this)
+	}
+
+	componentDidUpdate() {
+		window.scrollTo(0, 0)
+	}
+
+
+	componentWillReceiveProps(nextProps) {
+		axios.post('/api/cart', nextProps.cart)
+			.catch(console.error)
 	}
 
 	calcTotal() {
@@ -40,8 +55,66 @@ export class CheckoutView extends Component {
 		this.setState({[e.target.name]: e.target.value})
 	}
 
+	renderEmailInput() {
+		if(!this.props.user.hasOwnProperty('id')) {
+			return (
+				<div>
+					<input onChange={this.handleChange} type="email" name="email" value={this.state.email} id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					<input disabled onChange={this.handleChange} type="email" name="email" placeholder={this.props.user.email} value={this.state.email} id="email-address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
+				</div>
+			)
+		}
+	}
+
+	renderAlert() {
+		if(this.props.orderStatus === 'success') {
+			return (
+				<Alert bsStyle="success">
+					<strong>Success</strong> Your order was created :)
+				</Alert>
+			)
+		} else if(this.props.orderStatus === 'fail') {
+			return (
+				<Alert bsStyle="danger">
+					<strong>Error</strong> Something went wrong :(
+				</Alert>
+			)
+		}
+	}
+
+	validateState() {
+		var validationArr = []
+		var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+		validationArr.push(emailRegex.test(this.state.email))
+		validationArr.push(this.state.address.length >= 1)
+		validationArr.push(this.state.phoneNumber.length >= 10)
+		validationArr.push(this.state.firstName.length >= 1)
+		validationArr.push(this.state.lastName.length >= 1)
+		validationArr.push(this.state.city.length >= 1)
+		validationArr.push(this.state.zipcode.length === 5)
+
+		for (var i = 0; i < validationArr.length; i++) {
+			if(!validationArr[i]) {
+				console.log('form invalid')
+				this.setState({invalid: true})
+				return false
+			}
+		}
+		this.setState({invalid: false})
+		return true
+
+	}
+
 	onCheckout() {
 		// pass order and product into handleCheckout
+		if(!this.validateState()) return
+
 		const {address, city, state, country, zipcode} = this.state
 		const order = {
 			shippingAddress: `${address}, ${city}, ${state}, ${zipcode}, ${country}`,
@@ -49,10 +122,16 @@ export class CheckoutView extends Component {
 			fulfilled: false
 		}
 
+		if(this.props.user.hasOwnProperty('id')) {
+			order.userId = this.props.user.id
+		}
+
 		const productArr = Object.keys(this.cart).map((id) => {
 			return {id: id, ...this.cart[id]}
 		})
+
 		this.props.handleCheckout(order, productArr)
+
 	}
 
 	// TODO: render fixed input with user's email value if authenticated user
@@ -60,6 +139,17 @@ export class CheckoutView extends Component {
 	render() {
 		return (
 		    <Grid>
+				{/*<Alert bsStyle="warning">*/}
+				{/*<strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.*/}
+				{/*</Alert>*/}
+				{this.renderAlert()}
+				{
+					this.state.invalid && (
+						<Alert bsStyle="warning">
+							<strong>Warning</strong> Please enter valid fields :|
+						</Alert>
+					)
+				}
 				<h3>Checkout</h3>
 				<div id="wrap">
 					<div id="accordian">
@@ -76,9 +166,7 @@ export class CheckoutView extends Component {
 						</div>
 						<div className="content" id="email">
 							<form className="go-right">
-								<div>
-									<input onChange={this.handleChange} type="email" name="email" value={this.state.email} id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/><label htmlFor="email">Email Address</label>
-								</div>
+								{this.renderEmailInput()}
 								{/*<Button onClick={() => this.props.handleLogin('SIGN_IN')}className="have-account" bsStyle="warning">Have an account?</Button>*/}
 							</form>
 							{/*<a className="continue" href="#">Continue</a>*/}
@@ -205,7 +293,7 @@ export class CheckoutView extends Component {
 						</div>
 						<div className="content" id="shipping">
 							<div>
-								<input type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
+								<input checked type="radio" id="standard" value="standard"/><label> Standard <span className="price"> - $4.00</span></label>
 							</div>
 							{/*<div>*/}
 							{/*<input type="radio" id="express" value="standard"/><label> Express <span className="price"> - $8.00</span></label>*/}
@@ -227,7 +315,6 @@ export class CheckoutView extends Component {
 						<div className="content" id="final_products">
 							<div className="left" id="ordered">
 								<div className="products">
-
 									{
 									    this.cart.length > 0 && this.cart.map((product) => {
 									        return (
@@ -269,7 +356,7 @@ export class CheckoutView extends Component {
 							{/*// TODO: Add billing address*/}
 							<div className="right" id="reviewed">
 								<div className="billing">
-									<span className="title">Billing:</span>
+									<span className="title">Shipping:</span>
 									<div className="address_reviewed">
 										<span className="name">{`${this.state.firstName} ${this.state.lastName}`}</span>
 										<span className="address">{`${this.state.address}`}</span>
@@ -300,7 +387,7 @@ export class CheckoutView extends Component {
 	}
 }
 
-const mapStateToProps = ({cart}) => ({cart})
+const mapStateToProps = ({cart, user, orderStatus}) => ({cart, user, orderStatus})
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -309,7 +396,8 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(postOrder(order, productArr))
 			// TODO: Bug, cart will be reset whether or not the order is posted successfully
 			dispatch(resetCart())
-			history.push('/')
+			console.log('order created')
+			// dispatch action to render checkout success/failure message
 		},
 
 	}
