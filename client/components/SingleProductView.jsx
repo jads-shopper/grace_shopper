@@ -5,7 +5,7 @@ import UserAddProductForm from './UserAddProductForm.jsx'
 import SingleProductReviews from './SingleProductReviews.jsx'
 import SingleProductRating from './SingleProductRating.jsx'
 import {addToCart, removeFromCart} from '../store/cart'
-import {postCartSession} from '../store/cart'
+// import {postCartSession} from '../store/cart'
 
 export function SingleProductView(props) {
 	const productId = +props.match.params.id
@@ -48,7 +48,7 @@ export function SingleProductView(props) {
 							currentProduct={currentProduct}
 							categories={categories}
 							handleAddToCart={props.handleAddToCart}
-							postCartSession = {props.postCartSession}
+							// postCartSession = {props.postCartSession}
 							cart = {props.cart}
 						/>
 					</Col>
@@ -83,9 +83,9 @@ const mapDispatchToProps = (dispatch) => {
 		handleSubmit: () => {
 			// add checked products + current product to cart
 		},
-		postCartSession: (cart) => {
-			dispatch(postCartSession(cart))
-		}
+		// postCartSession: (cart) => {
+		// 	dispatch(postCartSession(cart))
+		// }
 	}
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import {ListGroup, ListGroupItem} from 'react-bootstrap'
+import SingleProductRating from './SingleProductRating.jsx'
 
 export default function SingleProductReviews(props) {
     const {reviews} = props
@@ -13,7 +14,7 @@ export default function SingleProductReviews(props) {
 					return (
 						<ListGroupItem key={review.id}>
 							<p>{review.rating} {review.title}</p>
-							<p>by {review.userId} on {review.createdAt}</p>
+							<p>by {review.user.firstName} on {review.createdAt}</p>
 							<br />
 							<p>{review.text}</p>
 						</ListGroupItem>
