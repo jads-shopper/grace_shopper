@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Grid} from 'react-bootstrap'
 import {postOrder, resetCart} from './../store'
+import axios from 'axios'
 import history from '../history'
 
 export class CheckoutView extends Component {
@@ -28,6 +29,12 @@ export class CheckoutView extends Component {
 		this.handleChange = this.handleChange.bind(this)
 		this.calcTotal = this.calcTotal.bind(this)
 		this.onCheckout = this.onCheckout.bind(this)
+	}
+
+
+	componentWillReceiveProps(nextProps) {
+		axios.post('/api/cart', nextProps.cart)
+			.catch(console.error)
 	}
 
 	calcTotal() {
@@ -309,7 +316,9 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(postOrder(order, productArr))
 			// TODO: Bug, cart will be reset whether or not the order is posted successfully
 			dispatch(resetCart())
-			history.push('/')
+			console.log('order created')
+			// dispatch action to render checkout success/failure message
+			// history.push('/')
 		},
 
 	}
