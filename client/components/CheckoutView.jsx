@@ -91,7 +91,11 @@ export class CheckoutView extends Component {
 		var validationArr = []
 		var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-		validationArr.push(emailRegex.test(this.state.email))
+		var emailValid = emailRegex.test(this.state.email)
+		if (this.props.user.hasOwnProperty('email')) {
+			emailValid = true
+        }
+		validationArr.push(emailValid)
 		validationArr.push(this.state.address.length >= 1)
 		validationArr.push(this.state.phoneNumber.length >= 10)
 		validationArr.push(this.state.firstName.length >= 1)
