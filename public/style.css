@@ -144,7 +144,8 @@ div#order{
 }
 
 .black-label {
-	background-color: black
+	background-color: #5bc0de;
+	padding: 1em;
 }
 
 #subtitle {
