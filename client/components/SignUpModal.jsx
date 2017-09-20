@@ -26,7 +26,7 @@ class SignUp extends React.Component {
 
 		return (
 
-			<Modal bsSize="small" show = {true} onHide = {() => {
+			<Modal bsSize="medium" className="signUpModal" show = {true} onHide = {() => {
 				this.props.handleRemoveModal()}} >
 				<Modal.Header closeButton>
 					<Modal.Title>Sign In</Modal.Title>
@@ -71,7 +71,9 @@ class SignUp extends React.Component {
 							</Col>
 						</FormGroup>
 					</Modal.Body>
-					<Modal.Footer>
+					<Modal.Footer className="signUpModal">
+						<tr>
+							<td>
 						<FormGroup>
 							<Col smOffset={2} sm={10}>
 								<Button type="submit">
@@ -79,6 +81,8 @@ class SignUp extends React.Component {
 								</Button>
 							</Col>
 						</FormGroup>
+							</td>
+							<td>
 						<FormGroup>
 							<Col smOffset={2} sm={10}>
 								<Button href = "/auth/google" bsStyle="danger">
@@ -86,6 +90,8 @@ class SignUp extends React.Component {
 								</Button>
 							</Col>
 						</FormGroup>
+							</td>
+						</tr>
 					</Modal.Footer>
 				</Form>
 			</Modal>
