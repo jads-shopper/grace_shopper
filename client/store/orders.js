@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {createOrder, alertSuccessfulOrder, alertFailedOrder} from './orderStatus'
 
 /**
  * ACTION TYPES
@@ -64,9 +65,10 @@ export function fetchOrders () {
 }
 
 export function postOrder (order, productArray) {
-console.log('inside postorder', order, productArray)
+	console.log('inside postorder', order, productArray)
 	return function thunk (dispatch) {
-		return axios.post('/api/orders/admin', order)
+		dispatch(createOrder())
+		axios.post('/api/orders/admin', order)
 			.then(res => res.data)
 			.then(newOrder => {
 				productArray.forEach(productIdAndQuantity => {
@@ -76,7 +78,12 @@ console.log('inside postorder', order, productArray)
 				return newOrder
 			})
 			.then((newOrder) => {
+				dispatch(alertSuccessfulOrder())
 				dispatch(makeOrder(newOrder))
+			})
+			.catch((err) => {
+				console.log(err)
+				dispatch(alertFailedOrder())
 			})
 	}
 }

@@ -30,7 +30,12 @@ export class CheckoutView extends Component {
 		this.calcTotal = this.calcTotal.bind(this)
 		this.onCheckout = this.onCheckout.bind(this)
 		this.renderEmailInput = this.renderEmailInput.bind(this)
+		this.renderAlert = this.renderAlert.bind(this)
 	}
+
+    componentDidUpdate() {
+        window.scrollTo(0, 0)
+    }
 
 
 	componentWillReceiveProps(nextProps) {
@@ -50,18 +55,32 @@ export class CheckoutView extends Component {
 
 	renderEmailInput() {
 		if(!this.props.user.hasOwnProperty('id')) {
-			console.log('unauth')
 			return (
 				<div>
 					<input onChange={this.handleChange} type="email" name="email" value={this.state.email} id="email-address" placeholder="Email Address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
 				</div>
 			)
 		} else {
-			console.log('auth', this.props.user.email)
 			return (
 				<div>
 					<input disabled onChange={this.handleChange} type="email" name="email" placeholder={this.props.user.email} value={this.state.email} id="email-address" data-trigger="change" data-validation-minlength="1" data-type="email" data-required="true" data-error-message="Enter a valid email address."/>
 				</div>
+			)
+		}
+	}
+
+	renderAlert() {
+		if(this.props.orderStatus === 'success') {
+			return (
+				<Alert bsStyle="success">
+					<strong>Success</strong> Your order was created :)
+				</Alert>
+			)
+		} else if(this.props.orderStatus === 'fail') {
+			return (
+				<Alert bsStyle="danger">
+					<strong>Error</strong> Something went wrong :(
+				</Alert>
 			)
 		}
 	}
@@ -76,7 +95,6 @@ export class CheckoutView extends Component {
 		}
 
 		if(this.props.user.hasOwnProperty('id')) {
-			console.log('on checkout, user has id')
 			order.userId = this.props.user.id
 		}
 
@@ -96,6 +114,7 @@ export class CheckoutView extends Component {
 				{/*<Alert bsStyle="warning">*/}
 				{/*<strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.*/}
 				{/*</Alert>*/}
+				{this.renderAlert()}
 				<h3>Checkout</h3>
 				<div id="wrap">
 					<div id="accordian">
@@ -333,7 +352,7 @@ export class CheckoutView extends Component {
 	}
 }
 
-const mapStateToProps = ({cart, user}) => ({cart, user})
+const mapStateToProps = ({cart, user, orderStatus}) => ({cart, user, orderStatus})
 
 const mapDispatchToProps = (dispatch) => {
 	return {
