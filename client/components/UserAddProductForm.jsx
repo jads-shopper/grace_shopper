@@ -62,13 +62,13 @@ export default class UserAddProductForm extends Component {
 						<div className="card-body text-dark">
 							{/*{renderRelatedProducts(filterRelatedProducts())}*/}
 							<div>
-								{filteredProducts.length > 0 && <h4 className="card-title">Add a :</h4>}
+								{/*{filteredProducts.length > 0 && <h4 className="card-title">Add a :</h4>}*/}
 								<form>
-									<FormGroup>
-										{
-											filteredProducts.length > 0 && this.renderRelatedProducts()
-										}
-									</FormGroup>
+									{/*<FormGroup>*/}
+										{/*{*/}
+											{/*filteredProducts.length > 0 && this.renderRelatedProducts()*/}
+										{/*}*/}
+									{/*</FormGroup>*/}
 									<FormGroup controlId="formControlsSelect">
 										<select className="form-control" onChange={this.handleSelectChange} value={this.state.quantity}>
 											{/*
@@ -84,6 +84,7 @@ export default class UserAddProductForm extends Component {
 										</select>
 									</FormGroup>
 									<Button
+										className="cart-margin-left"
 										onClick={() => {
 											this.props.handleAddToCart(this.currentProduct, this.state.quantity)}}
 										bsStyle="info">
