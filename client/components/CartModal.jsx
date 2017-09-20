@@ -109,8 +109,8 @@ export class CartModal extends Component {
 				</Modal>
 			)
 		} else {
-		    return (
-		        <div></div>
+			return (
+				<div></div>
 			)
 		}
 
