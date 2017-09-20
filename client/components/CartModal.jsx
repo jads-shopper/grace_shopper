@@ -10,7 +10,7 @@ export class CartModal extends Component {
 		super(props)
 
 		this.handleSelectChange = this.handleSelectChange.bind(this)
-		this.callNumOfOptions = this.callNumOfOptions.bind(this)
+		// this.callNumOfOptions = this.callNumOfOptions.bind(this)
 		this.handleNavigateToCheckout = this.handleNavigateToCheckout.bind(this)
 	}
 
@@ -24,13 +24,13 @@ export class CartModal extends Component {
 		this.props.updateCart(+e.target.value, +productId)
 	}
 
-	callNumOfOptions(quantityOfCartProduct, quantityOfInventoryProduct) {
-	    if (quantityOfCartProduct  > quantityOfInventoryProduct) {
-	        return quantityOfCartProduct + 1
-		} else {
-	        return quantityOfInventoryProduct + 1
-		}
-	}
+	// callNumOfOptions(quantityOfCartProduct, quantityOfInventoryProduct) {
+	//     if (quantityOfCartProduct  > quantityOfInventoryProduct) {
+	//         return quantityOfCartProduct + 1
+	// 	} else {
+	//         return quantityOfInventoryProduct + 1
+	// 	}
+	// }
 
 	handleNavigateToCheckout() {
 		this.props.handleRemoveModal()
