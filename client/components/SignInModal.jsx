@@ -24,7 +24,7 @@ class SignIn extends React.Component {
 	render() {
 
 		return (
-			<Modal bsSize="small" show = {true} onHide = {() => {
+			<Modal className="signInModal" bsSize="small" show = {true} onHide = {() => {
 				this.props.handleRemoveModal()}} >
 				<Modal.Header closeButton>
 					<Modal.Title>Sign In</Modal.Title>
@@ -51,25 +51,26 @@ class SignIn extends React.Component {
 						</FormGroup>
 					</Modal.Body>
 					<Modal.Footer>
-						<FormGroup>
-							<Col smOffset={2} sm={10}>
-								<Checkbox>Remember me</Checkbox>
-							</Col>
-						</FormGroup>
-						<FormGroup>
-							<Col smOffset={2} sm={10}>
-								<Button type="submit">
+						<tr>
+							<td>
+								<FormGroup>
+									<Col smOffset={2} sm={10}>
+										<Button type="submit">
 							Sign in
-								</Button>
-							</Col>
-						</FormGroup>
-						<FormGroup>
-							<Col smOffset={2} sm={10}>
-								<Button href = "/auth/google" bsStyle="danger">
+										</Button>
+									</Col>
+								</FormGroup>
+							</td>
+							<td>
+								<FormGroup>
+									<Col smOffset={2} sm={10}>
+										<Button href = "/auth/google" bsStyle="danger">
 						Sign in with Google
-								</Button>
-							</Col>
-						</FormGroup>
+										</Button>
+									</Col>
+								</FormGroup>
+							</td>
+						</tr>
 					</Modal.Footer>
 				</Form>
 			</Modal>
