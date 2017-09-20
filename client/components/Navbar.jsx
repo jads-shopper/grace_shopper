@@ -23,6 +23,7 @@ function navbarInstance(props) {
 	}
 
 	const cartData = getCartData()
+
 	return (
 		<Navbar inverse collapseOnSelect>
 			<Navbar.Header>
@@ -36,7 +37,8 @@ function navbarInstance(props) {
 					<SearchQ />
 				</Nav>
 				<Nav pullRight>
-					<NavItem eventKey={1} onClick={() => {history.push('/admin')}}>Admin View</NavItem>
+					{props.user.isAdmin ? <NavItem eventKey={1} onClick={() => {history.push('/admin')}}>Admin View</NavItem>
+						: '' }
 					<NavDropdown eventKey={2} title="Options" id="basic-nav-dropdown">
 						<MenuItem eventKey={3.1}>Settings</MenuItem>
 						{props.user.id ?
