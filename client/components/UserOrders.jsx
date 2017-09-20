@@ -72,9 +72,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		renderOrders (userId) {
-
 			dispatch(fetchOrdersUser(userId))
-
 		},
 		renderMe(){
 			dispatch(getMe())
