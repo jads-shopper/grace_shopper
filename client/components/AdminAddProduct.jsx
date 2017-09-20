@@ -9,42 +9,6 @@ const mapStateToProps = function(state) {
 		categories: state.categories
 	}
 }
-let selectorCounter = 1
-
-function addCategorySelector (categories) {
-	if(selectorCounter === 5) {
-		let tooManyDiv = document.createElement('h4')
-		tooManyDiv.append('5 Categories is enough...')
-		let targetCol = document.getElementById('categoryCol')
-		targetCol.append(tooManyDiv)
-		selectorCounter++
-
-	} else if(selectorCounter < 5){
-		//creates selector element
-		let newSelector = document.createElement('select')
-		newSelector.className= 'categorySelector'
-		selectorCounter++
-		newSelector.name = 'category' + selectorCounter
-		newSelector.id = 'category' + selectorCounter
-		let nullOption = document.createElement('option')
-		nullOption.append('None')
-		nullOption.key = 'null'
-		nullOption.value = null
-		newSelector.append(nullOption)
-
-		//maps categories and adds them as options
-		categories.forEach(category => {
-			let newOption = document.createElement('option')
-			newOption.append(category.name)
-			newOption.key = category.id
-			newOption.value = category.id
-			newSelector.append(newOption)
-		})
-
-		let targetCol = document.getElementById('categoryCol')
-		targetCol.append(newSelector)
-	}
-}
 
 function AddProductForm(props){
 	return (
@@ -53,7 +17,7 @@ function AddProductForm(props){
 				<Col xs={0} sm={1}>
 				</Col>
 				<Col xs={12} sm={11}>
-					<form id="newProductForm" onSubmit={props.handleSubmit}>
+					<form id="newProductForm" onSubmit={(evt) => {props.handleSubmit(evt, props.categories)}}>
 						<div className="">
 							<span>
 								<h5>Name</h5>
@@ -133,23 +97,23 @@ function AddProductForm(props){
 				<Col xs={0} sm={1}>
 				</Col>
 				<Col id="categoryCol" xs={12} sm={11}>
-					<h5>Category</h5>
-					<button id="newCat" onClick={() => {addCategorySelector(props.categories)}}>Add Another Category</button>
-					<select id="category1" name="category1" className="categorySelector">
-						<option value={null}>None</option>
-						{
-							props.categories.map(category => {
-								return <option value={Number(category.id)} key={category.id}>{category.name}</option>
-							})
-						}
-					</select>
+					<h5>Categories</h5>
+					{
+						props.categories.map(category => {
+							return(
+								<div key={category.id}>
+									<input type="checkbox" id={`categoryBox` + category.id} /> - {category.name}
+								</div>
+							)
+						})
+					}
 				</Col>
 			</Row>
 		</div>
 	)
 }
 
-function mapDispatchToProps (dispatch){
+function mapDispatchToProps (dispatch, ownProps){
 	return {
 		handleName: function(evt){
 			dispatch(writeProductName(evt.target.value))
@@ -169,16 +133,16 @@ function mapDispatchToProps (dispatch){
 		handleActive: function(evt){
 			dispatch(activeSelect(evt.target.value))
 		},
-		handleSubmit: function(evt){
+		handleSubmit: function(evt, categories){
 			evt.preventDefault()
 			let categoryArray = []
-			for (var i = 1; i <= selectorCounter; i++){
-				let tempName = 'category' + i
+			categories.forEach(category => {
+				let tempName = 'categoryBox' + category.id
 				let targetSelect = document.getElementById(tempName)
-				if (targetSelect.value !== 'None') {
-					categoryArray.push(targetSelect.value)
+				if (targetSelect.checked) {
+					categoryArray.push(category.id)
 				}
-			}
+			})
 			dispatch(postProduct({name: evt.target.name.value, imageURL: evt.target.imageURL.value, price: Number(evt.target.price.value), description: evt.target.description.value, quantity: Number(evt.target.quantity.value), isActive: evt.target.isActive.value}, categoryArray))
 			dispatch(writeProductName(''))
 			dispatch(writeImageURL(''))
@@ -186,6 +150,7 @@ function mapDispatchToProps (dispatch){
 			dispatch(writePrice(0))
 			dispatch(writeDescription(''))
 			dispatch(writeQuantity(0))
+			ownProps.history.push('/admin')
 		}
 	}
 }
