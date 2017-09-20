@@ -753,3 +753,7 @@ form.go-right input:focus + label, form.go-right textarea:focus + label {
 	margin-top: 0px;
 	color: white;
 }
+
+.cart-margin-left {
+	margin-left: 1em;
+}

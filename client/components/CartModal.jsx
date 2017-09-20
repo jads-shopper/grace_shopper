@@ -110,7 +110,7 @@ export class CartModal extends Component {
 			)
 		} else {
 		    return (
-		        <div>Cart is empty</div>
+		        <div></div>
 			)
 		}
 
