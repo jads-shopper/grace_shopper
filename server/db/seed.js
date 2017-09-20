@@ -14,10 +14,15 @@ const chalk = require('chalk')
 const promises = []
 const promisesUsers = []
 const promisesReviews = []
-const promisesOrders= []
 
 //user seed
 const userFirstName = [], userLastName = [], userEmail = [], password = [], isAdmin = []
+
+userFirstName.push('Admin')
+userLastName.push('Admin')
+userEmail.push('admin@gmail.com')
+password.push('123')
+isAdmin.push(true)
 
 for (var i = 0; i < 50; i++) {
 	userFirstName.push(chance.first())

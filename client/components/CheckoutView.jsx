@@ -137,6 +137,7 @@ export class CheckoutView extends Component {
 	// TODO: render fixed input with user's email value if authenticated user
 	// TODO: remove email label popup when focused
 	render() {
+		console.log('cart', this.props.cart)
 		return (
 		    <Grid>
 				{/*<Alert bsStyle="warning">*/}

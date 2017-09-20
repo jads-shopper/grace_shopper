@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Category, Product} = require('../db/models')
+const gatekeepers = require('../utils/gatekeepers')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -8,7 +9,7 @@ router.get('/', (req, res, next) => {
 		.catch(next)
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', gatekeepers.admin, (req, res, next) => {
 	Category.create(req.body)
 		.then((category) => {
 			if (category) {
