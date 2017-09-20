@@ -118,6 +118,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		renderOrders (userId) {
+			dispatch(fetchOrdersUser(userId))
 			if(userId){
 				dispatch(fetchOrdersUser(userId))
 			}
