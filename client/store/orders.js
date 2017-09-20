@@ -5,6 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const GET_ORDERS = 'GET_ORDERS'
+const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
 const POST_ORDER = 'POST_ORDER'
 const EDIT_ORDER = 'EDIT_ORDER'
 const DELETE_ORDER = 'DELETE_ORDER'
@@ -33,9 +34,20 @@ export function fetchOrdersUser (userId) {
 
 	return function thunk (dispatch) {
 		return axios.get(`/api/orders/user/${userId}`)
-    	.then(res => res.data)
+			.then(res => res.data)
 			.then(orders => {
 				dispatch(getOrders(orders))
+			})
+	}
+}
+
+export function fetchSingleOrder (orderId) {
+
+	return function thunk (dispatch) {
+		return axios.get(`/api/orders/${orderId}`)
+			.then(res => res.data)
+			.then(order => {
+				dispatch(getOrders(order))
 			})
 	}
 }
@@ -52,7 +64,7 @@ export function fetchOrders () {
 }
 
 export function postOrder (order, productArray) {
-
+console.log('inside postorder', order, productArray)
 	return function thunk (dispatch) {
 		return axios.post('/api/orders/admin', order)
 			.then(res => res.data)
@@ -65,7 +77,6 @@ export function postOrder (order, productArray) {
 			})
 			.then((newOrder) => {
 				dispatch(makeOrder(newOrder))
-				history.push('/admin')
 			})
 	}
 }

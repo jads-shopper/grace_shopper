@@ -106,7 +106,6 @@ router.get('/user/:userId', (req, res, next) => {
 	return Order.findAll({
 		where: {
 			userId: req.params.userId,
-			fulfilled: true
 		},
 		include: [{all: true}]
 	})

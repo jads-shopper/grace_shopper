@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Col, Row, Table, Button} from 'react-bootstrap'
-import {fetchOrderProducts, fetchOrders, editOrder} from './../store'
+import {fetchSingleOrder, editOrder} from './../store'
 
 const mapStateToProps = function(state) {
 	return {
@@ -17,28 +17,29 @@ class EditOrderForm extends Component {
 
 	render(){
 		const orderId = Number(this.props.match.params.id)
-		const theOrder = this.props.orders.filter(order => {
-			return order.id === orderId
-		})[0]
+		const theOrder = this.props.orders[0]
 
 		if(theOrder && theOrder.products) {
+			//Calculating the total of an order
+			let orderTotal = 0
+			theOrder.products.forEach(product => {
+				let quantityCost = product.price * product.orderProduct.quantity
+				orderTotal += quantityCost
+			})
 			return (
 				<div>
 					<Row>
 						<Col xs={0} sm={1}>
 						</Col>
-						<Col xs={12} sm={11}>
+						<Col xs={12} sm={10}>
 							<h3>Order #{orderId}</h3>
-							<span>
-								<h4>Shipping Address: {theOrder.shippingAddress}</h4>
-							</span>
-							<span>
-								<h5>User ID: {theOrder.userId}</h5>
-							</span>
-							<span>
-								<h5>Status: {theOrder.fulfilled ? 'Fulfilled' : 'Unfulfilled'}</h5>
-							</span>
+							<h4>Shipping Address: {theOrder.shippingAddress}</h4>
+							<h5>User: {theOrder.user.firstName} {theOrder.user.lastName}({theOrder.userId})</h5>
+							<h5>Total: ${orderTotal}</h5>
+							<h5>Status: {theOrder.fulfilled ? 'Fulfilled' : 'Unfulfilled'}</h5>
 							<Button onClick={(evt) => {this.props.handleToggle(evt, theOrder)}}>Toggle Status</Button>
+						</Col>
+						<Col xs={0} sm={1}>
 						</Col>
 					</Row>
 					<Row>
@@ -49,7 +50,7 @@ class EditOrderForm extends Component {
 							<Table striped bordered condensed hover>
 								<thead>
 									<tr>
-										<th>#</th>
+										<th>Product #</th>
 										<th>Name</th>
 										<th>Price</th>
 										<th>Quantity</th>
@@ -59,22 +60,15 @@ class EditOrderForm extends Component {
 								<tbody>
 									{
 										theOrder.products.map(product => {
-											let theOrderProduct =  this.props.orderProduct.filter(one => {
-												return Number(one.productId) === Number(product.id)
-											})[0]
-											if(theOrderProduct){
-												return (
-													<tr key={product.id} onClick={() => {history.push(`/admin/edit/product/${product.id}`)}}>
-														<td>{product.id}</td>
-														<td>{product.name}</td>
-														<td>${product.price}</td>
-														<td>{theOrderProduct.quantity}</td>
-														<td>{product.isActive ? 'Yes' : 'No'}</td>
-													</tr>
-												)
-											} else {
-												return (<tr key='first'><td key='second'>Loading...</td></tr>)
-											}
+											return (
+												<tr key={product.id}>
+													<td>{product.id}</td>
+													<td>{product.name}</td>
+													<td>${product.price}</td>
+													<td>{product.orderProduct.quantity}</td>
+													<td>{product.isActive ? 'Yes' : 'No'}</td>
+												</tr>
+											)
 										})
 									}
 								</tbody>
@@ -102,8 +96,7 @@ class EditOrderForm extends Component {
 const mapDispatch = (dispatch) => {
 	return {
 		loadInitialData (id) {
-			dispatch(fetchOrderProducts(id))
-			dispatch(fetchOrders())
+			dispatch(fetchSingleOrder(id))
 		},
 		handleToggle(evt, theOrder) {
 			evt.preventDefault()
