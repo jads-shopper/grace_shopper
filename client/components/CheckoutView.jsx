@@ -35,9 +35,9 @@ export class CheckoutView extends Component {
 		this.validateState = this.validateState.bind(this)
 	}
 
-    componentDidUpdate() {
-        window.scrollTo(0, 0)
-    }
+	componentDidUpdate() {
+		window.scrollTo(0, 0)
+	}
 
 
 	componentWillReceiveProps(nextProps) {
@@ -89,7 +89,7 @@ export class CheckoutView extends Component {
 
 	validateState() {
 		var validationArr = []
-        var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 		validationArr.push(emailRegex.test(this.state.email))
 		validationArr.push(this.state.address.length >= 1)
@@ -398,7 +398,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(resetCart())
 			console.log('order created')
 			// dispatch action to render checkout success/failure message
-        },
+		},
 
 	}
 }
