@@ -11,7 +11,7 @@ router.get('/', gatekeepers.admin, (req, res, next) => {
 		.catch(next)
 })
 
-router.post('/admin', gatekeepers.admin, (req, res, next) => {
+router.post('/admin', (req, res, next) => {
 	Order.create(req.body)
 		.then((order) => {
 			if (order) {

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Grid, Alert} from 'react-bootstrap'
-import {postOrder, resetCart} from './../store'
+import {postOrderCheckout, resetCart} from './../store'
 import axios from 'axios'
 import history from '../history'
 
@@ -10,7 +10,7 @@ export class CheckoutView extends Component {
 		super(props)
 
 		this.state = {
-		    email: '',
+			email: '',
 			firstName: '',
 			lastName: '',
 			phoneNumber: '',
@@ -141,7 +141,6 @@ export class CheckoutView extends Component {
 	// TODO: render fixed input with user's email value if authenticated user
 	// TODO: remove email label popup when focused
 	render() {
-		console.log('cart', this.props.cart)
 		return (
 		    <Grid>
 				{/*<Alert bsStyle="warning">*/}
@@ -398,7 +397,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		handleCheckout: (order, productArr) => {
 			// pass
-			dispatch(postOrder(order, productArr))
+			let reqBodyEmail = Object.assign({}, {email: this.state.email}, {order: productArr})
+			dispatch(postOrderCheckout(order, productArr, reqBodyEmail))
 			// TODO: Bug, cart will be reset whether or not the order is posted successfully
 			dispatch(resetCart())
 			console.log('order created')
