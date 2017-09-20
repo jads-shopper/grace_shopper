@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Grid} from 'react-bootstrap'
+import {Button, Grid, Alert} from 'react-bootstrap'
 import {postOrder, resetCart} from './../store'
 import axios from 'axios'
 import history from '../history'
@@ -67,6 +67,9 @@ export class CheckoutView extends Component {
 	render() {
 		return (
 		    <Grid>
+				{/*<Alert bsStyle="warning">*/}
+					{/*<strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.*/}
+				{/*</Alert>*/}
 				<h3>Checkout</h3>
 				<div id="wrap">
 					<div id="accordian">
