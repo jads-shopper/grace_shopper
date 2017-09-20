@@ -2,7 +2,9 @@
 /*eslint no-mixed-spaces-and-tabs: ["error", "smart-tabs"]*/
 const router = require('express').Router()
 const { Review, Product } = require('../db/models')
+const gatekeepers = require('../utils/gatekeepers')
 module.exports = router
+
 //get product reviews
 
 router.get('/', (req,res,next) => {
@@ -30,7 +32,6 @@ router.post('/', ( req, res, next ) => {
 			res.json(createdReview)
 		})
 		.catch(console.error)
-
 })
 
 // update review
@@ -42,7 +43,7 @@ router.put('/update/', ( req, res, next ) => {
 			      text  : text,
 			      rating: rating,
 		      }).then(res.json)
-		                   .catch(next)
+		      	.catch(next)
 	      })
 })
 

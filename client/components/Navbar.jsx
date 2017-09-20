@@ -50,8 +50,13 @@ function navbarInstance(props) {
 					</NavDropdown>
 					{props.user.id ?
 						<NavItem eventKey={3} onClick={() => {props.handleLogOut()}} href="#">Logout</NavItem>
-						: <NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
-					<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
+						:
+						<NavItem eventKey={3} onClick={() => handleLogin('SIGN_IN')} href="#">Login</NavItem>}
+
+					{props.user.id ?
+						''
+						:<NavItem eventKey={4} onClick={() => handleLogin('SIGN_UP')} href="#">Sign-Up</NavItem>
+					}
 					{/*// TODO: Increase size of shopping cart*/}
 					<NavItem onClick={() => handleLogin('CART')}><Label className="black-label"><i className="fa fa-shopping-cart"></i> {cartData.quantity} ITEMS - ${cartData.totalPrice.toFixed(2)}</Label></NavItem>
 				</Nav>
